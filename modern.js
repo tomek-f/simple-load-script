@@ -1,4 +1,4 @@
-function deleteFromGlobal(name) {
+export function deleteFromGlobal(name) {
   try {
     delete window[name];
   } catch (e) {
@@ -6,7 +6,7 @@ function deleteFromGlobal(name) {
   }
 }
 
-function getScript(url, options = {}) {
+export default function getScript(url, options = {}) {
   return new Promise((resolve, reject) => {
     let script = document.createElement('script');
     let where = options.inBody ? document.body : document.head;
