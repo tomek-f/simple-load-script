@@ -7,8 +7,8 @@ function deleteFromGlobal(name) {
 }
 
 // array of urls or array of objects
-function getAll() {
-  if (!arguments.length) return Promise.reject(new Error('No file configs!'));
+function getAllScripts() {
+  if (!arguments.length) return Promise.reject(new Error('No files or no file configs'));
   return Promise.all(Array.prototype.slice.call(arguments).map(getScript));
 }
 
@@ -49,6 +49,6 @@ function getScript(url, options) {
 }
 
 getScript.deleteFromGlobal = deleteFromGlobal;
-getScript.getAll = getAll;
+getScript.getAllScripts = getAllScripts;
 
 module.exports = getScript;
