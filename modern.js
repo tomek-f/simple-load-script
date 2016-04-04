@@ -1,3 +1,6 @@
+/* global Promise */
+'use strict';
+
 export function deleteFromGlobal(name) {
   try {
     delete window[name];
