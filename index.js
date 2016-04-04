@@ -7,7 +7,7 @@ function deleteFromGlobal(name) {
 }
 
 function getScript(url, options) {
-  return new Promise((resolve, reject) => {
+  return new Promise(function (resolve, reject) {
     if (!options) options = {};
     var script = document.createElement('script');
     var where = options.inBody ? document.body : document.head;
@@ -19,7 +19,7 @@ function getScript(url, options) {
       }
     }
     if (!callBackName) {
-      script.addEventListener('load', e => {
+      script.addEventListener('load', function(e) {
         resolve([script, e.type, e]);
       });
     } else {
@@ -28,7 +28,7 @@ function getScript(url, options) {
         resolve([script]);
       };
     }
-    script.addEventListener('error', e => {
+    script.addEventListener('error', function(e) {
       where.removeChild(script);
       reject([script, e.type, e]);
     });
