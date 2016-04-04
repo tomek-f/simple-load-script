@@ -22,7 +22,7 @@ function getScript(url, options = {}) {
         resolve([e.type, e, script]);
       });
     } else {
-      window[callBackName] = function() {
+      window[callBackName] = () => {
         deleteFromGlobal(callBackName);
         resolve([script]);
       };
