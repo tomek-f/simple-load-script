@@ -8,7 +8,7 @@ export function deleteFromGlobal(name) {
 
 // array of urls or array of objects
 export function getAll() {
-  if (!arguments.length) return Promise.reject(new Error('No file configs!'));
+  if (!arguments.length) return Promise.reject(new Error('No files or no file configs'));
   return Promise.all(Array.from(arguments).map(getScript));
 }
 
