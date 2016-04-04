@@ -11,7 +11,7 @@ function getScript(url, options) {
     if (!options) options = {};
     var script = document.createElement('script');
     var where = options.inBody ? document.body : document.head;
-    var attrs = options.attr;
+    var attrs = options.attrs;
     var callBackName = options.callBackName;
     for (var attr in attrs) {
       if (Object.prototype.hasOwnProperty.call(attrs, attr)) {
