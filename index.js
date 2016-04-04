@@ -20,7 +20,7 @@ function getScript(url, options) {
     }
     if (!callBackName) {
       script.addEventListener('load', function(e) {
-        resolve([script, e.type, e]);
+        resolve([e.type, e, script]);
       });
     } else {
       window[callBackName] = function() {
@@ -30,7 +30,7 @@ function getScript(url, options) {
     }
     script.addEventListener('error', function(e) {
       where.removeChild(script);
-      reject([script, e.type, e]);
+      reject([e.type, e]);
     });
     script.src = url;
     where.appendChild(script);
