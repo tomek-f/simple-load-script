@@ -36,3 +36,7 @@ function getScript(url, options) {
     where.appendChild(script);
   });
 }
+
+getScript.deleteFromGlobal = deleteFromGlobal;
+
+module.exports = getScript;
