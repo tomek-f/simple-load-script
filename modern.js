@@ -6,8 +6,19 @@ export function deleteFromGlobal(name) {
   }
 }
 
+// array of urls or array of objects
+export function getAll() {
+  if (!arguments.length) return Promise.reject(new Error('No file configs!'));
+  return Promise.all(Array.from(arguments).map(getScript));
+}
+
 export default function getScript(url, options = {}) {
   return new Promise((resolve, reject) => {
+    if (typeof url === 'object') {
+      options = url;
+      url = options.url;
+    }
+    if (!url) reject('Error: no script url');
     let script = document.createElement('script');
     let where = options.inBody ? document.body : document.head;
     let attrs = options.attrs;
