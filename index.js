@@ -8,12 +8,11 @@ function deleteFromGlobal(name) {
 
 function getScript(url, options) {
   return new Promise((resolve, reject) => {
-    var script = document.createElement('script');
-    var attrs;
-    var callBackName;
     if (!options) options = {};
-    attrs = options.attrs;
-    callBackName = options.callBackName;
+    var script = document.createElement('script');
+    var where = options.inBody ? document.body : document.head;
+    var attrs = options.attr;
+    var callBackName = options.callBackName;
     for (var attr in attrs) {
       if (Object.prototype.hasOwnProperty.call(attrs, attr)) {
         script.setAttribute(attr, attrs[attr]);
@@ -30,10 +29,10 @@ function getScript(url, options) {
       };
     }
     script.addEventListener('error', e => {
-      document.body.removeChild(script);
+      where.removeChild(script);
       reject([script, e.type, e]);
     });
     script.src = url;
-    document.body.appendChild(script);
+    where.appendChild(script);
   });
 }
