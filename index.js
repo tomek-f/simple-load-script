@@ -1,3 +1,5 @@
+/* global Promise */
+
 function deleteFromGlobal(name) {
   try {
     delete window[name];
