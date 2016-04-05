@@ -1,3 +1,5 @@
+var scriptInfo = {};
+
 function deleteFromGlobal(name) {
   try {
     delete window[name];
@@ -48,6 +50,7 @@ function getScript(url, options) {
   });
 }
 
+getScript.scriptInfo = scriptInfo;
 getScript.deleteFromGlobal = deleteFromGlobal;
 getScript.all = all;
 
