@@ -23,17 +23,17 @@ function getScript(url, options) {
     if (!options) options = {};
     if (!url) {
       reject('Error: no script url');
-      return; // todo check
+      return;
     }
     if (!scriptInfo[url] || options.force) {
       scriptInfo[url] = { script: script, state: 0 };
     } else {
-      if (scriptInfo[url] && document.contains(scriptInfo[url].script)) { // todo is it necessary and wildly supported
+      if (document.contains(scriptInfo[url].script)) {
         resolve(scriptInfo[url].script);
-      } else if (!scriptInfo[url]) {
+      } else if (scriptInfo[url].state === 0) {
         reject('Error: already loading');
       }
-      return; // todo check
+      return;
     }
     var script = document.createElement('script');
     var where = options.inBody ? document.body : document.head;
