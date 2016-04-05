@@ -21,7 +21,20 @@ function getScript(url, options) {
       url = options.url;
     }
     if (!options) options = {};
-    if (!url) reject('Error: no script url');
+    if (!url) {
+      reject('Error: no script url');
+      return; // todo check
+    }
+    if (!scriptInfo[url] || options.force) {
+      scriptInfo[url] = { script: script, state: 0 };
+    } else {
+      if (scriptInfo[url] && document.contains(scriptInfo[url].script)) { // todo is it necessary and wildly supported
+        resolve(scriptInfo[url].script);
+      } else if (!scriptInfo[url]) {
+        reject('Error: already loading');
+      }
+      return; // todo check
+    }
     var script = document.createElement('script');
     var where = options.inBody ? document.body : document.head;
     var attrs = options.attrs;
@@ -33,16 +46,19 @@ function getScript(url, options) {
     }
     if (!callBackName) {
       script.addEventListener('load', function(e) {
+        scriptInfo[url].state = 1;
         resolve(script);
       });
     } else {
       window[callBackName] = function() {
+        scriptInfo[url].state = 1;
         deleteFromGlobal(callBackName);
         resolve(script);
       };
     }
     script.addEventListener('error', function(e) {
       where.removeChild(script);
+      delete scriptInfo[url];
       reject('Error: loading script');
     });
     script.src = url;
