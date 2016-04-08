@@ -22,7 +22,10 @@ export default function getScript(url, options = {}) {
       options = url;
       url = options.url;
     }
-    if (!url) reject('Error: no script url');
+    if (!url) {
+      reject('Error: no script url');
+      return;
+    }
     let script = document.createElement('script');
     let where = options.inBody ? document.body : document.head;
     let attrs = options.attrs;
