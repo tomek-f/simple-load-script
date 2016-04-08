@@ -1,7 +1,5 @@
 'use strict';
 
-export const scriptInfo = {};
-
 export function deleteFromGlobal(name) {
   try {
     delete window[name];
