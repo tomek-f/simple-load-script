@@ -1,5 +1,3 @@
-var scriptInfo = {};
-
 function deleteFromGlobal(name) {
   try {
     delete window[name];
@@ -25,16 +23,6 @@ function getScript(url, options) {
       reject('Error: no script url');
       return;
     }
-    if (!scriptInfo[url] || options.force) {
-      scriptInfo[url] = { script: script, state: 0 };
-    } else {
-      if (document.contains(scriptInfo[url].script)) {
-        resolve(scriptInfo[url].script);
-      } else if (scriptInfo[url].state === 0) {
-        reject('Error: already loading');
-      }
-      return;
-    }
     var script = document.createElement('script');
     var where = options.inBody ? document.body : document.head;
     var attrs = options.attrs;
@@ -46,19 +34,16 @@ function getScript(url, options) {
     }
     if (!callBackName) {
       script.addEventListener('load', function(e) {
-        scriptInfo[url].state = 1;
         resolve(script);
       });
     } else {
       window[callBackName] = function() {
-        scriptInfo[url].state = 1;
         deleteFromGlobal(callBackName);
         resolve(script);
       };
     }
     script.addEventListener('error', function(e) {
       where.removeChild(script);
-      delete scriptInfo[url];
       reject('Error: loading script');
     });
     script.src = url;
@@ -66,7 +51,6 @@ function getScript(url, options) {
   });
 }
 
-getScript.scriptInfo = scriptInfo;
 getScript.deleteFromGlobal = deleteFromGlobal;
 getScript.all = all;
 
