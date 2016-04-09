@@ -28,18 +28,18 @@ export default function getScript(url, options = {}) {
       }
     }
     if (!callBackName) {
-      script.addEventListener('load', e => {
-        resolve([e.type, e, script]);
+      script.addEventListener('load', () => {
+        resolve(script);
       });
     } else {
-      window[callBackName] = () => {
+      window[callBackName] = res => {
         deleteFromGlobal(callBackName);
-        resolve([script]);
+        resolve(res || script);
       };
     }
     script.addEventListener('error', e => {
       where.removeChild(script);
-      reject([e.type, e]);
+      reject('Error: loading script');
     });
     script.src = url;
     where.appendChild(script);
