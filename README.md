@@ -20,7 +20,7 @@ Good example
 npm install es6-promise --save
 ```
 
-## es6 (es2015) version
+## es6 (es2015) version (non-UMD)
 
 ```bash
 simple-load-script/modern.js
