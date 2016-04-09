@@ -6,7 +6,7 @@
   } else if (typeof module === 'object' && module.exports) {
     module.exports = factory();
   } else {
-    root.SimpleLoadScript = factory();
+    root.simpleLoadScript = factory();
   }
 }(this, function () {
 
