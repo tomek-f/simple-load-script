@@ -37,7 +37,7 @@ export default function getScript(url, options = {}) {
         resolve(res || script);
       };
     }
-    script.addEventListener('error', e => {
+    script.addEventListener('error', () => {
       where.removeChild(script);
       reject('Error: loading script');
     });
