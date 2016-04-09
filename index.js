@@ -43,9 +43,9 @@
           resolve(script);
         });
       } else {
-        window[callBackName] = function () {
+        window[callBackName] = function (res) {
           deleteFromGlobal(callBackName);
-          resolve(script);
+          resolve(res || script);
         };
       }
       script.addEventListener('error', function () {
