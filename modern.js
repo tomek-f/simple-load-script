@@ -8,12 +8,6 @@ export function deleteFromGlobal(name) {
   }
 }
 
-// array of urls or array of objects
-export function all() {
-  if (!arguments.length) return Promise.reject(new Error('No files or no file configs'));
-  return Promise.all(Array.from(arguments).map(getScript));
-}
-
 export default function getScript(url, options = {}) {
   return new Promise((resolve, reject) => {
     if (typeof url === 'object') {
@@ -50,4 +44,10 @@ export default function getScript(url, options = {}) {
     script.src = url;
     where.appendChild(script);
   });
+}
+
+// array of urls or array of objects
+export function all() {
+  if (!arguments.length) return Promise.reject(new Error('No files or no file configs'));
+  return Promise.all(Array.from(arguments).map(getScript));
 }

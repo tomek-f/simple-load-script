@@ -17,13 +17,7 @@
       window[name] = null;
     }
   }
-  
-  // array of urls or array of objects
-  function all() {
-    if (!arguments.length) return Promise.reject(new Error('No files or no file configs'));
-    return Promise.all(Array.prototype.slice.call(arguments).map(getScript));
-  }
-  
+
   function getScript(url, options) {
     return new Promise(function (resolve, reject) {
       if (typeof url === 'object') {
@@ -45,16 +39,16 @@
         }
       }
       if (!callBackName) {
-        script.addEventListener('load', function(e) {
+        script.addEventListener('load', function () {
           resolve(script);
         });
       } else {
-        window[callBackName] = function() {
+        window[callBackName] = function () {
           deleteFromGlobal(callBackName);
           resolve(script);
         };
       }
-      script.addEventListener('error', function(e) {
+      script.addEventListener('error', function () {
         where.removeChild(script);
         reject('Error: loading script');
       });
@@ -62,10 +56,16 @@
       where.appendChild(script);
     });
   }
-  
+
+  // array of urls or array of objects
+  function all() {
+    if (!arguments.length) return Promise.reject(new Error('No files or no file configs'));
+    return Promise.all(Array.prototype.slice.call(arguments).map(getScript));
+  }
+
   getScript.deleteFromGlobal = deleteFromGlobal;
   getScript.all = all;
-  
+
   return getScript;
 
 }));
