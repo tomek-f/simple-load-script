@@ -1,6 +1,6 @@
 # simple-load-script
 
-> Very simple promise based script loader
+> Very simple promise based script loader and JSONP
 
 * tiny, only 531 bytes (minified and gzipped)
 * Promise based ([use polyfill if you need](http://caniuse.com/#feat=promises))
