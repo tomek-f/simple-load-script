@@ -3,7 +3,7 @@
 > Very simple promise based script loader
 
 * tiny, only 531 bytes (minified and gzipped)
-* Promise based (use polyfill if you need)
+* Promise based ([use polyfill if you need](http://caniuse.com/#feat=promises))
 * uses addEventListener (IE9+)
 
 ## Installation
