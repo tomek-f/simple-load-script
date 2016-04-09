@@ -1,6 +1,6 @@
 # 2do
 
-* [ ] JSONP timeouts
+* [ ] timeouts
 * [ ] JSONP example
 * [ ] tests
 * [x] UMD
