@@ -1,5 +1,6 @@
 # 2do
 
-* tests
-* UMD
-* test cache
+* [ ] tests
+* [x] UMD
+* [ ] readme (umd, options, examples)
+* [ ] test cache
