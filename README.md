@@ -2,8 +2,8 @@
 
 > Very simple promise based script loader
 
-* tiny, only 478 bytes (minified and gzipped)
-* Promise based (use polyfill if you need)
+* tiny, only 531 bytes (minified and gzipped)
+* Promise based ([use polyfill if you need](http://caniuse.com/#feat=promises))
 * uses addEventListener (IE9+)
 
 ## Installation
@@ -11,6 +11,44 @@
 ```bash
 npm install --save simple-load-script
 ```
+
+## UMD (CommonJS, AMD, global, ES6)
+
+### CommonJS
+
+```js
+var loadScript = require('simple-load-script');
+
+loadScript(/**/);
+```
+
+### AMD
+
+```js
+define(['simple-load-script'], function(loadScript) {
+  loadScript(/**/);
+});
+```
+
+### Global (in window object)
+
+```js
+simpleLoadScript(/**/);
+```
+
+### ES6 (ES2015) modules
+
+* loading ES5 module
+
+```js
+import loadScript from 'simple-load-script';
+
+loadScript(/**/);
+```
+
+## Usage
+
+xxx
 
 ## Promise polyfill
 
