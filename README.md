@@ -48,7 +48,9 @@ loadScript(/**/);
 
 ## Usage
 
-xxx
+!!!
+WORK IN PROGRESS
+!!!
 
 ## Promise polyfill
 
