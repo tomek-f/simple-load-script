@@ -2,7 +2,7 @@
 
 > Very simple promise based script loader
 
-* tiny, only 478 bytes (minified and gzipped)
+* tiny, only 531 bytes (minified and gzipped)
 * Promise based (use polyfill if you need)
 * uses addEventListener (IE9+)
 
