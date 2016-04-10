@@ -107,7 +107,7 @@ loadScripts(
   });
 ```
 
-Load more scripts (Promise.all) - objects and url (no mixed option), callback must be unique
+Load more scripts (Promise.all) - objects and urls (no url-object pairs allowed), callback must be unique names
 
 ```js
 var loadScripts = require('simple-load-script').all;
