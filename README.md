@@ -50,7 +50,7 @@ loadScript(/**/);
 
 * `url` (optional) - file to append to body
 * `options` (required) - options in object
-* 
+
 ## Options
 
 * `url` - file to append to body
