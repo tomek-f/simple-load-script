@@ -2,6 +2,7 @@
 
 ## 1.0.0
 
+* readme
 * removed ES6 version
 
 ## 0.0.0
