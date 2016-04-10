@@ -5,7 +5,11 @@
   "repository": "tomek-f/simple-load-script",
   "keywords": [
     "script",
-    "promise"
+    "load",
+    "promise",
+    "JSONP",
+    "UMD",
+    "callback"
   ],
   "main": "index.js",
   "author": "Tomek Fijoł",
