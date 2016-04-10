@@ -2,6 +2,7 @@
 
 ## 1.0.0
 
+* `dontRemoveCallBack` and `removeScript`
 * readme
 * removed ES6 version
 
