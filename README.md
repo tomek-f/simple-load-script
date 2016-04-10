@@ -55,6 +55,23 @@ loadScript({
   });
 ```
 
+Google Maps API
+
+```js
+var loadScript = require('simple-load-script');
+
+loadScript({
+  url: '//maps.googleapis.com/maps/api/js?&callback=gmapiready',
+  callBackName: 'gmapiready'
+})
+  .then(function(scriptRef) {
+    console.log('success', scriptRef);
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+```
+
 ## Arguments
 
 * `url` (optional) - file to append to body
