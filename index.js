@@ -9,6 +9,8 @@
     root.simpleLoadScript = factory();
   }
 }(this, function () {
+  
+  var undef;
 
   function deleteFromGlobal(name) {
     try {
@@ -32,6 +34,7 @@
       var script = document.createElement('script');
       var where = options.inBody ? document.body : document.head;
       var attrs = options.attrs;
+      var removeScript = options.removeScript;
       var callBackName = options.callBackName;
       for (var attr in attrs) {
         if (Object.prototype.hasOwnProperty.call(attrs, attr)) {
@@ -40,12 +43,14 @@
       }
       if (!callBackName) {
         script.addEventListener('load', function () {
-          resolve(script);
+          if (removeScript) where.removeChild(script);
+          resolve(removeScript ? undef : script);
         });
       } else {
         window[callBackName] = function (res) {
-          deleteFromGlobal(callBackName);
-          resolve(res || script);
+          if (!options.dontRemoveCallBack) deleteFromGlobal(callBackName);
+          if (removeScript) where.removeChild(script);
+          resolve(res || removeScript ? undef : script);
         };
       }
       script.addEventListener('error', function () {
