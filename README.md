@@ -86,6 +86,11 @@ loadScript({
 * `dontRemoveCallBack` (boolean) - from `window` after load; no real use - let me know
 * `removeScript` (boolean) - after load (for JSONP, other reasons); it's always removed on error
 
+## Returned values
+
+* then: resource (JSONP, callback) script reference in DOM or undefined
+* catch: error
+
 ## UMD (CommonJS, AMD, global, ES6)
 
 ### CommonJS
