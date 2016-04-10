@@ -2,7 +2,7 @@
 
 > Very simple promise based script loader and JSONP
 
-* tiny, only 568 bytes (minified and gzipped)
+* tiny
 * Promise based ([use polyfill if you need](http://caniuse.com/#feat=promises))
 * uses addEventListener (IE9+)
 
