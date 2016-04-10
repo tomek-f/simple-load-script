@@ -48,6 +48,7 @@
         });
       } else {
         window[callBackName] = function (res) {
+          if (!res) res = removeScript ? undef : script;
           if (!options.dontRemoveCallBack) deleteFromGlobal(callBackName);
           if (removeScript) where.removeChild(script);
           resolve(res || removeScript ? undef : script);

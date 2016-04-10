@@ -33,7 +33,7 @@ loadScript('//code.jquery.com/jquery-2.2.3.js', {
   inBody: true
 })
   .then(function(scriptRef) {
-    console.log('success', scriptRef);
+    console.log('success', scriptRef); // 'success', script ref.
   })
   .catch(function(err) {
     console.log(err);
@@ -48,7 +48,7 @@ loadScript({
   attrs: { id: 'one', charset: 'UTF-8' }
 })
   .then(function(scriptRef) {
-    console.log('success', scriptRef);
+    console.log('success', scriptRef); // 'success', script ref.
   })
   .catch(function(err) {
     console.log(err);
@@ -65,7 +65,23 @@ loadScript({
   callBackName: 'gmapiready'
 })
   .then(function(scriptRef) {
-    console.log('success', scriptRef);
+    console.log('success', scriptRef); // 'success', undefined
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+```
+
+JSONP
+
+```js
+var loadScript = require('simple-load-script');
+
+loadScript('//beta0.tomekf.pl/proxy.php?callback=elo', {
+  callBackName: 'elo'
+})
+  .then(function(scriptRef) {
+    console.log('success', scriptRef); // 'success', res
   })
   .catch(function(err) {
     console.log(err);
@@ -88,8 +104,8 @@ loadScript({
 
 ## Returned values
 
-* then: resource (JSONP, callback) script reference in DOM or undefined
-* catch: error
+* then: resource (JSONP - options.callBackName) script reference in DOM or undefined (options.callBackName, options.removeScript)
+* catch: error message
 
 ## UMD (CommonJS, AMD, global, ES6)
 
