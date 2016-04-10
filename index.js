@@ -9,7 +9,7 @@
     root.simpleLoadScript = factory();
   }
 }(this, function () {
-  
+
   var undef;
 
   function deleteFromGlobal(name) {
