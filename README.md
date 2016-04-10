@@ -14,9 +14,46 @@ npm install --save simple-load-script
 
 ## Usage
 
-!!!
-WORK IN PROGRESS
-!!!
+```js
+var loadScript = require('simple-load-script');
+
+loadScript('//code.jquery.com/jquery-2.2.3.js')
+  .then(function(scriptRef) {
+    console.log('success', scriptRef);
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+```
+
+```js
+var loadScript = require('simple-load-script');
+
+loadScript('//code.jquery.com/jquery-2.2.3.js', {
+  inBody: true
+})
+  .then(function(scriptRef) {
+    console.log('success', scriptRef);
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+```
+
+```js
+var loadScript = require('simple-load-script');
+
+loadScript({
+  url: '//code.jquery.com/jquery-2.2.3.js',
+  attrs: { id: 'one', charset: 'UTF-8' }
+})
+  .then(function(scriptRef) {
+    console.log('success', scriptRef);
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+```
 
 ## Arguments
 
@@ -29,7 +66,7 @@ WORK IN PROGRESS
 * `inBody` (boolean) - append to `document.body` instead of `document.head`
 * `attrs` (object) - with attributes to append to script tag (`charset`, `type`, `id`, &hellip;)
 * `callBackName` (string) - callback to add to `window` object; promise is resolved after callback is fired; callback is removed after that
-* `dontRemoveCallBack` (boolean) - from `window` after load
+* `dontRemoveCallBack` (boolean) - from `window` after load; no real use - let me know
 * `removeScript` (boolean) - after load (for JSONP, other reasons); it's always removed on error
 
 ## UMD (CommonJS, AMD, global, ES6)
