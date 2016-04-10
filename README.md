@@ -46,6 +46,18 @@ import loadScript from 'simple-load-script';
 loadScript(/**/);
 ```
 
+## Arguments
+
+* `url` (optional) - file to append to body
+* `options` (required) - options in object
+* 
+## Options
+
+* `url` - file to append to body
+* `inBody` - append to `document.body` instead of `document.head`
+* `attrs` - object with attributes to append to script tag (`charset`, `type`, `id`, &hellip;)
+* `callBackName` - callback to add to `window` object; promise is resolved after callback is fired; callback is removed after that
+
 ## Usage
 
 !!!
