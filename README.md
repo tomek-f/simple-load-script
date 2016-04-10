@@ -29,6 +29,8 @@ WORK IN PROGRESS
 * `inBody` - append to `document.body` instead of `document.head`
 * `attrs` - object with attributes to append to script tag (`charset`, `type`, `id`, &hellip;)
 * `callBackName` - callback to add to `window` object; promise is resolved after callback is fired; callback is removed after that
+* `dontRemoveCallBack` - from `window` after load
+* `removeScript` - after load (for JSONP, other reasons); it's always removed on error
 
 ## UMD (CommonJS, AMD, global, ES6)
 
