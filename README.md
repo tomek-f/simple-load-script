@@ -77,11 +77,59 @@ JSONP
 ```js
 var loadScript = require('simple-load-script');
 
-loadScript('//beta0.tomekf.pl/proxy.php?callback=elo', {
-  callBackName: 'elo'
+loadScripts('//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo', {
+  callBackName: 'elo',
+  removeScript: true
 })
   .then(function(scriptRef) {
     console.log('success', scriptRef); // 'success', res
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+```
+
+Load more scripts (Promise.all) - urls
+
+```js
+var loadScripts = require('simple-load-script').all;
+
+loadScripts(
+  '//example.com/test1.js',
+  '//example.com/test2.js',
+  '//example.com/test3.js'
+)
+  .then(function(scriptRef) {
+    console.log('success', scriptRef); // 'success', res
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+```
+
+Load more scripts (Promise.all) - objects and url (no mixed option), callback must be unique
+
+```js
+var loadScripts = require('simple-load-script').all;
+
+loadScripts(
+  {
+    url: '//maps.googleapis.com/maps/api/js?&callback=gmapiready',
+    callBackName: 'gmapiready'
+  },
+  {
+    url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
+    callBackName: 'elo',
+    removeScript: true
+  },
+  {
+    url: 'https://api.twitter.com/1/statuses/oembed.json?id=507185938620219395&callback=elo2',
+    callBackName: 'elo2'
+  },
+  '//code.jquery.com/jquery-2.2.3.js'
+)
+  .then(function(scriptRef) {
+    console.log('success', scriptRef); // 'success', array
   })
   .catch(function(err) {
     console.log(err);
@@ -98,7 +146,7 @@ loadScript('//beta0.tomekf.pl/proxy.php?callback=elo', {
 * `url` (string) - file to append to body
 * `inBody` (boolean) - append to `document.body` instead of `document.head`
 * `attrs` (object) - with attributes to append to script tag (`charset`, `type`, `id`, &hellip;)
-* `callBackName` (string) - callback to add to `window` object; promise is resolved after callback is fired; callback is removed after that
+* `callBackName` (string) - callback to add to `window` object; promise is resolved after callback is fired; callback is removed after that; multiple callbacks must have unique names
 * `dontRemoveCallBack` (boolean) - from `window` after load; no real use - let me know
 * `removeScript` (boolean) - after load (for JSONP, other reasons); it's always removed on error
 
