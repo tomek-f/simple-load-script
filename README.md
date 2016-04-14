@@ -107,7 +107,7 @@ loadScripts(
   });
 ```
 
-Load more scripts (Promise.all) - objects and urls (no url-object pairs allowed), callback must be unique names
+Load more scripts (Promise.all) - objects and urls, callback must be unique names
 
 ```js
 var loadScripts = require('simple-load-script').all;
@@ -122,10 +122,10 @@ loadScripts(
     callBackName: 'elo',
     removeScript: true
   },
-  {
-    url: 'https://api.twitter.com/1/statuses/oembed.json?id=507185938620219395&callback=elo2',
-    callBackName: 'elo2'
-  },
+  [
+    'https://api.twitter.com/1/statuses/oembed.json?id=507185938620219395&callback=elo2',
+    { callBackName: 'elo2' }
+  ],
   '//code.jquery.com/jquery-2.2.3.js'
 )
   .then(function(scriptRef) {
