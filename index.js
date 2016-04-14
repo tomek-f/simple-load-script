@@ -1,5 +1,3 @@
-/* global define */
-
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     define([], factory);
@@ -66,7 +64,9 @@
   // array of urls or array of objects
   function all() {
     if (!arguments.length) return Promise.reject(new Error('No files or no file configs'));
-    return Promise.all(Array.prototype.slice.call(arguments).map(getScript));
+    return Promise.all(Array.prototype.slice.call(arguments).map(function (e) {
+      return Array.isArray(e) ? getScript.apply(null, e) : getScript(e);
+    }));
   }
 
   getScript.deleteFromGlobal = deleteFromGlobal;
