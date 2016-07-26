@@ -11,7 +11,7 @@
     "UMD",
     "callback"
   ],
-  "main": "index.js",
+  "main": "simpleLoadScript.js",
   "author": "Tomek Fijoł",
   "license": "MIT",
   "readmeFilename": "README.md"
