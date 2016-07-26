@@ -1,7 +1,8 @@
 # changelog
 
-## x.x.x
+## 1.0.1
 
+* rename index.js
 * readme
 * changes in `all` method
 
