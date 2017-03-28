@@ -30,7 +30,12 @@
         return;
       }
       var script = document.createElement('script');
-      var where = options.inBody ? document.body : document.head;
+      var where = (function () {
+        if (options.insertInto) {
+          return document.querySelector(options.insertInto);
+        }
+        return options.inBody ? document.body : document.head;
+      })();
       var attrs = options.attrs;
       var removeScript = options.removeScript;
       var callBackName = options.callBackName;
