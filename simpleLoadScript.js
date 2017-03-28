@@ -7,7 +7,6 @@
     root.simpleLoadScript = factory();
   }
 }(this, function () {
-
   var undef;
 
   function deleteFromGlobal(name) {
@@ -36,6 +35,10 @@
         }
         return options.inBody ? document.body : document.head;
       }());
+      if (!where) {
+        reject('Error: no DOM element to append script');
+        return;
+      }
       var attrs = options.attrs;
       var removeScript = options.removeScript;
       var callBackName = options.callBackName;
@@ -78,5 +81,4 @@
   getScript.all = all;
 
   return getScript;
-
 }));
