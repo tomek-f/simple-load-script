@@ -1,5 +1,8 @@
 # changelog
 
+## 1.0.2
+* added `insertInto` config option
+
 ## 1.0.1
 
 * rename index.js
