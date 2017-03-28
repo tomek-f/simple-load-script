@@ -149,7 +149,7 @@ loadScripts(
 * `callBackName` (string) - callback to add to `window` object; promise is resolved after callback is fired; callback is removed after that; multiple callbacks must have unique names
 * `dontRemoveCallBack` (boolean) - from `window` after load; no real use - let me know
 * `removeScript` (boolean) - after load (for JSONP, other reasons); it's always removed on error
-* `insertInto` (string) - an ID or class name to insert the script into. Overrides `inBody` value.
+* `insertInto` (string) - CSS selector (an ID, class name, element name, etc.) to insert the script into. Overrides `inBody` value.
 
 ## Returned values
 
