@@ -35,7 +35,7 @@
           return document.querySelector(options.insertInto);
         }
         return options.inBody ? document.body : document.head;
-      })();
+      }());
       var attrs = options.attrs;
       var removeScript = options.removeScript;
       var callBackName = options.callBackName;
