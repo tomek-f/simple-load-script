@@ -12,7 +12,7 @@
     "callback"
   ],
   "main": "simpleLoadScript.js",
-  "author": "Tomek Fijoł",
+  "author": "Tomek Fijoł <tomekfijol@gmail.com> (http://tomekf.pl/)",
   "license": "MIT",
   "readmeFilename": "README.md"
 }
