@@ -11,8 +11,33 @@
     "UMD",
     "callback"
   ],
-  "main": "simpleLoadScript.js",
+  "scripts": {
+    "prepare": "npm run build",
+    "makedir": "mkdirp ./es5 && mkdirp ./es5-umd",
+    "browserify": "browserify es6/simpleLoadScript.js -s simpleLoadScript -t babelify -o es5-umd/simpleLoadScript.js",
+    "umd": "npm run makedir && npm run browserify",
+    "es5": "babel es6 --out-dir es5",
+    "es5-watch": "babel es6 --out-dir es5 --watch",
+    "umd-watch": "watch-run -i -p 'es6/simpleLoadScript.js' npm run umd",
+    "build": "npm run umd && npm run es5",
+    "watch": "npm run umd-watch && npm run es5-watch"
+  },
+  "files": [
+    "es6",
+    "es5",
+    "es5-umd"
+  ],
+  "main": "es5/simpleLoadScript.js",
   "author": "Tomek Fijoł <tomekfijol@gmail.com> (http://tomekf.pl/)",
   "license": "MIT",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env": "^1.5.1",
+    "babelify": "^7.3.0",
+    "browserify": "^14.4.0",
+    "mkdirp": "^0.5.1",
+    "watch-run": "^1.2.4"
+  }
 }

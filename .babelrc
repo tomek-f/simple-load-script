@@ -1,0 +1,9 @@
+{
+  "comments": false,
+  "presets": [
+    "env"
+  ],
+  "plugins": [
+    "add-module-exports"
+  ]
+}

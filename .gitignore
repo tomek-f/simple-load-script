@@ -1,5 +1,7 @@
 *.log
 .idea/
 node_modules/
-*.min.js
+es5/
+es5-umd/
 *.tgz
+
