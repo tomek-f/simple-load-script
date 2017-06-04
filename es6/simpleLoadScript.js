@@ -1,5 +1,5 @@
 const scripName = 'simpleLoadScript';
-const ownCallBacksName = `___${ scripName }CallBacks___`;
+const ownCallBacksName = `_$_${ scripName }CallBacks_$_`;
 let counter = 0;
 
 const uid = () => `script-${ counter++ }`;
@@ -20,27 +20,27 @@ const getCallBackObject = () => {
 //   return urlVar ? global.decodeURIComponent(urlVar) : undefined;
 // };
 
-const placementNode = options => {
-  if (options.insertInto) {
-    return document.querySelector(options.insertInto);
+const placementNode = opts => {
+  if (opts.insertInto) {
+    return document.querySelector(opts.insertInto);
   }
-  return options.inBody ? document.body : document.head;
+  return opts.inBody ? document.body : document.head;
 };
 
-const createScript = options => {
+const createScript = opts => {
   const script = document.createElement('script');
 
-  if (options.attrs && typeObj(options.attrs)) {
-    for (const attr of Object.keys(options.attrs)) {
-      script.setAttribute(attr, options.attrs[attr]);
+  if (opts.attrs && typeObj(opts.attrs)) {
+    for (const attr of Object.keys(opts.attrs)) {
+      script.setAttribute(attr, opts.attrs[attr]);
     }
   }
   return script;
 };
 
-const loadCallBack = options => {
-  if (options.callBack && type(options.callBack) === 'function') {
-    options.callBack();
+const loadCallBack = opts => {
+  if (opts.callBack && type(opts.callBack) === 'function') {
+    opts.callBack();
   }
 };
 
@@ -50,12 +50,12 @@ const loadRemoveScript = (removeScript, where, script) => {
   }
 };
 
-const prepareCallBack = options => {
-  const callBackName = options.callBackName;
-  const url = options.url;
+const prepareCallBack = opts => {
+  const callBackName = opts.callBackName;
+  const url = opts.url;
 
   // todo add callback, get callback
-  // options.callBackParamName
+  // opts.callBackParamName
   // no name -> get from url || add own
   // add callback to url -> add, rename, change value
   return [url, callBackName ? window : getCallBackObject(), callBackName || uid()];
@@ -69,48 +69,48 @@ const getScriptDefaults = {
 };
 
 // url arrays
-export default function getScript(options = {}) {
+export default function getScript(opts = {}) {
   if (arguments.length > 1) {
     return Promise.all([...arguments].map(getScript));
   }
 
-  const optionsTypeStr = typeStr(options);
+  const optsTypeStr = typeStr(opts);
 
   return new Promise((resolve, reject) => {
-    if (!(typeObj(options) && options.url || optionsTypeStr)) {
+    if (!(typeObj(opts) && opts.url || optsTypeStr)) {
       reject('Error: object with url or url string needed');
       return;
     }
-    if (optionsTypeStr) {
-      options = { url: options };
+    if (optsTypeStr) {
+      opts = { url: opts };
     }
-    options = Object.assign({}, getScriptDefaults, options);
+    opts = Object.assign({}, getScriptDefaults, opts);
 
-    const where = placementNode(options);
+    const where = placementNode(opts);
 
     if (!where) {
       reject('Error: no DOM element to append script');
       return;
     }
 
-    const script = createScript(options);
-    const removeScript = options.removeScript;
-    const jsonp = options.callBackName || options.jsonp;
+    const script = createScript(opts);
+    const removeScript = opts.removeScript;
+    const jsonp = opts.callBackName || opts.jsonp;
 
     if (!jsonp) {
       script.addEventListener('load', () => {
         loadRemoveScript(removeScript, where, script);
-        loadCallBack(options);
+        loadCallBack(opts);
         resolve(removeScript ? undefined : script);
       });
     } else {
-      const [url, callBackObj, callBackName] = prepareCallBack(options);
+      const [url, callBackObj, callBackName] = prepareCallBack(opts);
 
-      options.url = url;
+      opts.url = url;
       callBackObj[callBackName] = res => {
         delete callBackObj[callBackName];
         loadRemoveScript(removeScript, where, script);
-        loadCallBack(options);
+        loadCallBack(opts);
         resolve(res || removeScript ? undefined : script);
       };
     }
@@ -118,7 +118,7 @@ export default function getScript(options = {}) {
       where.removeChild(script);
       reject('Error: loading script');
     });
-    script.src = options.url;
+    script.src = opts.url;
     where.appendChild(script);
   });
 }
