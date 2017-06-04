@@ -2,7 +2,6 @@
 
 > Very simple promise based script loader and JSONP
 
-* tiny
 * Promise based ([use polyfill if you need](http://caniuse.com/#feat=promises))
 * uses addEventListener (IE9+)
 
