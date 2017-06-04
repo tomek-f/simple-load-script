@@ -1,20 +1,19 @@
 const scripName = 'simpleLoadScript';
-const ownCallBacksName = `_$_${ scripName }CallBacks_$_`;
+const globalCbsName = `_$_${ scripName }CallBacks_$_`;
 let counter = 0;
 const uid = () => `script-${ counter++ }`;
-const type = obj => Object.prototype.toString.call(obj)
-  .slice(8, -1).toLowerCase();
+const type = obj => Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
 const typeObj = obj => type(obj) === 'object';
 const typeStr = obj => type(obj) === 'string';
 const getCallBackObject = () => {
-  window[ownCallBacksName] = !typeObj(window[ownCallBacksName]) ? {} : window[ownCallBacksName];
-  return window[ownCallBacksName];
+  window[globalCbsName] = !typeObj(window[globalCbsName]) ? {} : window[globalCbsName];
+  return window[globalCbsName];
 };
-// const getUrlVar = (where, item) => {
-//   const urlVar = (where.match(new RegExp('[?&]' + item + '=([^&]*)(&?)', 'i')) || [])[1];
-//
-//   return urlVar ? global.decodeURIComponent(urlVar) : undefined;
-// };
+const getUrlVar = (where, item) => {
+  const urlVar = (where.match(new RegExp('[?&]' + item + '=([^&]*)(&?)', 'i')) || [])[1];
+
+  return urlVar ? global.decodeURIComponent(urlVar) : undefined;
+};
 const placementNode = opts => {
   if (opts.insertInto) {
     return document.querySelector(opts.insertInto);
