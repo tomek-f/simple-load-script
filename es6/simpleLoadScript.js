@@ -1,28 +1,24 @@
 const scripName = 'simpleLoadScript';
-const nonGlobalCbsName = `___${ scripName }CallBacks___`;
+const ownCallBacksName = `___${ scripName }CallBacks___`;
+let counter = 0;
 
-// todo if only one case (object, change it to one method)
-const typeCheck = obj => Object.prototype.toString.call(obj)
+const uid = () => `script-${ counter++ }`;
+
+const type = obj => Object.prototype.toString.call(obj)
   .slice(8, -1).toLowerCase();
-const typeCheckObj = obj => typeCheck(obj) === 'object';
+const typeObj = obj => type(obj) === 'object';
+const typeStr = obj => type(obj) === 'string';
 
-// const getCallBackObject = () => {
-//   const globalScript = window[scripName];
-//
-//   if (globalScript) {
-//     globalScript.callBacks = !typeCheckObj(globalScript.callBacks) ? {} || globalScript.callBacks;
-//     return globalScript.callBacks;
-//   } else {
-//     window[nonGlobalCbsName] = !typeCheckObj(window[nonGlobalCbsName]) ? {} || window[nonGlobalCbsName];
-//     return window[nonGlobalCbsName];
-//   }
-// };
+const getCallBackObject = () => {
+  window[ownCallBacksName] = !typeObj(window[ownCallBacksName]) ? {} : window[ownCallBacksName];
+  return window[ownCallBacksName];
+};
 
 // const getUrlVar = (where, item) => {
-//   const urlVar = where.match(new RegExp('[?&]' + item + '=([^&]*)(&?)', 'i'));
+//   const urlVar = (where.match(new RegExp('[?&]' + item + '=([^&]*)(&?)', 'i')) || [])[1];
 //
-//   return urlVar ? global.decodeURIComponent(urlVar[1]) : undefined;
-// }
+//   return urlVar ? global.decodeURIComponent(urlVar) : undefined;
+// };
 
 const placementNode = options => {
   if (options.insertInto) {
@@ -31,35 +27,64 @@ const placementNode = options => {
   return options.inBody ? document.body : document.head;
 };
 
-const scriptAttrs = (options, script) => {
-  if (options.attrs && typeCheckObj(options.attrs)) {
+const createScript = options => {
+  const script = document.createElement('script');
+
+  if (options.attrs && typeObj(options.attrs)) {
     for (const attr of Object.keys(options.attrs)) {
       script.setAttribute(attr, options.attrs[attr]);
     }
   }
-}
+  return script;
+};
 
-// const prepareCallBack = (url, options) => {
-//   let callBackName = options.callBackName;
-//   // const callBackObject = getCallBackObject(); // only for non-user names
-//
-//   // todo add callback, get callback
-//   // options.calbackParamName
-//   // no name -> get from url || add own
-//   // add callback to url -> add, rename, change value
-//   return [url, callBackName];
-// };
+const loadCallBack = options => {
+  if (options.callBack && type(options.callBack) === 'function') {
+    options.callBack();
+  }
+};
 
-export default function getScript(url, options = {}) {
+const loadRemoveScript = (removeScript, where, script) => {
+  if (removeScript) {
+    where.removeChild(script);
+  }
+};
+
+const prepareCallBack = options => {
+  const callBackName = options.callBackName;
+  const url = options.url;
+
+  // todo add callback, get callback
+  // options.callBackParamName
+  // no name -> get from url || add own
+  // add callback to url -> add, rename, change value
+  return [url, callBackName ? window : getCallBackObject(), callBackName || uid()];
+};
+
+const getScriptDefaults = {
+  jsonp: false,
+  callBackParamName: 'callback',
+  removeScript: false,
+  callBackName: null
+};
+
+// url arrays
+export default function getScript(options = {}) {
+  if (arguments.length > 1) {
+    return Promise.all([...arguments].map(getScript));
+  }
+
+  const optionsTypeStr = typeStr(options);
+
   return new Promise((resolve, reject) => {
-    if (typeCheckObj(url)) {
-      options = url;
-      url = options.url;
-    }
-    if (!url) {
-      reject('Error: no script url');
+    if (!(typeObj(options) && options.url || optionsTypeStr)) {
+      reject('Error: object with url or url string needed');
       return;
     }
+    if (optionsTypeStr) {
+      options = { url: options };
+    }
+    options = Object.assign({}, getScriptDefaults, options);
 
     const where = placementNode(options);
 
@@ -68,26 +93,24 @@ export default function getScript(url, options = {}) {
       return;
     }
 
-    const script = document.createElement('script');
+    const script = createScript(options);
     const removeScript = options.removeScript;
-    const useCallBack = options.callBackName || options.useCallBack;
+    const jsonp = options.callBackName || options.jsonp;
 
-    scriptAttrs(options, script);
-    if (!useCallBack) {
+    if (!jsonp) {
       script.addEventListener('load', () => {
-        if (removeScript) {
-          where.removeChild(script);
-        }
+        loadRemoveScript(removeScript, where, script);
+        loadCallBack(options);
         resolve(removeScript ? undefined : script);
       });
     } else {
-      // let callBack;
-      // [callBack, url] = prepareCallBack(url, options);
-      window[options.callBackName] = res => { // todo delete script own callbacks
-        delete window[options.callBackName]; // todo delete script own callbacks
-        if (removeScript) {
-          where.removeChild(script);
-        }
+      const [url, callBackObj, callBackName] = prepareCallBack(options);
+
+      options.url = url;
+      callBackObj[callBackName] = res => {
+        delete callBackObj[callBackName];
+        loadRemoveScript(removeScript, where, script);
+        loadCallBack(options);
         resolve(res || removeScript ? undefined : script);
       };
     }
@@ -95,17 +118,7 @@ export default function getScript(url, options = {}) {
       where.removeChild(script);
       reject('Error: loading script');
     });
-    script.src = url;
+    script.src = options.url;
     where.appendChild(script);
   });
 }
-
-function all() {
-  if (!arguments.length) {
-    return Promise.reject(new Error('No files or no file configs'));
-  }
-  return Promise.all([...arguments].map(e => Array.isArray(e) ? getScript(...e) : getScript(e)));
-}
-
-getScript.all = all;
-
