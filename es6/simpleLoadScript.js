@@ -1,32 +1,26 @@
 const scripName = 'simpleLoadScript';
 const ownCallBacksName = `_$_${ scripName }CallBacks_$_`;
 let counter = 0;
-
 const uid = () => `script-${ counter++ }`;
-
 const type = obj => Object.prototype.toString.call(obj)
   .slice(8, -1).toLowerCase();
 const typeObj = obj => type(obj) === 'object';
 const typeStr = obj => type(obj) === 'string';
-
 const getCallBackObject = () => {
   window[ownCallBacksName] = !typeObj(window[ownCallBacksName]) ? {} : window[ownCallBacksName];
   return window[ownCallBacksName];
 };
-
 // const getUrlVar = (where, item) => {
 //   const urlVar = (where.match(new RegExp('[?&]' + item + '=([^&]*)(&?)', 'i')) || [])[1];
 //
 //   return urlVar ? global.decodeURIComponent(urlVar) : undefined;
 // };
-
 const placementNode = opts => {
   if (opts.insertInto) {
     return document.querySelector(opts.insertInto);
   }
   return opts.inBody ? document.body : document.head;
 };
-
 const createScript = opts => {
   const script = document.createElement('script');
 
@@ -37,19 +31,16 @@ const createScript = opts => {
   }
   return script;
 };
-
 const loadCallBack = opts => {
   if (opts.callBack && type(opts.callBack) === 'function') {
     opts.callBack();
   }
 };
-
 const loadRemoveScript = (removeScript, where, script) => {
   if (removeScript) {
     where.removeChild(script);
   }
 };
-
 const prepareCallBack = opts => {
   const callBackName = opts.callBackName;
   const url = opts.url;
@@ -60,7 +51,6 @@ const prepareCallBack = opts => {
   // add callback to url -> add, rename, change value
   return [url, callBackName ? window : getCallBackObject(), callBackName || uid()];
 };
-
 const getScriptDefaults = {
   jsonp: false,
   callBackParamName: 'callback',
@@ -68,7 +58,7 @@ const getScriptDefaults = {
   callBackName: null
 };
 
-// url arrays
+// todo url arrays
 export default function getScript(opts = {}) {
   if (arguments.length > 1) {
     return Promise.all([...arguments].map(getScript));
