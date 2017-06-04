@@ -39,16 +39,16 @@ const scriptAttrs = (options, script) => {
   }
 }
 
-const prepareCallBack = (url, options) => {
-  let callBackName = options.callBackName;
-  // const callBackObject = getCallBackObject(); // only for non-user names
-
-  // todo add callback, get callback
-  // options.calbackParamName
-  // no name -> get from url || add own
-  // add callback to url -> add, rename, change value
-  return [url, callBackName];
-};
+// const prepareCallBack = (url, options) => {
+//   let callBackName = options.callBackName;
+//   // const callBackObject = getCallBackObject(); // only for non-user names
+//
+//   // todo add callback, get callback
+//   // options.calbackParamName
+//   // no name -> get from url || add own
+//   // add callback to url -> add, rename, change value
+//   return [url, callBackName];
+// };
 
 export default function getScript(url, options = {}) {
   return new Promise((resolve, reject) => {
@@ -81,10 +81,10 @@ export default function getScript(url, options = {}) {
         resolve(removeScript ? undefined : script);
       });
     } else {
-      let callBack;
-      [callBack, url] = prepareCallBack(url, options);
-      window[callBackName] = res => { // todo delete script own callbacks
-        delete window[callBackName]; // todo delete script own callbacks
+      // let callBack;
+      // [callBack, url] = prepareCallBack(url, options);
+      window[options.callBackName] = res => { // todo delete script own callbacks
+        delete window[options.callBackName]; // todo delete script own callbacks
         if (removeScript) {
           where.removeChild(script);
         }
