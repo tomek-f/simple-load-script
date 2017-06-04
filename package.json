@@ -20,7 +20,7 @@
     "es5-watch": "babel es6 --out-dir es5 --watch",
     "umd-watch": "watch-run -i -p 'es6/simpleLoadScript.js' npm run umd",
     "build": "npm run umd && npm run es5",
-    "watch": "npm run umd-watch && npm run es5-watch"
+    "watch": "npm run umd-watch & npm run es5-watch"
   },
   "files": [
     "es6",
@@ -38,6 +38,9 @@
     "babelify": "^7.3.0",
     "browserify": "^14.4.0",
     "mkdirp": "^0.5.1",
-    "watch-run": "^1.2.4"
+    "watch-run": "^1.2.5"
+  },
+  "dependencies": {
+    "querystring-es3": "^0.2.1"
   }
 }
