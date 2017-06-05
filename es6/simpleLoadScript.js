@@ -12,7 +12,7 @@ const getCallBackObject = () => {
 const getUrlVar = (where, item) => {
   const urlVar = (where.match(new RegExp('[?&]' + item + '=([^&]*)(&?)', 'i')) || [])[1];
 
-  return urlVar ? global.decodeURIComponent(urlVar) : undefined;
+  return urlVar ? global.decodeURIComponent(urlVar) : urlVar;
 };
 const placementNode = opts => {
   if (opts.insertInto) {
