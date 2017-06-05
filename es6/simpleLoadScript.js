@@ -1,3 +1,4 @@
+const glob = window;
 const scripName = 'simpleLoadScript';
 const globalCbsName = `_$_${ scripName }CallBacks_$_`;
 let counter = 0;
@@ -6,14 +7,15 @@ const type = obj => Object.prototype.toString.call(obj).slice(8, -1).toLowerCase
 const typeObj = obj => type(obj) === 'object';
 const typeStr = obj => type(obj) === 'string';
 const getCallBackObject = () => {
-  window[globalCbsName] = !typeObj(window[globalCbsName]) ? {} : window[globalCbsName];
-  return window[globalCbsName];
+  glob[globalCbsName] = !typeObj(glob[globalCbsName]) ? {} : glob[globalCbsName];
+  return glob[globalCbsName];
 };
-const getUrlVar = (where, item) => {
+const getUrlVar = (where = glob.location.search, item = '') => {
   const urlVar = (where.match(new RegExp('[?&]' + item + '=([^&]*)(&?)', 'i')) || [])[1];
 
   return urlVar ? global.decodeURIComponent(urlVar) : urlVar;
-};
+  // or return urlVar && global.decodeURIComponent(urlVar) || urlVar;
+};;
 const placementNode = opts => {
   if (opts.insertInto) {
     return document.querySelector(opts.insertInto);
@@ -48,7 +50,7 @@ const prepareCallBack = opts => {
   // opts.callBackParamName
   // no name -> get from url || add own
   // add callback to url -> add, rename, change value
-  return [url, callBackName ? window : getCallBackObject(), callBackName || uid()];
+  return [url, callBackName ? glob : getCallBackObject(), callBackName || uid()];
 };
 const getScriptDefaults = {
   jsonp: false,
