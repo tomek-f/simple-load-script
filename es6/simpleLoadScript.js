@@ -10,11 +10,11 @@ const getCallBackObject = () => {
   glob[globalCbsName] = !typeObj(glob[globalCbsName]) ? {} : glob[globalCbsName];
   return glob[globalCbsName];
 };
-const getUrlVar = (where = glob.location.search, item = '') => {
-  const urlVar = (where.match(new RegExp('[?&]' + item + '=([^&]*)(&?)', 'i')) || [])[1];
+const getUrlVar = (item = '') => {
+  const urlVar = (glob.location.search.match(new RegExp('[?&]' + item + '=([^&]*)(&?)', 'i')) || [])[1];
 
-  return urlVar ? global.decodeURIComponent(urlVar) : urlVar;
-  // or return urlVar && global.decodeURIComponent(urlVar) || urlVar;
+  return urlVar ? glob.decodeURIComponent(urlVar) : urlVar;
+  // or return urlVar && glob.decodeURIComponent(urlVar) || urlVar;
 };;
 const placementNode = opts => {
   if (opts.insertInto) {
