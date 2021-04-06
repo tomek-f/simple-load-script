@@ -10,11 +10,6 @@ const getCallBackObject = () => {
   glob[globalCbsName] = !typeObj(glob[globalCbsName]) ? {} : glob[globalCbsName];
   return glob[globalCbsName];
 };
-const getUrlVar = (item = '') => {
-  const urlVar = (glob.location.search.match(new RegExp('[?&]' + item + '=([^&]*)(&?)', 'i')) || [])[1];
-
-  return urlVar ? glob.decodeURIComponent(urlVar) : urlVar;
-};
 const placementNode = opts => {
   if (opts.insertInto) {
     return document.querySelector(opts.insertInto);

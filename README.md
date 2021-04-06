@@ -11,10 +11,23 @@
 npm install --save simple-load-script
 ```
 
+## Import
+
+```js
+// es5 CommonJS
+const loadScript = require('simple-load-script');
+
+// es6
+const loadScript = require('simple-load-script/es6/simpleLoadScript');
+
+// es5-umd
+const loadScript = require('simple-load-script/es5-umd/simpleLoadScript');
+```
+
 ## Usage
 
 ```js
-var loadScript = require('simple-load-script');
+import loadScript from 'simple-load-script';
 
 loadScript('//code.jquery.com/jquery-2.2.3.js')
   .then(function(scriptRef) {
@@ -26,7 +39,17 @@ loadScript('//code.jquery.com/jquery-2.2.3.js')
 ```
 
 ```js
-var loadScript = require('simple-load-script');
+import loadScript from 'simple-load-script';
+
+try {
+  /* const scriptRef = */ loadScript('//code.jquery.com/jquery-2.2.3.js');
+} catch (err) {
+  console.log(err);
+}
+```
+
+```js
+import loadScript from 'simple-load-script';
 
 loadScript('//code.jquery.com/jquery-2.2.3.js', {
   inBody: true
@@ -40,7 +63,7 @@ loadScript('//code.jquery.com/jquery-2.2.3.js', {
 ```
 
 ```js
-var loadScript = require('simple-load-script');
+import loadScript from 'simple-load-script';
 
 loadScript({
   url: '//code.jquery.com/jquery-2.2.3.js',
@@ -57,7 +80,7 @@ loadScript({
 Google Maps API
 
 ```js
-var loadScript = require('simple-load-script');
+import loadScript from 'simple-load-script';
 
 loadScript({
   url: '//maps.googleapis.com/maps/api/js?&callback=gmapiready',
@@ -91,7 +114,7 @@ loadScripts('//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo', {
 Load more scripts (Promise.all) - urls
 
 ```js
-var loadScripts = require('simple-load-script').all;
+import loadScript from 'simple-load-script';
 
 loadScripts(
   '//example.com/test1.js',
@@ -109,7 +132,7 @@ loadScripts(
 Load more scripts (Promise.all) - objects and urls, callback must be unique names
 
 ```js
-var loadScripts = require('simple-load-script').all;
+import loadScript from 'simple-load-script';
 
 loadScripts(
   {
@@ -154,48 +177,6 @@ loadScripts(
 
 * then: resource (JSONP - options.callBackName) script reference in DOM or undefined (options.callBackName, options.removeScript)
 * catch: error message
-
-## UMD (CommonJS, AMD, global, ES6)
-
-### CommonJS
-
-```js
-var loadScript = require('simple-load-script');
-
-loadScript(/**/);
-```
-
-### AMD
-
-```js
-define(['simple-load-script'], function(loadScript) {
-  loadScript(/**/);
-});
-```
-
-### Global (in window object)
-
-```js
-simpleLoadScript(/**/);
-```
-
-### ES6 (ES2015) modules
-
-* loading ES5 module
-
-```js
-import loadScript from 'simple-load-script';
-
-loadScript(/**/);
-```
-
-## Promise polyfill
-
-Good example
-
-```bash
-npm install es6-promise --save
-```
 
 ## Changelog
 

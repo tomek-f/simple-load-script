@@ -1,8 +1,8 @@
 # changelog
 
-## x.x.x
-* other deps
-* deps (npm audit fix)
+## 1.0.3
+* update readme
+* update dev deps
 
 ## 1.0.2
 * added `insertInto` config option
