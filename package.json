@@ -33,11 +33,11 @@
   "readmeFilename": "README.md",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-env": "^1.5.1",
+    "babel-plugin-add-module-exports": "^1.0.4",
+    "babel-preset-env": "^1.7.0",
     "babelify": "^7.3.0",
     "browserify": "^14.4.0",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.4",
     "watch-run": "^1.2.5"
   }
 }

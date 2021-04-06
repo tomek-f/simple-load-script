@@ -1,6 +1,7 @@
 # changelog
 
 ## x.x.x
+* other deps
 * deps (npm audit fix)
 
 ## 1.0.2
