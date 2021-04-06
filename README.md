@@ -129,7 +129,7 @@ loadScripts(
   });
 ```
 
-Load more scripts (Promise.all) - objects and urls, callback must be unique names
+Load more scripts (Promise.all) - objects and urls, callBackNames must be unique names
 
 ```js
 import loadScript from 'simple-load-script';

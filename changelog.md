@@ -1,6 +1,7 @@
 # changelog
 
 ## 1.0.3
+* update 2do
 * update readme
 * update dev deps
 
