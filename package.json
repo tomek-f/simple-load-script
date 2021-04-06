@@ -21,7 +21,7 @@
     "dist"
   ],
   "main": "dist/index.umd.js",
-  "module": "src/index.js",
+  "module": "dist/index.es.js",
   "author": "Tomek Fijoł <tomekfijol@gmail.com> (http://tomekf.pl/)",
   "license": "MIT",
   "readmeFilename": "README.md",

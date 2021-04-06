@@ -13,6 +13,7 @@ module.exports = {
   ],
   output: [
     { file: './dist/index.cjs.js', format: 'cjs', exports: 'default' },
+    { file: './dist/index.es.js', format: 'es' },
     { file: './dist/index.umd.js', format: 'umd', name: 'simpleLoadScript' }
   ],
   watch: {
