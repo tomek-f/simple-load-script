@@ -1,5 +1,7 @@
 # 2do
 
+* [ ] remove getUrlVar
+* [ ] fix readme (.all)
 * [ ] remove script after load (JSONP)
 * [ ] timeouts
 * [ ] JSONP example
