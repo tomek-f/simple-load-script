@@ -17,7 +17,6 @@
     "watch": "yarn build -w"
   },
   "files": [
-    "src",
     "dist"
   ],
   "main": "dist/index.umd.js",
@@ -27,6 +26,7 @@
   "readmeFilename": "README.md",
   "devDependencies": {
     "@babel/core": "^7.13.14",
+    "@babel/preset-env": "^7.13.12",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^18.0.0",
     "rollup": "^2.44.0",
