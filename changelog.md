@@ -1,5 +1,11 @@
 # changelog
 
+## 2.0.0
+* code split to files
+* new deps: rollup
+* remove deps
+* readme
+
 ## 1.0.3
 * update 2do
 * update readme

@@ -1,36 +1,24 @@
-const glob = window;
+import createScript from './createScript';
+import getGlobalThis from './getGlobalThis';
+import isType from './isType';
+import placementNode from './placementNode';
+import uid from './uid';
+
+const globThis = getGlobalThis;
 const scripName = 'simpleLoadScript';
 const globalCbsName = `_$_${ scripName }CallBacks_$_`;
-let counter = 0;
-const uid = () => `script-${ counter++ }`;
-const type = obj => Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
-const typeObj = obj => type(obj) === 'object';
-const typeStr = obj => type(obj) === 'string';
-const getCallBackObject = () => {
-  glob[globalCbsName] = !typeObj(glob[globalCbsName]) ? {} : glob[globalCbsName];
-  return glob[globalCbsName];
-};
-const placementNode = opts => {
-  if (opts.insertInto) {
-    return document.querySelector(opts.insertInto);
-  }
-  return opts.inBody ? document.body : document.head;
-};
-const createScript = opts => {
-  const script = document.createElement('script');
 
-  if (opts.attrs && typeObj(opts.attrs)) {
-    for (const attr of Object.keys(opts.attrs)) {
-      script.setAttribute(attr, opts.attrs[attr]);
-    }
-  }
-  return script;
+const getCallBackObject = () => {
+  globThis[globalCbsName] = !isType(globThis[globalCbsName], Object) ? {} : globThis[globalCbsName];
+  return globThis[globalCbsName];
 };
+
 const loadCallBack = opts => {
-  if (opts.callBack && type(opts.callBack) === 'function') {
+  if (opts.callBack && isType(opts.callBack, Function)) {
     opts.callBack();
   }
 };
+
 const loadRemoveScript = (removeScript, where, script) => {
   if (removeScript) {
     where.removeChild(script);
@@ -44,7 +32,7 @@ const prepareCallBack = opts => {
   // opts.callBackParamName
   // no name -> get from url || add own
   // add callback to url -> add, rename, change value
-  return [url, callBackName ? glob : getCallBackObject(), callBackName || uid()];
+  return [url, callBackName ? globThis : getCallBackObject(), callBackName || uid()];
 };
 const getScriptDefaults = {
   jsonp: false,
@@ -59,10 +47,10 @@ export default function getScript(opts = {}) {
     return Promise.all([...arguments].map(getScript));
   }
 
-  const optsTypeStr = typeStr(opts);
+  const optsTypeStr = isType(opts, String);
 
   return new Promise((resolve, reject) => {
-    if (!(typeObj(opts) && opts.url || optsTypeStr)) {
+    if (!(isType(opts, Object) && opts.url || optsTypeStr)) {
       reject('Error: object with url or url string needed');
       return;
     }

@@ -1,7 +1,6 @@
 *.log
 .idea/
 node_modules/
-es5/
-es5-umd/
+dist/
 *.tgz
 
