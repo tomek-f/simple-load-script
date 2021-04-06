@@ -39,6 +39,5 @@
     "browserify": "^14.4.0",
     "mkdirp": "^0.5.1",
     "watch-run": "^1.2.5"
-  },
-  "dependencies": {}
+  }
 }
