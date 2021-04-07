@@ -37,7 +37,7 @@ export default function simpleLoadScript(options = {}) {
       });
     } else {
       if (!isType(callback, String) || new URL(url).searchParams.get('callback') !== callback) {
-        reject(new Error(`'options.callback' must be a string (equal to 'callback' get param).`));
+        reject(new Error(`'options.callback' must be a string (equal to 'callback' get param in url).`));
         return;
       }
 
