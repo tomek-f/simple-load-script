@@ -1,5 +1,6 @@
 const defaultOptions = {
   callback: null,
+  callbackURLParamName: 'callback',
   placement: document.head,
   removeScript: false,
   runOriginalCallback: false,

@@ -15,45 +15,44 @@ export default function simpleLoadScript(options = {}) {
       return;
     }
 
-    const {
-      callback,
-      placement,
-      removeScript,
-      runOriginalCallback,
-      scriptAttr,
-      url,
-    } = options;
+    const {callback, callbackURLParamName} = options;
 
-    if (placement.nodeType !== Node.ELEMENT_NODE) {
+    if (options.placement.nodeType !== Node.ELEMENT_NODE) {
       reject(new Error(`'options.placement' must be a valid Node element.`));
       return;
     }
 
-    const script = createScript(scriptAttr);
+    const script = createScript(options.scriptAttr);
 
     if (!callback) {
       script.addEventListener('load', () => {
         resolve(script);
       });
     } else {
-      if (!isType(callback, String) || new URL(url).searchParams.get('callback') !== callback) {
-        reject(new Error(`'options.callback' must be a string (equal to 'callback' get param in url).`));
+      const callbackURLParamValue = new URL(options.url).searchParams.get(callbackURLParamName);
+      if (!callbackURLParamName || !isType(callbackURLParamName, String) || !callbackURLParamValue) {
+        reject(new Error(`'options.callbackURLParamName' must be a string (equal to get param name in url).`));
+        return;
+      }
+
+      if (!isType(callback, String) || callbackURLParamValue !== callback) {
+        reject(new Error(`'options.callback' must be a string (equal to '${callbackURLParamValue}' in url).`));
         return;
       }
 
       const callbackOrig = globThis[callback];
 
-      if (runOriginalCallback && (!callbackOrig || !isType(callbackOrig, Function))) {
+      if (options.runOriginalCallback && (!callbackOrig || !isType(callbackOrig, Function))) {
         reject(new Error(`To run original callback, '${callback}' must be a global function.`));
         return;
       }
 
       globThis[callback] = (resource) => {
         delete globThis[callback];
-        if (removeScript) {
+        if (options.removeScript) {
           script.remove();
         }
-        if (runOriginalCallback) {
+        if (options.runOriginalCallback) {
           resolve(callbackOrig(resource));
         } else {
           resolve(resource);
@@ -61,11 +60,8 @@ export default function simpleLoadScript(options = {}) {
       };
     }
 
-    script.addEventListener('error', (ev) => {
-      placement.remove(script);
-      reject(ev);
-    });
-    script.src = url;
-    placement.append(script);
+    script.addEventListener('error', reject);
+    script.src = options.url;
+    options.placement.append(script);
   });
 }
