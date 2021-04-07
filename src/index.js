@@ -11,7 +11,7 @@ export default function simpleLoadScript(options = {}) {
     } else if (isType(options, Object) && options.url) {
       options = Object.assign({}, defaultOptions, options);
     } else {
-      reject(new Error('Pass an url string or an object with an url param'));
+      reject(new Error('Pass an url string or an object with url param'));
       return;
     }
 
@@ -25,7 +25,7 @@ export default function simpleLoadScript(options = {}) {
     } = options;
 
     if (placement.nodeType !== Node.ELEMENT_NODE) {
-      reject(new Error('options.placement must be a valid Node element.'));
+      reject(new Error(`'options.placement' must be a valid Node element.`));
       return;
     }
 
@@ -37,14 +37,14 @@ export default function simpleLoadScript(options = {}) {
       });
     } else {
       if (!isType(callback, String) || new URL(url).searchParams.get('callback') !== callback) {
-        reject(new Error(`options.callback must be a string (equal to url get param).`));
+        reject(new Error(`'options.callback' must be a string (equal to 'callback' get param).`));
         return;
       }
 
       const callbackOrig = globThis[callback];
 
       if (runOriginalCallback && (!callbackOrig || !isType(callbackOrig, Function))) {
-        reject(new Error(`To run original callback, '${callback}' string must be a name of a global function.`));
+        reject(new Error(`To run original callback, '${callback}' must be a global function.`));
         return;
       }
 
