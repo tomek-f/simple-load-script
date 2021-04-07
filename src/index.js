@@ -1,97 +1,71 @@
 import createScript from './createScript';
-import getGlobalThis from './getGlobalThis';
+import defaultOptions from './defaultOptions';
 import isType from './isType';
-import placementNode from './placementNode';
-import uid from './uid';
 
-const globThis = getGlobalThis;
-const scripName = 'simpleLoadScript';
-const globalCbsName = `_$_${ scripName }CallBacks_$_`;
+const globThis = typeof globalThis !== 'undefined' ? globalThis : window;
 
-const getCallBackObject = () => {
-  globThis[globalCbsName] = !isType(globThis[globalCbsName], Object) ? {} : globThis[globalCbsName];
-  return globThis[globalCbsName];
-};
-
-const loadCallBack = opts => {
-  if (opts.callBack && isType(opts.callBack, Function)) {
-    opts.callBack();
-  }
-};
-
-const loadRemoveScript = (removeScript, where, script) => {
-  if (removeScript) {
-    where.removeChild(script);
-  }
-};
-const prepareCallBack = opts => {
-  const callBackName = opts.callBackName;
-  const url = opts.url;
-
-  // todo add callback, get callback
-  // opts.callBackParamName
-  // no name -> get from url || add own
-  // add callback to url -> add, rename, change value
-  return [url, callBackName ? globThis : getCallBackObject(), callBackName || uid()];
-};
-const getScriptDefaults = {
-  jsonp: false,
-  callBackParamName: 'callback',
-  removeScript: false,
-  callBackName: null
-};
-
-// todo url arrays
-export default function getScript(opts = {}) {
-  if (arguments.length > 1) {
-    return Promise.all([...arguments].map(getScript));
-  }
-
-  const optsTypeStr = isType(opts, String);
-
+export default function simpleLoadScript(options = {}) {
   return new Promise((resolve, reject) => {
-    if (!(isType(opts, Object) && opts.url || optsTypeStr)) {
-      reject('Error: object with url or url string needed');
-      return;
-    }
-    if (optsTypeStr) {
-      opts = { url: opts };
-    }
-    opts = Object.assign({}, getScriptDefaults, opts);
-
-    const where = placementNode(opts);
-
-    if (!where) {
-      reject('Error: no DOM element to append script');
+    if (isType(options, String)) {
+      options = Object.assign({}, defaultOptions, {url: options});
+    } else if (isType(options, Object) && options.url) {
+      options = Object.assign({}, defaultOptions, options);
+    } else {
+      reject(new Error('Pass an url string or an object with an url param'));
       return;
     }
 
-    const script = createScript(opts);
-    const removeScript = opts.removeScript;
-    const jsonp = opts.callBackName || opts.jsonp;
+    const {
+      callback,
+      placement,
+      removeScript,
+      runOriginalCallback,
+      scriptAttr,
+      url,
+    } = options;
 
-    if (!jsonp) {
+    if (placement.nodeType !== Node.ELEMENT_NODE) {
+      reject(new Error('options.placement must be a valid Node element.'));
+      return;
+    }
+
+    const script = createScript(scriptAttr);
+
+    if (!callback) {
       script.addEventListener('load', () => {
-        loadRemoveScript(removeScript, where, script);
-        loadCallBack(opts);
-        resolve(removeScript ? undefined : script);
+        resolve(script);
       });
     } else {
-      const [url, callBackObj, callBackName] = prepareCallBack(opts);
+      if (!isType(callback, String) || new URL(url).searchParams.get('callback') !== callback) {
+        reject(new Error(`options.callback must be a string (equal to url get param).`));
+        return;
+      }
 
-      opts.url = url;
-      callBackObj[callBackName] = res => {
-        delete callBackObj[callBackName];
-        loadRemoveScript(removeScript, where, script);
-        loadCallBack(opts);
-        resolve(res || removeScript ? undefined : script);
+      const callbackOrig = globThis[callback];
+
+      if (runOriginalCallback && (!callbackOrig || !isType(callbackOrig, Function))) {
+        reject(new Error(`To run original callback, '${callback}' string must be a name of a global function.`));
+        return;
+      }
+
+      globThis[callback] = (resource) => {
+        delete globThis[callback];
+        if (removeScript) {
+          script.remove();
+        }
+        if (runOriginalCallback) {
+          resolve(callbackOrig(resource));
+        } else {
+          resolve(resource);
+        }
       };
     }
-    script.addEventListener('error', () => {
-      where.removeChild(script);
-      reject('Error: loading script');
+
+    script.addEventListener('error', (ev) => {
+      placement.remove(script);
+      reject(ev);
     });
-    script.src = opts.url;
-    where.appendChild(script);
+    script.src = url;
+    placement.append(script);
   });
 }

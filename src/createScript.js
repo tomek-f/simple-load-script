@@ -1,9 +1,11 @@
-const createScript = opts => {
+import isType from './isType';
+
+const createScript = (scriptAttr) => {
   const script = document.createElement('script');
 
-  if (opts.attrs && typeObj(opts.attrs)) {
-    for (const attr of Object.keys(opts.attrs)) { // todo entries?
-      script.setAttribute(attr, opts.attrs[attr]);
+  if (isType(scriptAttr, Object)) {
+    for (const [key, value] of Object.entries(scriptAttr)) {
+      script.setAttribute(key, value);
     }
   }
 

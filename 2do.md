@@ -11,15 +11,17 @@
 * [x] use rollup instead of browserify
 * [x] main and module in package.json
 * [x] babel preset env
-* [ ] split code
+* [x] split code
+* [ ] eslint
+* [ ] better eslint
 * [ ] readme adresing changes
 * [ ] changelog
-* [ ] drop arguments, just string | object + fix current behavior
+* [x] drop arguments, just string | object + fix current behavior
 * [ ] add examples showing Promise.all Promise.allSettled
 * [ ] JSONP proper examples
 * [ ] url to broken version's readme or breaking changes in changelog
-* [ ] return data in JSONP?
-* [ ] remove script after load (JSONP) ?
+* [x] return data in JSONP?
+* [x] remove script after load (JSONP)
 
 ## 2.x.x
 * [ ] typescript
