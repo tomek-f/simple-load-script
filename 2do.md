@@ -12,12 +12,12 @@
 * [x] main and module in package.json
 * [x] babel preset env
 * [x] split code
-* [ ] eslint
+* [x] eslint
 * [ ] better eslint
-* [ ] readme adresing changes
+* [ ] readme adressing changes
 * [ ] changelog
 * [x] drop arguments, just string | object + fix current behavior
-* [ ] add examples showing Promise.all Promise.allSettled
+* [ ] add examples showing Promise.all and Promise.allSettled
 * [ ] JSONP proper examples
 * [ ] url to broken version's readme or breaking changes in changelog
 * [x] return data in JSONP?
