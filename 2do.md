@@ -1,6 +1,16 @@
 # 2do
 
 ## 2.0.0
+* [ ] revert current script changes to `v1.0.3`
+* [ ] typescript
+* [ ] modern exports
+* [ ] ? timeouts
+* [ ] tests
+* [ ] test browser cache
+* [ ] prettier
+* [ ] some changes from `old 2.0.0`
+
+## old 2.0.0
 
 * [x] fix readme (.all)
 * [x] UMD
@@ -23,9 +33,3 @@
 * [ ] add examples showing Promise.all and Promise.allSettled
 * [ ] JSONP proper examples
 * [ ] url to broken version's readme or breaking changes in changelog
-
-## x.x.x
-* [ ] typescript
-* [ ] timeouts?
-* [ ] tests
-* [ ] test browser cache
