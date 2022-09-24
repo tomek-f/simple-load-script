@@ -14,7 +14,9 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "rollup --c ./rollup.config.js",
-    "watch": "yarn build -w"
+    "watch": "yarn build -w",
+    "format-check": "prettier --check .",
+    "format-write": "prettier --write ."
   },
   "files": [
     "dist"
@@ -25,13 +27,14 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "@babel/core": "^7.13.14",
-    "@babel/preset-env": "^7.13.12",
-    "@rollup/plugin-babel": "^5.3.0",
-    "@rollup/plugin-commonjs": "^18.0.0",
-    "eslint": "^7.23.0",
+    "@babel/core": "^7.19.1",
+    "@babel/preset-env": "^7.19.1",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "eslint": "^8.24.0",
     "eslint-config-google": "^0.14.0",
-    "rollup": "^2.44.0",
+    "prettier": "^2.7.1",
+    "rollup": "^2.79.1",
     "rollup-plugin-terser": "^7.0.2"
   }
 }

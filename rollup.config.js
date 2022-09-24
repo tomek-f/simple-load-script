@@ -1,6 +1,6 @@
 const commonJs = require('@rollup/plugin-commonjs');
-import {babel} from '@rollup/plugin-babel';
-const {terser} = require('rollup-plugin-terser');
+import { babel } from '@rollup/plugin-babel';
+const { terser } = require('rollup-plugin-terser');
 
 module.exports = {
   input: './src/index.js',
@@ -12,9 +12,9 @@ module.exports = {
     }),
   ],
   output: [
-    {file: './dist/index.cjs.js', format: 'cjs', exports: 'default'},
-    {file: './dist/index.es.js', format: 'es'},
-    {file: './dist/index.umd.js', format: 'umd', name: 'simpleLoadScript'},
+    { file: './dist/index.cjs.js', format: 'cjs', exports: 'default' },
+    { file: './dist/index.es.js', format: 'es' },
+    { file: './dist/index.umd.js', format: 'umd', name: 'simpleLoadScript' },
   ],
   watch: {
     include: './src/**',
