@@ -13,6 +13,8 @@
   ],
   "scripts": {
     "prepare": "npm run build",
+    "test": "eslint --ext .ts . && npm run format-check",
+    "prepublishOnly": "npm test",
     "build": "rollup --c ./rollup.config.js",
     "watch": "yarn build -w",
     "format-check": "prettier --check ./src/**/*.ts",
