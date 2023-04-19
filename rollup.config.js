@@ -1,10 +1,12 @@
 const commonJs = require('@rollup/plugin-commonjs');
 import { babel } from '@rollup/plugin-babel';
+import typescript from '@rollup/plugin-typescript';
 const { terser } = require('rollup-plugin-terser');
 
 module.exports = {
-  input: './src/index.js',
+  input: './src/index.ts',
   plugins: [
+    typescript(),
     commonJs(),
     terser(),
     babel({
