@@ -27,6 +27,12 @@
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
   "author": "Tomek Fijoł <tomekfijol@gmail.com> (http://tomekf.pl/)",
+  "contributors": [
+    {
+      "name": "Martin Jurča",
+      "email": "martin.jurca@firma.seznam.cz"
+    }
+  ],
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
