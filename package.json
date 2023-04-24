@@ -12,9 +12,10 @@
     "callback"
   ],
   "scripts": {
-    "prepare": "npm run build",
-    "test": "eslint --ext .ts . && npm run format-check",
+    "prepare": "npm run test && npm run build",
+    "test": "eslint --ext .ts . && npm run format-check && npm run check-types",
     "prepublishOnly": "npm test",
+    "check-types": "tsc",
     "build": "rollup --c ./rollup.config.js",
     "watch": "npm run build -- -w",
     "format-check": "prettier --check ./src/**/*.ts",
@@ -36,10 +37,8 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "@babel/core": "^7.19.3",
-    "@babel/preset-env": "^7.19.3",
-    "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-terser": "^0.4.1",
     "@rollup/plugin-typescript": "^11.1.0",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
@@ -47,7 +46,6 @@
     "eslint-config-google": "^0.14.0",
     "prettier": "^2.7.1",
     "rollup": "^2.79.1",
-    "rollup-plugin-terser": "^7.0.2",
     "typescript": "^5.0.4"
   }
 }

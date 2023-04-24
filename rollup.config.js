@@ -1,18 +1,10 @@
-const commonJs = require('@rollup/plugin-commonjs');
-import { babel } from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
-const { terser } = require('rollup-plugin-terser');
+import terser from '@rollup/plugin-terser';
 
-module.exports = {
+export default {
   input: './src/index.ts',
-  plugins: [
-    typescript(),
-    commonJs(),
-    terser(),
-    babel({
-      babelHelpers: 'bundled',
-    }),
-  ],
+  plugins: [commonjs(), terser(), typescript()],
   output: [
     { file: './dist/index.cjs.js', format: 'cjs', exports: 'default' },
     { file: './dist/index.es.js', format: 'es' },

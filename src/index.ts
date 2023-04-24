@@ -1,5 +1,31 @@
-import createScript from './createScript.js';
-import defaultOptions, { Options } from './defaultOptions.js';
+function createScript(scriptAttr: Record<string, string>): HTMLScriptElement {
+  const script = document.createElement('script');
+
+  for (const attr of Object.keys(scriptAttr)) {
+    script.setAttribute(attr, scriptAttr[attr]);
+  }
+
+  return script;
+}
+
+export interface Options {
+  callback: string | null;
+  callbackURLParamName: string;
+  placement: ParentNode;
+  removeScript: boolean;
+  runOriginalCallback: boolean;
+  scriptAttr: Record<string, string>;
+  url: string;
+}
+
+const defaultOptions = {
+  callback: null,
+  callbackURLParamName: 'callback',
+  placement: document.head,
+  removeScript: false,
+  runOriginalCallback: false,
+  scriptAttr: {},
+} as Omit<Options, 'url'>;
 
 const globThis = typeof globalThis !== 'undefined' ? globalThis : window;
 
@@ -31,6 +57,8 @@ export default function simpleLoadScript(
         resolve(script);
       });
     } else {
+      // eslint-disable-next-line max-len
+      // TODO revert URL https://github.com/tomek-f/simple-load-script/tree/16b10a058804bae8ef7cecedbb779587a1f283b9
       // JSONP
       const callbackURLParamValue = new URL(fullOptions.url).searchParams.get(
         callbackURLParamName,
