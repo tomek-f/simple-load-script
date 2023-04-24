@@ -1,11 +1,10 @@
 # changelog
 
-## 2.0.0
+## 1.1.0
 
-- code split to files
-- new deps: rollup
-- remove deps
-- readme
+- TS
+- rollup
+- deps
 
 ## 1.0.3
 
