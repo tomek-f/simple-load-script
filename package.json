@@ -32,6 +32,10 @@
     {
       "name": "Martin Jurča",
       "email": "martin.jurca@firma.seznam.cz"
+    },
+    {
+      "name": "Tom Conroy",
+      "url": "https://github.com/tconroy"
     }
   ],
   "license": "MIT",
