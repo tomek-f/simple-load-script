@@ -13,13 +13,14 @@
   ],
   "scripts": {
     "prepare": "npm run test && npm run build",
-    "test": "eslint --ext .ts . && npm run format-check && npm run check-types",
+    "test": "npm run lint && npm run format-check && npm run check-types",
     "prepublishOnly": "npm test",
-    "check-types": "tsc",
     "build": "rollup --c ./rollup.config.mjs",
     "watch": "npm run build -- -w",
+    "lint": "eslint --ext .ts . ",
     "format-check": "prettier --check ./src/**/*.ts",
-    "format-write": "prettier --write ./src/**/*.ts"
+    "format-write": "prettier --write ./src/**/*.ts",
+    "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
   },
   "files": [
     "dist"
