@@ -87,7 +87,7 @@ export default function getScript(opts = {}) {
     const jsonp = opts.callBackName || opts.jsonp;
     /* breaks on loadScript({
   url: '//maps.googleapis.com/maps/api/js?&callback=gmapiready',
-  callBackName1: 'gmapiready'
+  callBackName: 'gmapiready'
 }) */
 
     if (!jsonp) {
