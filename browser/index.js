@@ -1,3 +1,19 @@
+const root = document.createElement('div')
+const button = document.createElement('button')
+button.id = 'btn'
+
+let count = 0
+
+button.textContent = `Clicked ${count} time(s)`
+
+button.onclick = () => {
+  count++
+  button.textContent = `Clicked ${count} time(s)`
+}
+
+root.appendChild(button)
+document.body.appendChild(root)
+
 const glob = window;
 const scripName = 'simpleLoadScript';
 const globalCbsName = `_$_${ scripName }CallBacks_$_`;
@@ -53,8 +69,8 @@ const getScriptDefaults = {
   callBackName: null
 };
 
-// todo url arrays
-export default function getScript(opts = {}) {
+// todo ? url arrays
+glob.getScript = function getScript(opts = {}) {
   if (arguments.length > 1) {
     return Promise.all([...arguments].map(getScript));
   }
