@@ -12,13 +12,17 @@
     "callback"
   ],
   "scripts": {
-    "test": "npm run lint && npm run format-check && npm run check-types",
+    "check-all": "npm run lint && npm run format-check && npm run check-types",
     "prepublishOnly": "npm run test && npm run build",
     "build": "rollup --c ./rollup.config.mjs",
     "watch": "npm run build -- -w",
-    "lint": "eslint --ext .ts . ",
-    "format-check": "prettier --check ./src/**/*.ts",
-    "format-write": "prettier --write ./src/**/*.ts",
+    "lint": "eslint --ext .ts . -f tap",
+    "test:test": "vite build && vite preview",
+    "test:run": "vite build && vitest run",
+    "test:ui": "vite build && vite preview && vitest --ui",
+    "test:watch": "vite build && vite preview && vitest",
+    "format-check": "prettier --check ./**/*.ts",
+    "format-write": "prettier --write ./**/*.ts",
     "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
   },
   "files": [
@@ -47,11 +51,15 @@
     "@types/prettier": "^2.7.2",
     "@typescript-eslint/eslint-plugin": "^5.59.1",
     "@typescript-eslint/parser": "^5.59.1",
+    "@vitest/ui": "^0.30.1",
     "eslint": "^8.39.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "playwright": "^1.33.0",
     "prettier": "^2.8.8",
     "rollup": "^3.21.2",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vite": "^4.3.4",
+    "vitest": "^0.30.1"
   }
 }

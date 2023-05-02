@@ -2,14 +2,14 @@
   "compilerOptions": {
     "target": "es2015",
     "module": "es2015",
-    "rootDir": "./src/",
     "declaration": true,
     "outDir": "./",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "moduleResolution": "node"
   },
-  "include": ["./src/**/*.ts"],
+  "include": ["./src/**/*.ts", "./test/**/*.ts"],
   "exclude": []
 }

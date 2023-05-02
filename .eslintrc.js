@@ -16,9 +16,6 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
-    'max-len': ['error', 80],
-    // 'operator-linebreak': ['error', 'before'],
-    'require-jsdoc': 'off',
     'object-curly-spacing': 'off',
     indent: 'off',
   },
