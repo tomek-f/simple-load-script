@@ -1,38 +1,41 @@
-const root = document.createElement('div')
-const button = document.createElement('button')
-button.id = 'btn'
+const root = document.createElement('div');
+const button = document.createElement('button');
+button.id = 'btn';
 
-let count = 0
+let count = 0;
 
-button.textContent = `Clicked ${count} time(s)`
+button.textContent = `Clicked ${count} time(s)`;
 
 button.onclick = () => {
-  count++
-  button.textContent = `Clicked ${count} time(s)`
-}
+  count++;
+  button.textContent = `Clicked ${count} time(s)`;
+};
 
-root.appendChild(button)
-document.body.appendChild(root)
+root.appendChild(button);
+document.body.appendChild(root);
 
 const glob = window;
 const scripName = 'simpleLoadScript';
-const globalCbsName = `_$_${ scripName }CallBacks_$_`;
+const globalCbsName = `_$_${scripName}CallBacks_$_`;
 let counter = 0;
-const uid = () => `script-${ counter++ }`;
-const type = obj => Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
-const typeObj = obj => type(obj) === 'object';
-const typeStr = obj => type(obj) === 'string';
+const uid = () => `script-${counter++}`;
+const type = (obj) =>
+  Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+const typeObj = (obj) => type(obj) === 'object';
+const typeStr = (obj) => type(obj) === 'string';
 const getCallBackObject = () => {
-  glob[globalCbsName] = !typeObj(glob[globalCbsName]) ? {} : glob[globalCbsName];
+  glob[globalCbsName] = !typeObj(glob[globalCbsName])
+    ? {}
+    : glob[globalCbsName];
   return glob[globalCbsName];
 };
-const placementNode = opts => {
+const placementNode = (opts) => {
   if (opts.insertInto) {
     return document.querySelector(opts.insertInto);
   }
   return opts.inBody ? document.body : document.head;
 };
-const createScript = opts => {
+const createScript = (opts) => {
   const script = document.createElement('script');
 
   if (opts.attrs && typeObj(opts.attrs)) {
@@ -42,7 +45,7 @@ const createScript = opts => {
   }
   return script;
 };
-const loadCallBack = opts => {
+const loadCallBack = (opts) => {
   if (opts.callBack && type(opts.callBack) === 'function') {
     opts.callBack();
   }
@@ -52,7 +55,7 @@ const loadRemoveScript = (removeScript, where, script) => {
     where.removeChild(script);
   }
 };
-const prepareCallBack = opts => {
+const prepareCallBack = (opts) => {
   const callBackName = opts.callBackName;
   const url = opts.url;
 
@@ -60,13 +63,17 @@ const prepareCallBack = opts => {
   // opts.callBackParamName
   // no name -> get from url || add own
   // add callback to url -> add, rename, change value
-  return [url, callBackName ? glob : getCallBackObject(), callBackName || uid()];
+  return [
+    url,
+    callBackName ? glob : getCallBackObject(),
+    callBackName || uid(),
+  ];
 };
 const getScriptDefaults = {
   jsonp: false,
   callBackParamName: 'callback', // unused
   removeScript: false,
-  callBackName: null
+  callBackName: null,
 };
 
 // todo ? url arrays
@@ -80,7 +87,7 @@ glob.getScript = function getScript(opts = {}) {
   const optsTypeStr = typeStr(opts);
 
   return new Promise((resolve, reject) => {
-    if (!(typeObj(opts) && opts.url || optsTypeStr)) {
+    if (!((typeObj(opts) && opts.url) || optsTypeStr)) {
       reject('Error: object with url or url string needed');
       return;
     }
@@ -117,9 +124,8 @@ glob.getScript = function getScript(opts = {}) {
 
       console.log(url, callBackObj, callBackName);
 
-
       opts.url = url;
-      callBackObj[callBackName] = res => {
+      callBackObj[callBackName] = (res) => {
         delete callBackObj[callBackName];
         loadRemoveScript(removeScript, where, script);
         loadCallBack(opts);
@@ -133,4 +139,4 @@ glob.getScript = function getScript(opts = {}) {
     script.src = opts.url;
     where.appendChild(script);
   });
-}
+};
