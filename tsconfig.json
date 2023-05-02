@@ -10,6 +10,6 @@
     "noEmit": true,
     "moduleResolution": "node"
   },
-  "include": ["./src/**/*.ts", "./test/**/*.ts"],
+  "include": ["./**/*.ts"],
   "exclude": []
 }
