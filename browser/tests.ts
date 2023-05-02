@@ -13,9 +13,11 @@ export {};
   try {
     await window.loadScript('./sss');
   } catch (err) {
-    console.log(err, err.message);
+    const error = err as Error;
+
+    console.log(err, error.message);
     console.assert(
-      err.message === 'Error: loading script',
+      error.message === 'Error: loading script',
       'err !== `Error: loading script`',
     );
   }

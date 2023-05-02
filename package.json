@@ -19,8 +19,8 @@
     "lint": "eslint --ext .ts . -f tap",
     "test:test": "vite build && vite preview",
     "test:run": "vite build && vitest run",
-    "test:ui": "vite build && vite preview && vitest --ui",
-    "test:watch": "vite build && vite preview && vitest",
+    "test:ui": "vite build && vitest --ui",
+    "test:watch": "vite build && vitest",
     "format-check": "prettier --check ./**/*.ts",
     "format-write": "prettier --write ./**/*.ts",
     "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
