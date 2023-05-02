@@ -16,7 +16,7 @@
     "prepublishOnly": "npm run test && npm run build",
     "build": "rollup --c ./rollup.config.mjs",
     "watch": "npm run build -- -w",
-    "lint": "eslint --ext .ts .",
+    "lint": "eslint --ext .ts . -f tap",
     "test:test": "vite build && vite preview",
     "test:run": "vite build && vitest run",
     "test:ui": "vite build && vite preview && vitest --ui",
