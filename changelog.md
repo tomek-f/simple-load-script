@@ -1,10 +1,15 @@
 # changelog
 
-## 1.1.0
+## 2.0.0
 
+- **BREAKING CHANGE** `jsonp` removed form Config
+- **BREAKING CHANGE** `callBackName` removed form Config
+- **BREAKING CHANGE** `removeScript` changes - script is not removed by default on error
 - TS
 - rollup
 - deps
+- tests
+- readme
 
 ## 1.0.3
 

@@ -7,8 +7,7 @@ declare global {
 
 export {};
 
-// @ts-expect-error declaration file
-import simpleLoadScript from '../src/oldJs.js';
+import simpleLoadScript from '../src/index.js';
 
 window.simpleLoadScript = simpleLoadScript;
 
