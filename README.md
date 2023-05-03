@@ -30,7 +30,7 @@ import loadScript from 'simple-load-script';
 
 loadScript('//code.jquery.com/jquery-2.2.3.js')
   .then(function (scriptRef) {
-    console.log('success', scriptRef);
+    console.log(scriptRef);
   })
   .catch(function (err) {
     console.log(err);
@@ -45,9 +45,9 @@ import loadScript from 'simple-load-script';
 try {
   const scriptRef = loadScript('//code.jquery.com/jquery-2.2.3.js');
 
-  console.log('success', scriptRef); // 'success', HTMLScriptElement
+  console.log(scriptRef); // HTMLScriptElement
 } catch (err) {
-  console.log('error', err);
+  console.log(err);
 }
 ```
 
@@ -56,17 +56,17 @@ try {
 ```js
 import loadScript from 'simple-load-script';
 
-loadScript({
-  url: '//code.jquery.com/jquery-2.2.3.js',
-  inBody: true,
-  attrs: { id: 'one', charset: 'UTF-8' },
-})
-  .then(function (scriptRef) {
-    console.log('success', scriptRef); // 'success', HTMLScriptElement inBody  with attrs present
-  })
-  .catch(function (err) {
-    console.log('error', err);
+try {
+  const scriptRef = loadScript({
+    url: '//code.jquery.com/jquery-2.2.3.js',
+    inBody: true,
+    attrs: { id: 'one', charset: 'UTF-8' },
   });
+
+  console.log(scriptRef); // HTMLScriptElement inBody with attrs present
+} catch (err) {
+  console.log(err);
+}
 ```
 
 ### Google Maps API
@@ -76,13 +76,13 @@ Runs global callback (window.gmapiready)
 ```js
 import loadScript from 'simple-load-script';
 
-loadScript('//maps.googleapis.com/maps/api/js?&callback=gmapiready')
-  .then(function (scriptRef) {
-    console.log('success', scriptRef); // 'success', HTMLScriptElement
-  })
-  .catch(function (err) {
-    console.log(err);
-  });
+try {
+  const scriptRef = loadScript('//maps.googleapis.com/maps/api/js?&callback=gmapiready');
+
+  console.log(scriptRef); // HTMLScriptElement
+} catch (err) {
+  console.log(err);
+}
 ```
 
 ### JSONP
@@ -92,16 +92,16 @@ Runs global callback (window.elo)
 ```js
 var loadScript = require('simple-load-script');
 
-loadScripts({
-  url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
-  removeScript: true,
-})
-  .then(function (scriptRef) {
-    console.log('success', scriptRef); // 'success', undefined
-  })
-  .catch(function (err) {
-    console.log(err);
+try {
+  const scriptRef = loadScript({
+    url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
+    removeScript: true,
   });
+
+  console.log(scriptRef); // undefined
+} catch (err) {
+  console.log(err);
+}
 ```
 
 ### Array mode - objects and urls, callBackNames must have unique names
@@ -109,20 +109,20 @@ loadScripts({
 ```js
 import loadScript from 'simple-load-script';
 
-loadScripts(
-  '//maps.googleapis.com/maps/api/js?&callback=gmapiready',
-  {
-    url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
-    removeScript: true,
-  },
-  '//code.jquery.com/jquery-2.2.3.js',
-)
-  .then(function (scriptRef) {
-    console.log('success', scriptRef); // 'success', HTMLScriptElement[]
-  })
-  .catch(function (err) {
-    console.log(err);
-  });
+try {
+  const scriptRefs = loadScript([
+    '//maps.googleapis.com/maps/api/js?&callback=gmapiready',
+    {
+      url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
+      removeScript: true,
+    },
+    '//code.jquery.com/jquery-2.2.3.js',
+  ]);
+
+  console.log(scriptRefs); // HTMLScriptElement[]
+} catch (err) {
+  console.log(err);
+}
 ```
 
 ## Arguments
