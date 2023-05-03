@@ -1,109 +1,90 @@
-function createScript(scriptAttr: Record<string, string>): HTMLScriptElement {
-  const script = document.createElement('script');
+export interface Config {
+  url: string;
+  attrs?: Record<string, string>;
+  callBack?: ((scriptRef?: HTMLScriptElement) => void) | null;
+  inBody?: boolean;
+  insertInto?: string | null;
+  removeScript?: boolean;
+}
 
-  for (const attr of Object.keys(scriptAttr)) {
-    script.setAttribute(attr, scriptAttr[attr]);
+const defaultConfig = {
+  url: '',
+  attrs: {},
+  callBack: null,
+  inBody: false,
+  insertInto: null,
+  removeScript: false,
+} satisfies Config;
+
+export default function simpleLoadScript(
+  config: (Config | string)[],
+): Promise<(HTMLScriptElement | undefined)[]>;
+export default function simpleLoadScript(
+  config: Config | string,
+): Promise<HTMLScriptElement | undefined>;
+export default function simpleLoadScript(
+  config: Config | string | (Config | string)[],
+): Promise<HTMLScriptElement | undefined | (HTMLScriptElement | undefined)[]> {
+  if (Array.isArray(config)) {
+    return Promise.all(config.map(simpleLoadScript));
   }
 
-  return script;
-}
-
-export interface Options {
-  callback: string | null;
-  callbackURLParamName: string;
-  placement: ParentNode;
-  removeScript: boolean;
-  runOriginalCallback: boolean;
-  scriptAttr: Record<string, string>;
-  url: string;
-}
-
-const defaultOptions = {
-  callback: null,
-  callbackURLParamName: 'callback',
-  placement: document.head,
-  removeScript: false,
-  runOriginalCallback: false,
-  scriptAttr: {},
-} as Omit<Options, 'url'>;
-
-const globThis = typeof globalThis !== 'undefined' ? globalThis : window;
-
-export default function simpleLoadScript(
-  options: string,
-): Promise<HTMLScriptElement>;
-export default function simpleLoadScript(
-  options: Partial<Omit<Options, 'callback'>> & {
-    callback: never | null | undefined;
-    url: Options['url'];
-  },
-): Promise<HTMLScriptElement>;
-export default function simpleLoadScript(
-  options: Partial<Options> & { callback: string; url: Options['url'] },
-): Promise<HTMLScriptElement>;
-export default function simpleLoadScript(
-  options: string | (Partial<Options> & { url: Options['url'] }),
-): Promise<HTMLScriptElement | unknown> {
   return new Promise((resolve, reject) => {
-    const normalizedOptions =
-      typeof options === 'string' ? { url: options } : options;
-    const fullOptions = Object.assign({}, defaultOptions, normalizedOptions);
-
-    const { callback, callbackURLParamName } = fullOptions;
-    const script = createScript(fullOptions.scriptAttr);
-
-    if (!callback) {
-      script.addEventListener('load', () => {
-        resolve(script);
-      });
-    } else {
-      // eslint-disable-next-line max-len
-      // TODO revert URL https://github.com/tomek-f/simple-load-script/tree/16b10a058804bae8ef7cecedbb779587a1f283b9
-      // JSONP
-      const callbackURLParamValue = new URL(fullOptions.url).searchParams.get(
-        callbackURLParamName,
-      );
-
-      if (
-        !callbackURLParamName ||
-        typeof callbackURLParamName !== 'string' ||
-        !callbackURLParamValue
-      ) {
-        throw new Error(
-          // eslint-disable-next-line max-len
-          `'options.callbackURLParamName' must be a string (equal to get param name in url).`,
-        );
-      }
-
-      const rawCallbackOrig = (globThis as Record<string, unknown>)[callback];
-      let callbackOrig: ((resource: unknown) => unknown) | null = null;
-      if (fullOptions.runOriginalCallback) {
-        if (typeof rawCallbackOrig !== 'function') {
-          throw new Error(
-            // eslint-disable-next-line max-len
-            `To run original callback, '${callback}' must be a global function.`,
-          );
-        }
-        callbackOrig = rawCallbackOrig as (resource: unknown) => unknown;
-      }
-
-      (globThis as Record<string, unknown>)[callback] = (
-        resource: unknown,
-      ): void => {
-        delete (globThis as Record<string, unknown>)[callback];
-        if (fullOptions.removeScript) {
-          script.remove();
-        }
-        if (callbackOrig) {
-          resolve(callbackOrig(resource));
-        } else {
-          resolve(resource);
-        }
-      };
+    if (
+      !(
+        (typeof config === 'object' && config.url) ||
+        typeof config === 'string'
+      )
+    ) {
+      console.log({ config });
+      reject(new Error('Object with url or url string needed'));
+      return;
     }
 
-    script.addEventListener('error', reject);
-    script.src = fullOptions.url;
-    fullOptions.placement.append(script);
+    const configProcessed: Required<Config> = Object.assign(
+      {},
+      defaultConfig,
+      typeof config === 'string' ? { url: config } : config,
+    );
+    const { url, attrs, callBack, inBody, insertInto, removeScript } =
+      configProcessed;
+    const script = document.createElement('script');
+    const where: HTMLElement | null = insertInto
+      ? document.querySelector(insertInto)
+      : inBody
+      ? document.body
+      : document.head;
+
+    if (attrs && typeof attrs === 'object') {
+      for (const attr of Object.keys(attrs)) {
+        script.setAttribute(attr, attrs[attr]);
+      }
+    }
+
+    console.log({ config, configProcessed });
+
+    if (where == null) {
+      reject(new Error('No DOM element to append script'));
+      return;
+    }
+
+    script.addEventListener('load', () => {
+      if (removeScript) {
+        where.removeChild(script);
+      }
+      if (typeof callBack === 'function') {
+        callBack(removeScript ? undefined : script);
+      }
+      resolve(removeScript ? undefined : script);
+    });
+    script.addEventListener('error', (err) => {
+      console.log(err);
+      if (removeScript) {
+        where.removeChild(script);
+      }
+      reject(new Error('Loading script'));
+    });
+    script.src = url;
+    where.appendChild(script);
   });
 }
