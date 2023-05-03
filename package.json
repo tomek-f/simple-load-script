@@ -45,7 +45,6 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^24.1.0",
     "@rollup/plugin-terser": "^0.4.1",
     "@rollup/plugin-typescript": "^11.1.0",
     "@types/prettier": "^2.7.2",
