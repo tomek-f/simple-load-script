@@ -11,5 +11,5 @@
     "moduleResolution": "node"
   },
   "include": ["./**/*.ts"],
-  "exclude": []
+  "exclude": ["./dist", "./browser/dist"]
 }
