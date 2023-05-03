@@ -168,6 +168,6 @@ const defaultConfig = {
 
 [View on github](https://github.com/tomek-f/simple-load-script/blob/master/changelog.md).
 
-## misc.
+## Misc.
 
 - uses addEventListener, Array.isArray, for…of, destructuring Promise & Promise.all
