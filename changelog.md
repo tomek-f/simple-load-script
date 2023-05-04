@@ -4,7 +4,8 @@
 
 - **BREAKING CHANGE** `jsonp` removed form Config
 - **BREAKING CHANGE** `callBackName` removed form Config
-- **BREAKING CHANGE** `removeScript` changes - script is not removed by default on error
+- **BREAKING CHANGE** `removeScript` changes - script is not removed by default on an error
+- **BREAKING CHANGE** `callBack` removed form Config - just run code after simpleLoadScript run (eg. `console.log` in examples)
 - TS
 - rollup
 - deps

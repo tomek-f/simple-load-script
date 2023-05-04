@@ -12,13 +12,13 @@ npm install --save simple-load-script
 
 ```js
 // es5 CommonJS
-const loadScript = require('simple-load-script');
+const simpleLoadScript = require('simple-load-script');
 
 // es6
-const loadScript = require('simple-load-script/es6/simpleLoadScript');
+const simpleLoadScript = require('simple-load-script/es6/simpleLoadScript');
 
 // es5-umd
-const loadScript = require('simple-load-script/es5-umd/simpleLoadScript');
+const simpleLoadScript = require('simple-load-script/es5-umd/simpleLoadScript');
 ```
 
 ## Usage
@@ -26,9 +26,9 @@ const loadScript = require('simple-load-script/es5-umd/simpleLoadScript');
 ### Promise
 
 ```js
-import loadScript from 'simple-load-script';
+import simpleLoadScript from 'simple-load-script';
 
-loadScript('//code.jquery.com/jquery-2.2.3.js')
+simpleLoadScript('//code.jquery.com/jquery-2.2.3.js')
   .then(function (scriptRef) {
     console.log(scriptRef);
   })
@@ -40,10 +40,10 @@ loadScript('//code.jquery.com/jquery-2.2.3.js')
 ### Async/await
 
 ```js
-import loadScript from 'simple-load-script';
+import simpleLoadScript from 'simple-load-script';
 
 try {
-  const scriptRef = loadScript('//code.jquery.com/jquery-2.2.3.js');
+  const scriptRef = simpleLoadScript('//code.jquery.com/jquery-2.2.3.js');
 
   console.log(scriptRef); // HTMLScriptElement
 } catch (err) {
@@ -54,10 +54,10 @@ try {
 ### Config object
 
 ```js
-import loadScript from 'simple-load-script';
+import simpleLoadScript from 'simple-load-script';
 
 try {
-  const scriptRef = loadScript({
+  const scriptRef = simpleLoadScript({
     url: '//code.jquery.com/jquery-2.2.3.js',
     inBody: true,
     attrs: { id: 'one', charset: 'UTF-8' },
@@ -74,10 +74,10 @@ try {
 Runs global callback (window.gmapiready)
 
 ```js
-import loadScript from 'simple-load-script';
+import simpleLoadScript from 'simple-load-script';
 
 try {
-  const scriptRef = loadScript('//maps.googleapis.com/maps/api/js?&callback=gmapiready');
+  const scriptRef = simpleLoadScript('//maps.googleapis.com/maps/api/js?&callback=gmapiready');
 
   console.log(scriptRef); // HTMLScriptElement
 } catch (err) {
@@ -90,10 +90,10 @@ try {
 Runs global callback (window.elo)
 
 ```js
-var loadScript = require('simple-load-script');
+var simpleLoadScript = require('simple-load-script');
 
 try {
-  const scriptRef = loadScript({
+  const scriptRef = simpleLoadScript({
     url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
     removeScript: true,
   });
@@ -107,10 +107,10 @@ try {
 ### Array mode - objects and urls, callBackNames must have unique names
 
 ```js
-import loadScript from 'simple-load-script';
+import simpleLoadScript from 'simple-load-script';
 
 try {
-  const scriptRefs = loadScript([
+  const scriptRefs = simpleLoadScript([
     '//maps.googleapis.com/maps/api/js?&callback=gmapiready',
     {
       url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
@@ -137,7 +137,6 @@ try {
 interface Config {
   url: string;
   attrs?: Record<string, string>;
-  callBack?: ((scriptRef?: HTMLScriptElement) => void) | null;
   inBody?: boolean;
   insertInto?: string | null;
   removeScript?: boolean;
@@ -150,7 +149,6 @@ interface Config {
 const defaultConfig = {
   url: '',
   attrs: {},
-  callBack: null,
   inBody: false,
   insertInto: null,
   removeScript: false,
@@ -159,7 +157,6 @@ const defaultConfig = {
 
 - `url` - file to append to body
 - `attrs` - with attributes to append to script tag (`charset`, `type`, `id`, &hellip;)
-- `callBack` - additional callback on success
 - `inBody` - append to `document.body` instead of `document.head`
 - `insertInto` - [CSS selector (an ID, class name, element name, etc.)](https://developer.mozilla.org/en/docs/Web/API/Document/querySelector) to insert the script into. Overrides `inBody` value.
 - `removeScript` - remove script tag after load; it's always removed on an error

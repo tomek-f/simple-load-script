@@ -1,7 +1,6 @@
 export interface Config {
   url: string;
   attrs?: Record<string, string>;
-  callBack?: ((scriptRef?: HTMLScriptElement) => void) | null;
   inBody?: boolean;
   insertInto?: string | null;
   removeScript?: boolean;
@@ -10,7 +9,6 @@ export interface Config {
 const defaultConfig = {
   url: '',
   attrs: {},
-  callBack: null,
   inBody: false,
   insertInto: null,
   removeScript: false,
@@ -46,8 +44,7 @@ export default function simpleLoadScript(
       defaultConfig,
       typeof config === 'string' ? { url: config } : config,
     );
-    const { url, attrs, callBack, inBody, insertInto, removeScript } =
-      configProcessed;
+    const { url, attrs, inBody, insertInto, removeScript } = configProcessed;
     const script = document.createElement('script');
     const where: HTMLElement | null = insertInto
       ? document.querySelector(insertInto)
@@ -71,9 +68,6 @@ export default function simpleLoadScript(
     script.addEventListener('load', () => {
       if (removeScript) {
         where.removeChild(script);
-      }
-      if (typeof callBack === 'function') {
-        callBack(removeScript ? undefined : script);
       }
       resolve(removeScript ? undefined : script);
     });
