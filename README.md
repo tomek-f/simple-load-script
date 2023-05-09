@@ -2,12 +2,6 @@
 
 > Very simple promise based script loader and JSONP
 
-## Installation
-
-```bash
-npm install --save simple-load-script
-```
-
 ## Import
 
 [Check dist folder](https://www.npmjs.com/package/simple-load-script?activeTab=code) or package.json
