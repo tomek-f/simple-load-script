@@ -3,6 +3,7 @@ import { preview } from 'vite';
 import type { PreviewServer } from 'vite';
 import { Browser, Page, chromium } from 'playwright';
 
+// https://github.com/vitest-dev/vitest/blob/main/examples/puppeteer/test/basic.test.ts
 // https://gist.github.com/mizchi/5f67109d0719ef6dd57695e1f528ce8d
 
 let browser: Browser;
@@ -22,7 +23,7 @@ afterAll(async () => {
   });
 });
 
-// test('should have the correct title', async () => {
+// test('example stuff', async () => {
 //   try {
 //     await page.goto('http://localhost:3000');
 //     const button = await page.$('#btn');
@@ -33,6 +34,7 @@ afterAll(async () => {
 
 //     await button?.click();
 //     text = await page.evaluate((btn) => btn?.textContent, button);
+//     expect(text).toBe('Clicked 1 time(s)');
 //   } catch (err) {
 //     console.error(err);
 //     expect(err).toBeUndefined();
