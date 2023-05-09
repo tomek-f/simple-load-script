@@ -69,11 +69,13 @@ export default function simpleLoadScript(
       }
       resolve(removeScript ? undefined : script);
     });
-    script.addEventListener('error', (err) => {
+    script.addEventListener('error', (/* err */) => {
       if (removeScript) {
         where.removeChild(script);
       }
-      reject(new Error('Loading script'));
+      // TODO ? just return err
+      // TODO ? re-throw err with changed message
+      reject(new Error('Loading script error'));
     });
     script.src = url;
     where.appendChild(script);
