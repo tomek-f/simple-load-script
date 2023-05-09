@@ -10,16 +10,7 @@ npm install --save simple-load-script
 
 ## Import
 
-```js
-// es5 CommonJS
-const simpleLoadScript = require('simple-load-script');
-
-// es6
-const simpleLoadScript = require('simple-load-script/es6/simpleLoadScript');
-
-// es5-umd
-const simpleLoadScript = require('simple-load-script/es5-umd/simpleLoadScript');
-```
+[Check dist folder](https://www.npmjs.com/package/simple-load-script?activeTab=code) or package.json
 
 ## Usage
 

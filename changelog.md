@@ -2,6 +2,7 @@
 
 ## 2.0.0
 
+- **BREAKING CHANGE** exported files paths
 - **BREAKING CHANGE** `jsonp` removed form Config
 - **BREAKING CHANGE** `callBackName` removed form Config
 - **BREAKING CHANGE** `removeScript` changes - script is not removed by default on an error
