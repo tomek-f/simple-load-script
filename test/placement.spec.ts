@@ -10,7 +10,7 @@ let page: Page;
 
 beforeAll(async () => {
   browser = await chromium.launch({ headless: true });
-  server = await preview({ preview: { port: 3000 } });
+  server = await preview({ preview: { port: 3003 } });
   page = await browser.newPage();
 });
 
@@ -25,7 +25,7 @@ test(
   'placement head',
   async () => {
     try {
-      await page.goto('http://localhost:3000');
+      await page.goto('http://localhost:3003');
       await page.evaluate(async () => {
         await window.simpleLoadScript({
           url: '//code.jquery.com/jquery-2.2.3.js',
@@ -46,7 +46,7 @@ test(
   'placement body',
   async () => {
     try {
-      await page.goto('http://localhost:3000');
+      await page.goto('http://localhost:3003');
       await page.evaluate(async () => {
         await window.simpleLoadScript({
           url: '//code.jquery.com/jquery-2.2.3.js',
@@ -68,7 +68,7 @@ test(
   'insertInto ok',
   async () => {
     try {
-      await page.goto('http://localhost:3000');
+      await page.goto('http://localhost:3003');
       await page.evaluate(async () => {
         await window.simpleLoadScript({
           url: '//code.jquery.com/jquery-2.2.3.js',
@@ -90,7 +90,7 @@ test(
   'insertInto error',
   async () => {
     try {
-      await page.goto('http://localhost:3000');
+      await page.goto('http://localhost:3003');
       await page.evaluate(async () => {
         await window.simpleLoadScript({
           url: '//code.jquery.com/jquery-2.2.3.js',

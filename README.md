@@ -2,10 +2,6 @@
 
 > Very simple promise based script loader and JSONP
 
-## Import
-
-[Check dist folder](https://www.npmjs.com/package/simple-load-script?activeTab=code) or package.json
-
 ## Usage
 
 ### Async/await
@@ -145,6 +141,10 @@ const defaultConfig = {
 - `inBody` - append to `document.body` instead of `document.head`
 - `insertInto` - [CSS selector (an ID, class name, element name, etc.)](https://developer.mozilla.org/en/docs/Web/API/Document/querySelector) to insert the script into. Overrides `inBody` value.
 - `removeScript` - remove script tag after load; it's always removed on an error
+
+## Specific import
+
+[Check files](https://www.npmjs.com/package/simple-load-script?activeTab=code) or package.json
 
 ## Changelog
 

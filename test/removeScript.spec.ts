@@ -10,7 +10,7 @@ let page: Page;
 
 beforeAll(async () => {
   browser = await chromium.launch({ headless: true });
-  server = await preview({ preview: { port: 3000 } });
+  server = await preview({ preview: { port: 3004 } });
   page = await browser.newPage();
 });
 
@@ -25,7 +25,7 @@ test(
   'removeScript true',
   async () => {
     try {
-      await page.goto('http://localhost:3000');
+      await page.goto('http://localhost:3004');
       await page.evaluate(async () => {
         await window.simpleLoadScript({
           url: '//code.jquery.com/jquery-2.2.3.js',
@@ -52,7 +52,7 @@ test(
   'removeScript false',
   async () => {
     try {
-      await page.goto('http://localhost:3000');
+      await page.goto('http://localhost:3004');
       await page.evaluate(async () => {
         await window.simpleLoadScript({
           url: '//code.jquery.com/jquery-2.2.3.js',

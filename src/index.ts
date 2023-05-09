@@ -58,8 +58,6 @@ export default function simpleLoadScript(
       }
     }
 
-    console.log({ config, configProcessed });
-
     if (where == null) {
       reject(new Error('No DOM element to append script'));
       return;
@@ -71,11 +69,12 @@ export default function simpleLoadScript(
       }
       resolve(removeScript ? undefined : script);
     });
-    script.addEventListener('error', (err) => {
-      console.log(err);
+    script.addEventListener('error', (/* err */) => {
       if (removeScript) {
         where.removeChild(script);
       }
+      // TODO ? just return err
+      // TODO ? re-throw err with changed message
       reject(new Error('Loading script error'));
     });
     script.src = url;
