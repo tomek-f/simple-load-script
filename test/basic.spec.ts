@@ -25,7 +25,7 @@ afterAll(async () => {
 });
 
 test(
-  'proper load',
+  'load url ok',
   async () => {
     try {
       await page.goto('http://localhost:3000');
@@ -44,7 +44,7 @@ test(
 );
 
 test(
-  'proper load config',
+  'load config ok',
   async () => {
     try {
       await page.goto('http://localhost:3000');
@@ -63,7 +63,7 @@ test(
 );
 
 test(
-  'error wrong url',
+  'wrong url error',
   async () => {
     try {
       await page.goto('http://localhost:3000');
@@ -79,7 +79,7 @@ test(
   TIMEOUT,
 );
 
-describe('error wrong config', () => {
+describe('wrong config error', () => {
   test(
     'no param',
     async () => {
