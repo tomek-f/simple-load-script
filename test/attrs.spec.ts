@@ -49,7 +49,7 @@ test(
 );
 
 test(
-  'dom not add attrs',
+  'do not add attrs',
   async () => {
     try {
       await page.goto('http://localhost:3001');
