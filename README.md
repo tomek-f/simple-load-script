@@ -23,6 +23,20 @@ const simpleLoadScript = require('simple-load-script/es5-umd/simpleLoadScript');
 
 ## Usage
 
+### Async/await
+
+```js
+import simpleLoadScript from 'simple-load-script';
+
+try {
+  const scriptRef = await simpleLoadScript('//code.jquery.com/jquery-2.2.3.js');
+
+  console.log(scriptRef); // HTMLScriptElement
+} catch (err) {
+  console.log(err);
+}
+```
+
 ### Promise
 
 ```js
@@ -37,27 +51,13 @@ simpleLoadScript('//code.jquery.com/jquery-2.2.3.js')
   });
 ```
 
-### Async/await
-
-```js
-import simpleLoadScript from 'simple-load-script';
-
-try {
-  const scriptRef = simpleLoadScript('//code.jquery.com/jquery-2.2.3.js');
-
-  console.log(scriptRef); // HTMLScriptElement
-} catch (err) {
-  console.log(err);
-}
-```
-
 ### Config object
 
 ```js
 import simpleLoadScript from 'simple-load-script';
 
 try {
-  const scriptRef = simpleLoadScript({
+  const scriptRef = await simpleLoadScript({
     url: '//code.jquery.com/jquery-2.2.3.js',
     inBody: true,
     attrs: { id: 'one', charset: 'UTF-8' },
@@ -77,7 +77,7 @@ Runs global callback (window.gmapiready)
 import simpleLoadScript from 'simple-load-script';
 
 try {
-  const scriptRef = simpleLoadScript('//maps.googleapis.com/maps/api/js?&callback=gmapiready');
+  const scriptRef = await simpleLoadScript('//maps.googleapis.com/maps/api/js?&callback=gmapiready');
 
   console.log(scriptRef); // HTMLScriptElement
 } catch (err) {
@@ -93,7 +93,7 @@ Runs global callback (window.elo)
 var simpleLoadScript = require('simple-load-script');
 
 try {
-  const scriptRef = simpleLoadScript({
+  const scriptRef = await simpleLoadScript({
     url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
     removeScript: true,
   });
@@ -110,7 +110,7 @@ try {
 import simpleLoadScript from 'simple-load-script';
 
 try {
-  const scriptRefs = simpleLoadScript([
+  const scriptRefs = await simpleLoadScript([
     '//maps.googleapis.com/maps/api/js?&callback=gmapiready',
     {
       url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
