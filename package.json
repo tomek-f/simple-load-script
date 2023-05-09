@@ -1,6 +1,6 @@
 {
   "name": "simple-load-script",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.1",
   "description": "Very simple promise based script and JSONP",
   "repository": "tomek-f/simple-load-script",
   "keywords": [
