@@ -25,7 +25,7 @@ import simpleLoadScript from 'simple-load-script';
 
 simpleLoadScript('//code.jquery.com/jquery-2.2.3.js')
   .then(function (scriptRef) {
-    console.log(scriptRef);
+    console.log(scriptRef); // HTMLScriptElement
   })
   .catch(function (err) {
     console.log(err);
