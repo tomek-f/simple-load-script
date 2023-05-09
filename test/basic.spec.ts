@@ -1,7 +1,8 @@
-import { afterAll, beforeAll, expect, test } from 'vitest';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { preview } from 'vite';
 import type { PreviewServer } from 'vite';
 import { Browser, Page, chromium } from 'playwright';
+import { TIMEOUT } from './constants';
 
 // https://github.com/vitest-dev/vitest/blob/main/examples/puppeteer/test/basic.test.ts
 // https://gist.github.com/mizchi/5f67109d0719ef6dd57695e1f528ce8d
@@ -23,54 +24,100 @@ afterAll(async () => {
   });
 });
 
-// test('example stuff', async () => {
-//   try {
-//     await page.goto('http://localhost:3000');
-//     const button = await page.$('#btn');
-//     expect(button).toBeDefined();
+test(
+  'proper load',
+  async () => {
+    try {
+      await page.goto('http://localhost:3000');
+      const ref = await page.evaluate(async () => {
+        const scriptRef = await window.simpleLoadScript(
+          '//code.jquery.com/jquery-2.2.3.js',
+        );
+        return scriptRef;
+      });
+      expect(ref).toBeDefined();
+    } catch (err) {
+      expect(err).toBeUndefined();
+    }
+  },
+  TIMEOUT,
+);
 
-//     let text = await page.evaluate((btn) => btn?.textContent, button);
-//     expect(text).toBe('Clicked 0 time(s)');
+test(
+  'proper load config',
+  async () => {
+    try {
+      await page.goto('http://localhost:3000');
+      const ref = await page.evaluate(async () => {
+        const scriptRef = await window.simpleLoadScript({
+          url: '//code.jquery.com/jquery-2.2.3.js',
+        });
+        return scriptRef;
+      });
+      expect(ref).toBeDefined();
+    } catch (err) {
+      expect(err).toBeUndefined();
+    }
+  },
+  TIMEOUT,
+);
 
-//     await button?.click();
-//     text = await page.evaluate((btn) => btn?.textContent, button);
-//     expect(text).toBe('Clicked 1 time(s)');
-//   } catch (err) {
-//     console.error(err);
-//     expect(err).toBeUndefined();
-//   }
-// }, 60_000);
+test(
+  'error wrong url',
+  async () => {
+    try {
+      await page.goto('http://localhost:3000');
+      await page.evaluate(async () => {
+        await window.simpleLoadScript('//wrong.domain/jquery-2.2.3.js');
+      });
+    } catch (err) {
+      expect(
+        (err as Error).message.includes('Error: Loading script error'),
+      ).toBe(true);
+    }
+  },
+  TIMEOUT,
+);
 
-test('proper load', async () => {
-  try {
-    await page.goto('http://localhost:3000');
-
-    const ref = await page.evaluate(async () => {
-      const scriptRef = await window.simpleLoadScript(
-        '//code.jquery.com/jquery-2.2.3.js',
-      );
-      return scriptRef;
-    });
-
-    expect(ref).toBeDefined(); // HTMLScriptElement
-  } catch (err) {
-    expect(err).toBeUndefined();
-  }
-}, 60_000);
-
-test('error load', async () => {
-  try {
-    await page.goto('http://localhost:3000');
-
-    const ref = await page.evaluate(async () => {
-      const scriptRef = await window.simpleLoadScript(
-        '//wrong.domain/jquery-2.2.3.js',
-      );
-      return scriptRef;
-    });
-
-    expect(ref).toBeDefined();
-  } catch (err) {
-    expect((err as Error).message.includes('Error: Loading script')).toBe(true);
-  }
-}, 60_000);
+describe('error wrong config', () => {
+  test(
+    'no param',
+    async () => {
+      try {
+        await page.goto('http://localhost:3000');
+        await page.evaluate(async () => {
+          // @ts-expect-error Testing wrong config
+          await window.simpleLoadScript();
+        });
+      } catch (err) {
+        expect(
+          (err as Error).message.includes(
+            'Error: Object with url or url string needed',
+          ),
+        ).toBe(true);
+      }
+    },
+    TIMEOUT,
+  );
+  test(
+    'bad config',
+    async () => {
+      try {
+        await page.goto('http://localhost:3000');
+        await page.evaluate(async () => {
+          await window.simpleLoadScript({
+            // @ts-expect-error Testing wrong config
+            elo: '//code.jquery.com/jquery-2.2.3.js',
+          });
+        });
+      } catch (err) {
+        expect(
+          (err as Error).message.includes(
+            'Error: Object with url or url string needed',
+          ),
+        ).toBe(true);
+      }
+    },
+    TIMEOUT,
+  );
+});

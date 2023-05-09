@@ -15,9 +15,9 @@
     "watch": "npm run build -- -w",
     "lint": "eslint --ext .ts . -f tap",
     "vite:build-and-preview": "vite build && vite preview",
-    "test:run": "vite build && vitest run",
-    "test:ui": "vite build && vitest --ui",
-    "test:watch": "vite build && vitest",
+    "test:run": "vite build && vitest run --reporter=verbose",
+    "test:ui": "vite build && vitest --reporter=verbose --ui",
+    "test:watch": "vite build && vitest --reporter=verbose",
     "format-check": "prettier --check ./**/*.ts",
     "format-write": "prettier --write ./**/*.ts",
     "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
