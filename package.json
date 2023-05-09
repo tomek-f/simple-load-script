@@ -23,7 +23,9 @@
     "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
   },
   "files": [
-    "dist"
+    "src",
+    "dist",
+    "changelog.md"
   ],
   "main": "./dist/index.umd.js",
   "umd:main": "./dist/index.umd.js",
