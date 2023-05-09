@@ -9,8 +9,8 @@
     "JSONP"
   ],
   "scripts": {
-    "check-all": "npm run lint && npm run format-check && npm run check-types",
-    "prepublishOnly": "npm run test && npm run build",
+    "check-all": "npm run lint && npm run format-check && npm run check-types && npm run test:run",
+    "prepublishOnly": "npm run check-all && npm run build",
     "build": "rollup --c ./rollup.config.mjs",
     "watch": "npm run build -- -w",
     "lint": "eslint --ext .ts . -f tap",
