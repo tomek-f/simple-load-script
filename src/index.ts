@@ -76,7 +76,7 @@ export default function simpleLoadScript(
       if (removeScript) {
         where.removeChild(script);
       }
-      reject(new Error('Loading script'));
+      reject(new Error('Loading script error'));
     });
     script.src = url;
     where.appendChild(script);
