@@ -1,65 +1,65 @@
 on:
-  push:
-    branches: ['**']
-    # branches: [master, feat/**, fix/**]
-    # branches: [feat/**, fix/**]
-  # pull_request:
-  #   branches: [master]
-  workflow_dispatch:
+    push:
+        branches: ['**']
+        # branches: [master, feat/**, fix/**]
+        # branches: [feat/**, fix/**]
+    # pull_request:
+    #   branches: [master]
+    workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          check-latest: true
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run build
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          check-latest: true
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run lint
-  types:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          check-latest: true
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run check-types
-  prettier:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          check-latest: true
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run format-check
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          check-latest: true
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run test:run
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+                  check-latest: true
+                  cache: 'npm'
+            - run: npm ci
+            - run: npm run build
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+                  check-latest: true
+                  cache: 'npm'
+            - run: npm ci
+            - run: npm run lint
+    types:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+                  check-latest: true
+                  cache: 'npm'
+            - run: npm ci
+            - run: npm run check-types
+    prettier:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+                  check-latest: true
+                  cache: 'npm'
+            - run: npm ci
+            - run: npm run format-check
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+                  check-latest: true
+                  cache: 'npm'
+            - run: npm ci
+            - run: npm run test:run

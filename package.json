@@ -1,73 +1,73 @@
 {
-  "name": "simple-load-script",
-  "version": "2.0.0",
-  "description": "Very simple promise based script and JSONP",
-  "repository": "tomek-f/simple-load-script",
-  "keywords": [
-    "script",
-    "promise",
-    "JSONP"
-  ],
-  "scripts": {
-    "check-all": "npm run lint && npm run format-check && npm run check-types && npm run test:run",
-    "prepublishOnly": "npm run check-all && npm run build",
-    "build": "rollup --c ./rollup.config.mjs",
-    "watch": "npm run build -- -w",
-    "lint": "eslint --ext .ts . -f tap",
-    "vite:build-and-preview": "vite build && vite preview",
-    "test:run": "vite build && vitest run --reporter=verbose",
-    "test:ui": "vite build && vitest --reporter=verbose --ui",
-    "test:watch": "vite build && vitest --reporter=verbose",
-    "format-check": "prettier --check ./**/*.ts",
-    "format-write": "prettier --write ./**/*.ts",
-    "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
-  },
-  "files": [
-    "src",
-    "dist",
-    "changelog.md"
-  ],
-  "main": "./dist/index.umd.js",
-  "umd:main": "./dist/index.umd.js",
-  "module": "./dist/index.es.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    "./package.json": "./package.json",
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.cjs.js",
-      "default": "./dist/index.umd.js"
-    }
-  },
-  "author": "Tomek Fijoł <tomekfijol@gmail.com> (http://tomekf.pl/)",
-  "contributors": [
-    {
-      "name": "Martin Jurča",
-      "email": "martin.jurca@firma.seznam.cz"
+    "name": "simple-load-script",
+    "version": "2.0.0",
+    "description": "Very simple promise based script and JSONP",
+    "repository": "tomek-f/simple-load-script",
+    "keywords": [
+        "script",
+        "promise",
+        "JSONP"
+    ],
+    "scripts": {
+        "check-all": "npm run lint && npm run format-check && npm run check-types && npm run test:run",
+        "prepublishOnly": "npm run check-all && npm run build",
+        "build": "rollup --c ./rollup.config.mjs",
+        "watch": "npm run build -- -w",
+        "lint": "eslint --ext .ts . -f tap",
+        "vite:build-and-preview": "vite build && vite preview",
+        "test:run": "vite build && vitest run --reporter=verbose",
+        "test:ui": "vite build && vitest --reporter=verbose --ui",
+        "test:watch": "vite build && vitest --reporter=verbose",
+        "format-check": "prettier --check ./",
+        "format-write": "prettier --write ./",
+        "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
     },
-    {
-      "name": "Tom Conroy",
-      "url": "https://github.com/tconroy"
+    "files": [
+        "src",
+        "dist",
+        "changelog.md"
+    ],
+    "main": "./dist/index.umd.js",
+    "umd:main": "./dist/index.umd.js",
+    "module": "./dist/index.es.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        "./package.json": "./package.json",
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.es.js",
+            "require": "./dist/index.cjs.js",
+            "default": "./dist/index.umd.js"
+        }
+    },
+    "author": "Tomek Fijoł <tomekfijol@gmail.com> (http://tomekf.pl/)",
+    "contributors": [
+        {
+            "name": "Martin Jurča",
+            "email": "martin.jurca@firma.seznam.cz"
+        },
+        {
+            "name": "Tom Conroy",
+            "url": "https://github.com/tconroy"
+        }
+    ],
+    "license": "MIT",
+    "readmeFilename": "README.md",
+    "devDependencies": {
+        "@rollup/plugin-terser": "^0.4.3",
+        "@rollup/plugin-typescript": "^11.1.2",
+        "@types/prettier": "^2.7.3",
+        "@typescript-eslint/eslint-plugin": "^5.61.0",
+        "@typescript-eslint/parser": "^5.61.0",
+        "@vitest/ui": "^0.32.4",
+        "eslint": "^8.44.0",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "playwright": "^1.35.1",
+        "prettier": "^2.8.8",
+        "rollup": "^3.26.0",
+        "typescript": "^5.1.6",
+        "vite": "^4.3.9",
+        "vitest": "^0.32.4"
     }
-  ],
-  "license": "MIT",
-  "readmeFilename": "README.md",
-  "devDependencies": {
-    "@rollup/plugin-terser": "^0.4.3",
-    "@rollup/plugin-typescript": "^11.1.2",
-    "@types/prettier": "^2.7.3",
-    "@typescript-eslint/eslint-plugin": "^5.61.0",
-    "@typescript-eslint/parser": "^5.61.0",
-    "@vitest/ui": "^0.32.4",
-    "eslint": "^8.44.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "playwright": "^1.35.1",
-    "prettier": "^2.8.8",
-    "rollup": "^3.26.0",
-    "typescript": "^5.1.6",
-    "vite": "^4.3.9",
-    "vitest": "^0.32.4"
-  }
 }
