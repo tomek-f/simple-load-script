@@ -12,112 +12,112 @@ let server: PreviewServer;
 let page: Page;
 
 beforeAll(async () => {
-  browser = await chromium.launch({ headless: true });
-  server = await preview({ preview: { port: 3000 } });
-  page = await browser.newPage();
+    browser = await chromium.launch({ headless: true });
+    server = await preview({ preview: { port: 3000 } });
+    page = await browser.newPage();
 });
 
 afterAll(async () => {
-  await browser.close();
-  await new Promise<void>((resolve, reject) => {
-    server.httpServer.close((error) => (error ? reject(error) : resolve()));
-  });
+    await browser.close();
+    await new Promise<void>((resolve, reject) => {
+        server.httpServer.close((error) => (error ? reject(error) : resolve()));
+    });
 });
 
 test(
-  'load url ok',
-  async () => {
-    try {
-      await page.goto('http://localhost:3000');
-      const ref = await page.evaluate(async () => {
-        const scriptRef = await window.simpleLoadScript(
-          '//code.jquery.com/jquery-2.2.3.js',
-        );
-        return scriptRef;
-      });
-      expect(ref).toBeDefined();
-    } catch (err) {
-      expect(err).toBeUndefined();
-    }
-  },
-  TIMEOUT,
+    'load url ok',
+    async () => {
+        try {
+            await page.goto('http://localhost:3000');
+            const ref = await page.evaluate(async () => {
+                const scriptRef = await window.simpleLoadScript(
+                    '//code.jquery.com/jquery-2.2.3.js',
+                );
+                return scriptRef;
+            });
+            expect(ref).toBeDefined();
+        } catch (err) {
+            expect(err).toBeUndefined();
+        }
+    },
+    TIMEOUT,
 );
 
 test(
-  'load config ok',
-  async () => {
-    try {
-      await page.goto('http://localhost:3000');
-      const ref = await page.evaluate(async () => {
-        const scriptRef = await window.simpleLoadScript({
-          url: '//code.jquery.com/jquery-2.2.3.js',
-        });
-        return scriptRef;
-      });
-      expect(ref).toBeDefined();
-    } catch (err) {
-      expect(err).toBeUndefined();
-    }
-  },
-  TIMEOUT,
+    'load config ok',
+    async () => {
+        try {
+            await page.goto('http://localhost:3000');
+            const ref = await page.evaluate(async () => {
+                const scriptRef = await window.simpleLoadScript({
+                    url: '//code.jquery.com/jquery-2.2.3.js',
+                });
+                return scriptRef;
+            });
+            expect(ref).toBeDefined();
+        } catch (err) {
+            expect(err).toBeUndefined();
+        }
+    },
+    TIMEOUT,
 );
 
 test(
-  'wrong url error',
-  async () => {
-    try {
-      await page.goto('http://localhost:3000');
-      await page.evaluate(async () => {
-        await window.simpleLoadScript('//wrong.domain/jquery-2.2.3.js');
-      });
-    } catch (err) {
-      expect(
-        (err as Error).message.includes('Error: Loading script error'),
-      ).toBe(true);
-    }
-  },
-  TIMEOUT,
+    'wrong url error',
+    async () => {
+        try {
+            await page.goto('http://localhost:3000');
+            await page.evaluate(async () => {
+                await window.simpleLoadScript('//wrong.domain/jquery-2.2.3.js');
+            });
+        } catch (err) {
+            expect(
+                (err as Error).message.includes('Error: Loading script error'),
+            ).toBe(true);
+        }
+    },
+    TIMEOUT,
 );
 
 describe('wrong config error', () => {
-  test(
-    'no param',
-    async () => {
-      try {
-        await page.goto('http://localhost:3000');
-        await page.evaluate(async () => {
-          // @ts-expect-error Testing wrong config
-          await window.simpleLoadScript();
-        });
-      } catch (err) {
-        expect(
-          (err as Error).message.includes(
-            'Error: Object with url or url string needed',
-          ),
-        ).toBe(true);
-      }
-    },
-    TIMEOUT,
-  );
-  test(
-    'bad config',
-    async () => {
-      try {
-        await page.goto('http://localhost:3000');
-        await page.evaluate(async () => {
-          await window.simpleLoadScript({
-            // @ts-expect-error Testing wrong config
-            elo: '//code.jquery.com/jquery-2.2.3.js',
-          });
-        });
-      } catch (err) {
-        expect(
-          (err as Error).message.includes(
-            'Error: Object with url or url string needed',
-          ),
-        ).toBe(true);
-      }
-    },
-    TIMEOUT,
-  );
+    test(
+        'no param',
+        async () => {
+            try {
+                await page.goto('http://localhost:3000');
+                await page.evaluate(async () => {
+                    // @ts-expect-error Testing wrong config
+                    await window.simpleLoadScript();
+                });
+            } catch (err) {
+                expect(
+                    (err as Error).message.includes(
+                        'Error: Object with url or url string needed',
+                    ),
+                ).toBe(true);
+            }
+        },
+        TIMEOUT,
+    );
+    test(
+        'bad config',
+        async () => {
+            try {
+                await page.goto('http://localhost:3000');
+                await page.evaluate(async () => {
+                    await window.simpleLoadScript({
+                        // @ts-expect-error Testing wrong config
+                        elo: '//code.jquery.com/jquery-2.2.3.js',
+                    });
+                });
+            } catch (err) {
+                expect(
+                    (err as Error).message.includes(
+                        'Error: Object with url or url string needed',
+                    ),
+                ).toBe(true);
+            }
+        },
+        TIMEOUT,
+    );
 });

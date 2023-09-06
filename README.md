@@ -10,11 +10,13 @@
 import simpleLoadScript from 'simple-load-script';
 
 try {
-  const scriptRef = await simpleLoadScript('//code.jquery.com/jquery-2.2.3.js');
+    const scriptRef = await simpleLoadScript(
+        '//code.jquery.com/jquery-2.2.3.js',
+    );
 
-  console.log(scriptRef); // HTMLScriptElement
+    console.log(scriptRef); // HTMLScriptElement
 } catch (err) {
-  console.log(err);
+    console.log(err);
 }
 ```
 
@@ -24,12 +26,12 @@ try {
 import simpleLoadScript from 'simple-load-script';
 
 simpleLoadScript('//code.jquery.com/jquery-2.2.3.js')
-  .then(function (scriptRef) {
-    console.log(scriptRef); // HTMLScriptElement
-  })
-  .catch(function (err) {
-    console.log(err);
-  });
+    .then(function (scriptRef) {
+        console.log(scriptRef); // HTMLScriptElement
+    })
+    .catch(function (err) {
+        console.log(err);
+    });
 ```
 
 ### Config object
@@ -38,15 +40,15 @@ simpleLoadScript('//code.jquery.com/jquery-2.2.3.js')
 import simpleLoadScript from 'simple-load-script';
 
 try {
-  const scriptRef = await simpleLoadScript({
-    url: '//code.jquery.com/jquery-2.2.3.js',
-    inBody: true,
-    attrs: { id: 'one', charset: 'UTF-8' },
-  });
+    const scriptRef = await simpleLoadScript({
+        url: '//code.jquery.com/jquery-2.2.3.js',
+        inBody: true,
+        attrs: { id: 'one', charset: 'UTF-8' },
+    });
 
-  console.log(scriptRef); // HTMLScriptElement inBody with attrs present
+    console.log(scriptRef); // HTMLScriptElement inBody with attrs present
 } catch (err) {
-  console.log(err);
+    console.log(err);
 }
 ```
 
@@ -58,11 +60,13 @@ Runs global callback (window.gmapiready)
 import simpleLoadScript from 'simple-load-script';
 
 try {
-  const scriptRef = await simpleLoadScript('//maps.googleapis.com/maps/api/js?&callback=gmapiready');
+    const scriptRef = await simpleLoadScript(
+        '//maps.googleapis.com/maps/api/js?&callback=gmapiready',
+    );
 
-  console.log(scriptRef); // HTMLScriptElement
+    console.log(scriptRef); // HTMLScriptElement
 } catch (err) {
-  console.log(err);
+    console.log(err);
 }
 ```
 
@@ -74,14 +78,14 @@ Runs global callback (window.elo)
 var simpleLoadScript = require('simple-load-script');
 
 try {
-  const scriptRef = await simpleLoadScript({
-    url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
-    removeScript: true,
-  });
+    const scriptRef = await simpleLoadScript({
+        url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
+        removeScript: true,
+    });
 
-  console.log(scriptRef); // undefined
+    console.log(scriptRef); // undefined
 } catch (err) {
-  console.log(err);
+    console.log(err);
 }
 ```
 
@@ -91,18 +95,18 @@ try {
 import simpleLoadScript from 'simple-load-script';
 
 try {
-  const scriptRefs = await simpleLoadScript([
-    '//maps.googleapis.com/maps/api/js?&callback=gmapiready',
-    {
-      url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
-      removeScript: true,
-    },
-    '//code.jquery.com/jquery-2.2.3.js',
-  ]);
+    const scriptRefs = await simpleLoadScript([
+        '//maps.googleapis.com/maps/api/js?&callback=gmapiready',
+        {
+            url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
+            removeScript: true,
+        },
+        '//code.jquery.com/jquery-2.2.3.js',
+    ]);
 
-  console.log(scriptRefs); // HTMLScriptElement[]
+    console.log(scriptRefs); // HTMLScriptElement[]
 } catch (err) {
-  console.log(err);
+    console.log(err);
 }
 ```
 
@@ -116,11 +120,11 @@ try {
 
 ```ts
 interface Config {
-  url: string;
-  attrs?: Record<string, string>;
-  inBody?: boolean;
-  insertInto?: string | null;
-  removeScript?: boolean;
+    url: string;
+    attrs?: Record<string, string>;
+    inBody?: boolean;
+    insertInto?: string | null;
+    removeScript?: boolean;
 }
 ```
 
@@ -128,19 +132,19 @@ interface Config {
 
 ```js
 const defaultConfig = {
-  url: '',
-  attrs: {},
-  inBody: false,
-  insertInto: null,
-  removeScript: false,
+    url: '',
+    attrs: {},
+    inBody: false,
+    insertInto: null,
+    removeScript: false,
 };
 ```
 
-- `url` - file to append to body
-- `attrs` - with attributes to append to script tag (`charset`, `type`, `id`, &hellip;)
-- `inBody` - append to `document.body` instead of `document.head`
-- `insertInto` - [CSS selector (an ID, class name, element name, etc.)](https://developer.mozilla.org/en/docs/Web/API/Document/querySelector) to insert the script into. Overrides `inBody` value.
-- `removeScript` - remove script tag after load; it's always removed on an error
+-   `url` - file to append to body
+-   `attrs` - with attributes to append to script tag (`charset`, `type`, `id`, &hellip;)
+-   `inBody` - append to `document.body` instead of `document.head`
+-   `insertInto` - [CSS selector (an ID, class name, element name, etc.)](https://developer.mozilla.org/en/docs/Web/API/Document/querySelector) to insert the script into. Overrides `inBody` value.
+-   `removeScript` - remove script tag after load; it's always removed on an error
 
 ## Specific import
 
@@ -152,4 +156,4 @@ const defaultConfig = {
 
 ## Misc.
 
-- uses addEventListener, Array.isArray, for…of, destructuring Promise & Promise.all
+-   uses addEventListener, Array.isArray, for…of, destructuring Promise & Promise.all
