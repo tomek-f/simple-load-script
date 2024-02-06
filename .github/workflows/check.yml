@@ -62,4 +62,5 @@ jobs:
                   check-latest: true
                   cache: 'npm'
             - run: npm ci
+            - run: npx playwright install chromium
             - run: npm run test:run
