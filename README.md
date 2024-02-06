@@ -11,7 +11,7 @@ import simpleLoadScript from 'simple-load-script';
 
 try {
     const scriptRef = await simpleLoadScript(
-        '//code.jquery.com/jquery-2.2.3.js',
+        'https://code.jquery.com/jquery-3.7.1.min.js',
     );
 
     console.log(scriptRef); // HTMLScriptElement
@@ -25,7 +25,7 @@ try {
 ```js
 import simpleLoadScript from 'simple-load-script';
 
-simpleLoadScript('//code.jquery.com/jquery-2.2.3.js')
+simpleLoadScript('https://code.jquery.com/jquery-3.7.1.min.js')
     .then(function (scriptRef) {
         console.log(scriptRef); // HTMLScriptElement
     })
@@ -41,7 +41,7 @@ import simpleLoadScript from 'simple-load-script';
 
 try {
     const scriptRef = await simpleLoadScript({
-        url: '//code.jquery.com/jquery-2.2.3.js',
+        url: 'https://code.jquery.com/jquery-3.7.1.min.js',
         inBody: true,
         attrs: { id: 'one', charset: 'UTF-8' },
     });
@@ -101,7 +101,7 @@ try {
             url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
             removeScript: true,
         },
-        '//code.jquery.com/jquery-2.2.3.js',
+        'https://code.jquery.com/jquery-3.7.1.min.js',
     ]);
 
     console.log(scriptRefs); // HTMLScriptElement[]
