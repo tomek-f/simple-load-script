@@ -50,8 +50,8 @@ export default function simpleLoadScript(
         const where: HTMLElement | null = insertInto
             ? document.querySelector(insertInto)
             : inBody
-            ? document.body
-            : document.head;
+              ? document.body
+              : document.head;
 
         if (attrs && typeof attrs === 'object') {
             for (const attr of Object.keys(attrs)) {
