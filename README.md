@@ -2,6 +2,8 @@
 
 > Very simple promise based script loader and JSONP
 
+[![.github/workflows/check.yml](https://github.com/tomek-f/simple-load-script/actions/workflows/check.yml/badge.svg)](https://github.com/tomek-f/simple-load-script/actions/workflows/check.yml)
+
 ## Usage
 
 ### Async/await
