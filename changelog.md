@@ -2,7 +2,7 @@
 
 ## WIP
 
-- update deps
+-   update deps
 
 ## 2.0.0
 
