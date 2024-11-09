@@ -5,10 +5,10 @@ export default {
     input: './src/index.ts',
     plugins: [terser(), typescript({ include: ['./src/index.ts'] })],
     output: [
-        { file: './dist/index.cjs.js', format: 'cjs', exports: 'default' },
-        { file: './dist/index.es.js', format: 'es' },
+        { dir: './dist', format: 'cjs', exports: 'default' },
+        { dir: './dist', format: 'es' },
         {
-            file: './dist/index.umd.js',
+            dir: './dist',
             format: 'umd',
             name: 'simpleLoadScript',
         },

@@ -1,5 +1,9 @@
 # changelog
 
+## WIP
+
+-   update deps
+
 ## 2.0.0
 
 -   **BREAKING CHANGE** exported files paths
