@@ -2,6 +2,8 @@
 
 ## WIP
 
+-   add action status badge
+-   use oxlint instead of ESLint (leave config file)
 -   update deps
 
 ## 2.0.0
