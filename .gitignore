@@ -1,6 +1,29 @@
-*.log
-.idea/
-node_modules/
-dist/
-*.tgz
+# typical suspects
+**/node_modules/
+**/tmp/
+**/dist/
+**/build/
+**/out/
+**/.next/
+**/.vercel/
+.vscode
 
+# testing
+/coverage
+/test-results
+
+# misc
+.DS_Store
+*.pem
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# tf
+.env*
+.vercel
+*.tsbuildinfo
+stats.html
