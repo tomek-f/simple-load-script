@@ -14,7 +14,7 @@
         "prepublishOnly": "npm run check-all && npm run build",
         "build": "rollup --c ./rollup.config.ts --configPlugin typescript",
         "watch": "npm run build -- -w",
-        "lint": "NODE_ENV=production oxlint --import-plugin --security-plugin --promise-plugin --node-plugin ./",
+        "lint": "NODE_ENV=production oxlint --import-plugin --promise-plugin --node-plugin ./",
         "vite:build-and-preview": "vite build && vite preview",
         "test:run": "vite build && vitest run --reporter=verbose",
         "test:ui": "vite build && vitest --reporter=verbose --ui",
@@ -56,14 +56,14 @@
     "readmeFilename": "README.md",
     "devDependencies": {
         "@rollup/plugin-terser": "^0.4.4",
-        "@rollup/plugin-typescript": "^12.1.1",
-        "@vitest/ui": "^2.1.5",
-        "oxlint": "^0.11.1",
-        "playwright": "^1.48.2",
-        "prettier": "^3.3.3",
-        "rollup": "^4.27.2",
-        "typescript": "^5.6.3",
-        "vite": "^5.4.11",
-        "vitest": "^2.1.5"
+        "@rollup/plugin-typescript": "^12.1.2",
+        "@vitest/ui": "^3.0.4",
+        "oxlint": "^0.15.9",
+        "playwright": "^1.50.1",
+        "prettier": "^3.4.2",
+        "rollup": "^4.34.1",
+        "typescript": "^5.7.3",
+        "vite": "^6.0.11",
+        "vitest": "^3.0.4"
     }
 }

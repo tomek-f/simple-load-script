@@ -142,11 +142,11 @@ const defaultConfig = {
 };
 ```
 
--   `url` - file to append to body
--   `attrs` - with attributes to append to script tag (`charset`, `type`, `id`, &hellip;)
--   `inBody` - append to `document.body` instead of `document.head`
--   `insertInto` - [CSS selector (an ID, class name, element name, etc.)](https://developer.mozilla.org/en/docs/Web/API/Document/querySelector) to insert the script into. Overrides `inBody` value.
--   `removeScript` - remove script tag after load; it's always removed on an error
+- `url` - file to append to body
+- `attrs` - with attributes to append to script tag (`charset`, `type`, `id`, &hellip;)
+- `inBody` - append to `document.body` instead of `document.head`
+- `insertInto` - [CSS selector (an ID, class name, element name, etc.)](https://developer.mozilla.org/en/docs/Web/API/Document/querySelector) to insert the script into. Overrides `inBody` value.
+- `removeScript` - remove script tag after load; it's always removed on an error
 
 ## Specific import
 
@@ -158,4 +158,4 @@ const defaultConfig = {
 
 ## Misc.
 
--   uses addEventListener, Array.isArray, for…of, destructuring Promise & Promise.all
+- uses addEventListener, Array.isArray, for…of, destructuring Promise & Promise.all
