@@ -58,13 +58,12 @@
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^12.1.2",
         "@vitest/ui": "^3.0.5",
-        "oxlint": "^0.15.10",
+        "oxlint": "^0.15.9",
         "playwright": "^1.50.1",
         "prettier": "^3.5.0",
         "rollup": "^4.34.6",
         "typescript": "^5.7.3",
         "vite": "^6.1.0",
         "vitest": "^3.0.5"
-    },
-    "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+    }
 }
