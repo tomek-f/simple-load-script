@@ -57,13 +57,13 @@
     "devDependencies": {
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^12.1.2",
-        "@vitest/ui": "^3.0.5",
-        "oxlint": "^0.15.10",
+        "@vitest/ui": "^3.0.7",
+        "oxlint": "^0.15.12",
         "playwright": "^1.50.1",
-        "prettier": "^3.5.1",
-        "rollup": "^4.34.7",
+        "prettier": "^3.5.2",
+        "rollup": "^4.34.8",
         "typescript": "^5.7.3",
-        "vite": "^6.1.0",
-        "vitest": "^3.0.5"
+        "vite": "^6.2.0",
+        "vitest": "^3.0.7"
     }
 }
