@@ -1,6 +1,10 @@
 # changelog
 
-## WIP
+## 2.1.1
+
+- update changelog
+
+## 2.1.0
 
 - add action status badge
 - use oxlint instead of ESLint (leave config file)
