@@ -58,7 +58,7 @@
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^12.1.2",
         "@vitest/ui": "^3.1.1",
-        "oxlint": "^0.15.12",
+        "oxlint": "^0.15.15",
         "playwright": "^1.50.1",
         "prettier": "^3.5.3",
         "rollup": "^4.34.9",
