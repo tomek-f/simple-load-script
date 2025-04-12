@@ -59,10 +59,10 @@
         "@rollup/plugin-typescript": "^12.1.2",
         "@vitest/ui": "^3.1.1",
         "oxlint": "^0.16.5",
-        "playwright": "^1.50.1",
+        "playwright": "^1.51.1",
         "prettier": "^3.5.3",
-        "rollup": "^4.34.9",
-        "typescript": "^5.8.2",
+        "rollup": "^4.40.0",
+        "typescript": "^5.8.3",
         "vite": "^6.2.0",
         "vitest": "^3.1.1"
     }
