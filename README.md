@@ -13,7 +13,7 @@ import simpleLoadScript from 'simple-load-script';
 
 try {
     const scriptRef = await simpleLoadScript(
-        'https://code.jquery.com/jquery-3.7.1.min.js',
+        'https://code.jquery.com/jquery-4.0.0.min.js',
     );
 
     console.log(scriptRef); // HTMLScriptElement
@@ -27,7 +27,7 @@ try {
 ```js
 import simpleLoadScript from 'simple-load-script';
 
-simpleLoadScript('https://code.jquery.com/jquery-3.7.1.min.js')
+simpleLoadScript('https://code.jquery.com/jquery-4.0.0.min.js')
     .then(function (scriptRef) {
         console.log(scriptRef); // HTMLScriptElement
     })
@@ -43,7 +43,7 @@ import simpleLoadScript from 'simple-load-script';
 
 try {
     const scriptRef = await simpleLoadScript({
-        url: 'https://code.jquery.com/jquery-3.7.1.min.js',
+        url: 'https://code.jquery.com/jquery-4.0.0.min.js',
         inBody: true,
         attrs: { id: 'one', charset: 'UTF-8' },
     });
@@ -103,7 +103,7 @@ try {
             url: '//api.ipinfodb.com/v3/ip-city/?format=json&callback=elo',
             removeScript: true,
         },
-        'https://code.jquery.com/jquery-3.7.1.min.js',
+        'https://code.jquery.com/jquery-4.0.0.min.js',
     ]);
 
     console.log(scriptRefs); // HTMLScriptElement[]
