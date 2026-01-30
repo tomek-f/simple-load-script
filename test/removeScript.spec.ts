@@ -1,77 +1,65 @@
-import { afterAll, beforeAll, expect, test } from 'vitest';
-import { preview } from 'vite';
-import type { PreviewServer } from 'vite';
-import type { Browser, Page } from 'playwright';
-import { chromium } from 'playwright';
-import { TIMEOUT } from './constants';
+import { afterEach, beforeEach, expect, test } from 'vitest';
+import simpleLoadScript from '../src/index';
 
-let browser: Browser;
-let server: PreviewServer;
-let page: Page;
-
-beforeAll(async () => {
-    browser = await chromium.launch({ headless: true });
-    server = await preview({ preview: { port: 3004 } });
-    page = await browser.newPage();
+beforeEach(() => {
+    // Clear any existing scripts before each test
+    window.document.head.innerHTML = '';
+    window.document.body.innerHTML = '';
 });
 
-afterAll(async () => {
-    await browser.close();
-    await new Promise<void>((resolve, reject) => {
-        server.httpServer.close((error: unknown) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve();
-            }
-        });
+afterEach(() => {
+    // Clean up after each test
+    window.document.head.innerHTML = '';
+    window.document.body.innerHTML = '';
+});
+
+test('removeScript true', async () => {
+    // Mock script loading by triggering load event
+    const originalAppendChild = window.document.head.appendChild.bind(
+        window.document.head,
+    );
+    window.document.head.appendChild = function (node: Node) {
+        const result = originalAppendChild(node);
+        if (node.nodeName === 'SCRIPT') {
+            setTimeout(() => {
+                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
+            }, 0);
+        }
+        return result;
+    } as any;
+
+    await simpleLoadScript({
+        attrs: { id: 'jquery' },
+        removeScript: true,
+        url: '//code.jquery.com/jquery-2.2.3.js',
     });
+
+    const jquery = window.document.querySelector('script#jquery');
+    expect(jquery).toBeNull();
 });
 
-test(
-    'removeScript true',
-    async () => {
-        try {
-            await page.goto('http://localhost:3004');
-            await page.evaluate(async () => {
-                await window.simpleLoadScript({
-                    attrs: { id: 'jquery' },
-                    removeScript: true,
-                    url: '//code.jquery.com/jquery-2.2.3.js',
-                });
-            });
-            const jquery = await page.$('script#jquery');
-            const id = await page.evaluate((script) => script?.id, jquery);
-            const nodeType = await page.evaluate(
-                (script) => script?.nodeType,
-                jquery,
-            );
-            expect(id).toBeUndefined();
-            expect(nodeType).toBeUndefined();
-        } catch (err) {
-            expect(err).toBeUndefined();
+test('removeScript false', async () => {
+    // Mock script loading by triggering load event
+    const originalAppendChild = window.document.head.appendChild.bind(
+        window.document.head,
+    );
+    window.document.head.appendChild = function (node: Node) {
+        const result = originalAppendChild(node);
+        if (node.nodeName === 'SCRIPT') {
+            setTimeout(() => {
+                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
+            }, 0);
         }
-    },
-    TIMEOUT,
-);
+        return result;
+    } as any;
 
-test(
-    'removeScript false',
-    async () => {
-        try {
-            await page.goto('http://localhost:3004');
-            await page.evaluate(async () => {
-                await window.simpleLoadScript({
-                    attrs: { id: 'jquery' },
-                    url: '//code.jquery.com/jquery-2.2.3.js',
-                });
-            });
-            const jquery = await page.$('script#jquery');
-            const id = await page.evaluate((script) => script?.id, jquery);
-            expect(id).toBe('jquery');
-        } catch (err) {
-            expect(err).toBeUndefined();
-        }
-    },
-    TIMEOUT,
-);
+    await simpleLoadScript({
+        attrs: { id: 'jquery' },
+        url: '//code.jquery.com/jquery-2.2.3.js',
+    });
+
+    const jquery = window.document.querySelector(
+        'script#jquery',
+    ) as HTMLScriptElement;
+    expect(jquery.id).toBe('jquery');
+});

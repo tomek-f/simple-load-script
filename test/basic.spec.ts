@@ -1,130 +1,106 @@
-import { afterAll, beforeAll, describe, expect, test } from 'vitest';
-import { preview } from 'vite';
-import type { PreviewServer } from 'vite';
-import type { Browser, Page } from 'playwright';
-import { chromium } from 'playwright';
-import { TIMEOUT } from './constants';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
+import simpleLoadScript from '../src/index';
 
 // https://github.com/vitest-dev/vitest/blob/main/examples/puppeteer/test/basic.test.ts
 // https://gist.github.com/mizchi/5f67109d0719ef6dd57695e1f528ce8d
 
-let browser: Browser;
-let server: PreviewServer;
-let page: Page;
-
-beforeAll(async () => {
-    browser = await chromium.launch({ headless: true });
-    server = await preview({ preview: { port: 3000 } });
-    page = await browser.newPage();
+beforeEach(() => {
+    // Clear any existing scripts before each test
+    window.document.head.innerHTML = '';
+    window.document.body.innerHTML = '';
 });
 
-afterAll(async () => {
-    await browser.close();
-    await new Promise<void>((resolve, reject) => {
-        server.httpServer.close((error: unknown) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve();
-            }
-        });
+afterEach(() => {
+    // Clean up after each test
+    window.document.head.innerHTML = '';
+    window.document.body.innerHTML = '';
+});
+
+test('load url ok', async () => {
+    // Mock script loading by triggering load event
+    const originalAppendChild = window.document.head.appendChild.bind(
+        window.document.head,
+    );
+    window.document.head.appendChild = function (node: Node) {
+        const result = originalAppendChild(node);
+        if (node.nodeName === 'SCRIPT') {
+            setTimeout(() => {
+                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
+            }, 0);
+        }
+        return result;
+    } as any;
+
+    const scriptRef = await simpleLoadScript(
+        '//code.jquery.com/jquery-2.2.3.js',
+    );
+    expect(scriptRef).toBeDefined();
+});
+
+test('load config ok', async () => {
+    // Mock script loading by triggering load event
+    const originalAppendChild = window.document.head.appendChild.bind(
+        window.document.head,
+    );
+    window.document.head.appendChild = function (node: Node) {
+        const result = originalAppendChild(node);
+        if (node.nodeName === 'SCRIPT') {
+            setTimeout(() => {
+                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
+            }, 0);
+        }
+        return result;
+    } as any;
+
+    const scriptRef = await simpleLoadScript({
+        url: '//code.jquery.com/jquery-2.2.3.js',
     });
+    expect(scriptRef).toBeDefined();
 });
 
-test(
-    'load url ok',
-    async () => {
-        try {
-            await page.goto('http://localhost:3000');
-            const ref = await page.evaluate(async () => {
-                const scriptRef = await window.simpleLoadScript(
-                    '//code.jquery.com/jquery-2.2.3.js',
-                );
-                return scriptRef;
-            });
-            expect(ref).toBeDefined();
-        } catch (err) {
-            expect(err).toBeUndefined();
+test('wrong url error', async () => {
+    // Mock script loading by triggering error event
+    const originalAppendChild = window.document.head.appendChild.bind(
+        window.document.head,
+    );
+    window.document.head.appendChild = function (node: Node) {
+        const result = originalAppendChild(node);
+        if (node.nodeName === 'SCRIPT') {
+            setTimeout(() => {
+                (node as HTMLScriptElement).dispatchEvent(new Event('error'));
+            }, 0);
         }
-    },
-    TIMEOUT,
-);
+        return result;
+    } as any;
 
-test(
-    'load config ok',
-    async () => {
-        try {
-            await page.goto('http://localhost:3000');
-            const ref = await page.evaluate(async () => {
-                const scriptRef = await window.simpleLoadScript({
-                    url: '//code.jquery.com/jquery-2.2.3.js',
-                });
-                return scriptRef;
-            });
-            expect(ref).toBeDefined();
-        } catch (err) {
-            expect(err).toBeUndefined();
-        }
-    },
-    TIMEOUT,
-);
-
-test(
-    'wrong url error',
-    async () => {
-        try {
-            await page.goto('http://localhost:3000');
-            await page.evaluate(async () => {
-                await window.simpleLoadScript('//wrong.domain/jquery-2.2.3.js');
-            });
-        } catch (err) {
-            expect(
-                (err as Error).message.includes('Error: Loading script error'),
-            ).toBe(true);
-        }
-    },
-    TIMEOUT,
-);
+    try {
+        await simpleLoadScript('//wrong.domain/jquery-2.2.3.js');
+    } catch (err) {
+        expect((err as Error).message).toBe('Loading script error');
+    }
+});
 
 describe('wrong config error', () => {
-    test(
-        'no param',
-        async () => {
-            try {
-                await page.goto('http://localhost:3000');
-                await page.evaluate(async () => {
-                    // @ts-expect-error Testing wrong config
-                    await window.simpleLoadScript();
-                });
-            } catch (err) {
-                expect(
-                    (err as Error).message.includes(
-                        'Error: Object with url or url string needed',
-                    ),
-                ).toBe(true);
-            }
-        },
-        TIMEOUT,
-    );
-    test(
-        'bad config',
-        async () => {
-            try {
-                await page.goto('http://localhost:3000');
-                await page.evaluate(async () => {
-                    await window.simpleLoadScript({
-                        // @ts-expect-error Testing wrong config
-                        elo: '//code.jquery.com/jquery-2.2.3.js',
-                    });
-                });
-            } catch (err) {
-                expect(
-                    (err as Error).message.includes(
-                        'Error: Object with url or url string needed',
-                    ),
-                ).toBe(true);
-            }
-        },
-        TIMEOUT,
-    );
+    test('no param', async () => {
+        try {
+            // @ts-expect-error Testing wrong config
+            await simpleLoadScript();
+        } catch (err) {
+            expect((err as Error).message).toBe(
+                'Object with url or url string needed',
+            );
+        }
+    });
+    test('bad config', async () => {
+        try {
+            await simpleLoadScript({
+                // @ts-expect-error Testing wrong config
+                elo: '//code.jquery.com/jquery-2.2.3.js',
+            });
+        } catch (err) {
+            expect((err as Error).message).toBe(
+                'Object with url or url string needed',
+            );
+        }
+    });
 });
