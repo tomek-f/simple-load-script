@@ -1,16 +1,14 @@
 import { afterEach, beforeEach, expect, test } from 'vitest';
 import simpleLoadScript from '../src/index';
+import { clearTestEnvironment } from './utils';
 
 beforeEach(() => {
-    // Clear any existing scripts before each test
-    window.document.head.innerHTML = '';
+    clearTestEnvironment();
     window.document.body.innerHTML = '<div id="insert"></div>';
 });
 
 afterEach(() => {
-    // Clean up after each test
-    window.document.head.innerHTML = '';
-    window.document.body.innerHTML = '';
+    clearTestEnvironment();
 });
 
 test('placement head', async () => {
