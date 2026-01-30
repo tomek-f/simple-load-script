@@ -31,3 +31,8 @@
 
 ## Skills
 - See [.github/skills](../.github/skills) for available skills and how to use them
+
+## Plan Mode
+- Make the plan extremely concise. Sacrifice grammar for the sake of concision.
+- End every plan with a numbered list of concrete steps. This should be the last thing visible in the terminal.
+- At the end of each plan, give me a list of unresolved questions to answer, if any.
