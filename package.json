@@ -20,6 +20,7 @@
         }
     ],
     "repository": "tomek-f/simple-load-script",
+    "source": "src/index.ts",
     "files": [
         "src",
         "dist",
@@ -27,23 +28,24 @@
     ],
     "type": "module",
     "main": "./dist/index.umd.js",
-    "module": "./dist/index.es.js",
-    "types": "./dist/index.d.ts",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.mts",
+    "unpkg": "./dist/index.umd.js",
     "umd:main": "./dist/index.umd.js",
     "exports": {
         "./package.json": "./package.json",
         ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.es.js",
-            "require": "./dist/index.cjs.js",
+            "types": "./dist/index.d.mts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.cjs",
             "default": "./dist/index.umd.js"
         }
     },
     "scripts": {
         "check-all": "npm run lint && npm run format-check && npm run check-types && npm run test-run",
         "prepublishOnly": "npm run check-all && npm run build",
-        "build": "rollup --c ./rollup.config.ts --configPlugin typescript",
-        "watch": "npm run build -- -w",
+        "build": "tsdown",
+        "watch": "tsdown --watch",
         "lint": "NODE_ENV=production oxlint ./",
         "lint-fix": "NODE_ENV=production oxlint --fix ./",
         "test-run": "vitest run --reporter=verbose",
@@ -53,14 +55,11 @@
         "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
     },
     "devDependencies": {
-        "@rollup/plugin-terser": "^0.4.4",
-        "@rollup/plugin-typescript": "^12.1.2",
         "@types/jsdom": "^27.0.0",
         "jsdom": "^27.4.0",
         "oxfmt": "^0.27.0",
         "oxlint": "^1.42.0",
-        "rollup": "^4.40.0",
-        "tslib": "^2.8.1",
+        "tsdown": "^0.20.1",
         "typescript": "^5.8.3",
         "vitest": "^3.1.1"
     },
