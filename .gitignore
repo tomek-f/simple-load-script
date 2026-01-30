@@ -4,8 +4,6 @@
 **/dist/
 **/build/
 **/out/
-**/.next/
-**/.vercel/
 .vscode
 
 # testing
@@ -24,6 +22,4 @@ pnpm-debug.log*
 
 # tf
 .env*
-.vercel
 *.tsbuildinfo
-stats.html
