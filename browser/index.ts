@@ -7,5 +7,3 @@ declare global {
 }
 
 window.simpleLoadScript = simpleLoadScript;
-
-export {};

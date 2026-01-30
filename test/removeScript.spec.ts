@@ -1,7 +1,8 @@
 import { afterAll, beforeAll, expect, test } from 'vitest';
 import { preview } from 'vite';
 import type { PreviewServer } from 'vite';
-import { Browser, Page, chromium } from 'playwright';
+import type { Browser, Page } from 'playwright';
+import { chromium } from 'playwright';
 import { TIMEOUT } from './constants';
 
 let browser: Browser;
@@ -17,9 +18,13 @@ beforeAll(async () => {
 afterAll(async () => {
     await browser.close();
     await new Promise<void>((resolve, reject) => {
-        server.httpServer.close((error: unknown) =>
-            error ? reject(error) : resolve(),
-        );
+        server.httpServer.close((error: unknown) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve();
+            }
+        });
     });
 });
 
@@ -30,9 +35,9 @@ test(
             await page.goto('http://localhost:3004');
             await page.evaluate(async () => {
                 await window.simpleLoadScript({
-                    url: '//code.jquery.com/jquery-2.2.3.js',
-                    removeScript: true,
                     attrs: { id: 'jquery' },
+                    removeScript: true,
+                    url: '//code.jquery.com/jquery-2.2.3.js',
                 });
             });
             const jquery = await page.$('script#jquery');
@@ -57,8 +62,8 @@ test(
             await page.goto('http://localhost:3004');
             await page.evaluate(async () => {
                 await window.simpleLoadScript({
-                    url: '//code.jquery.com/jquery-2.2.3.js',
                     attrs: { id: 'jquery' },
+                    url: '//code.jquery.com/jquery-2.2.3.js',
                 });
             });
             const jquery = await page.$('script#jquery');

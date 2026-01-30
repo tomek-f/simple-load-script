@@ -1,7 +1,8 @@
 import { afterAll, beforeAll, expect, test } from 'vitest';
 import { preview } from 'vite';
 import type { PreviewServer } from 'vite';
-import { Browser, Page, chromium } from 'playwright';
+import type { Browser, Page } from 'playwright';
+import { chromium } from 'playwright';
 import { TIMEOUT } from './constants';
 
 let browser: Browser;
@@ -17,9 +18,13 @@ beforeAll(async () => {
 afterAll(async () => {
     await browser.close();
     await new Promise<void>((resolve, reject) => {
-        server.httpServer.close((error: unknown) =>
-            error ? reject(error) : resolve(),
-        );
+        server.httpServer.close((error: unknown) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve();
+            }
+        });
     });
 });
 
@@ -30,8 +35,8 @@ test(
             await page.goto('http://localhost:3001');
             await page.evaluate(async () => {
                 await window.simpleLoadScript({
+                    attrs: { 'data-test': 'test', id: 'jquery' },
                     url: '//code.jquery.com/jquery-2.2.3.js',
-                    attrs: { id: 'jquery', 'data-test': 'test' },
                 });
             });
             const jquery = await page.$('script#jquery');

@@ -1,7 +1,8 @@
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { preview } from 'vite';
 import type { PreviewServer } from 'vite';
-import { Browser, Page, chromium } from 'playwright';
+import type { Browser, Page } from 'playwright';
+import { chromium } from 'playwright';
 import { TIMEOUT } from './constants';
 
 // https://github.com/vitest-dev/vitest/blob/main/examples/puppeteer/test/basic.test.ts
@@ -20,9 +21,13 @@ beforeAll(async () => {
 afterAll(async () => {
     await browser.close();
     await new Promise<void>((resolve, reject) => {
-        server.httpServer.close((error: unknown) =>
-            error ? reject(error) : resolve(),
-        );
+        server.httpServer.close((error: unknown) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve();
+            }
+        });
     });
 });
 

@@ -7,11 +7,11 @@ export interface Config {
 }
 
 const defaultConfig = {
-    url: '',
     attrs: {},
     inBody: false,
     insertInto: null,
     removeScript: false,
+    url: '',
 } satisfies Config;
 
 export default function simpleLoadScript(
@@ -46,12 +46,12 @@ export default function simpleLoadScript(
         );
         const { url, attrs, inBody, insertInto, removeScript } =
             configProcessed;
-        const script = document.createElement('script');
+        const script = window.document.createElement('script');
         const where: HTMLElement | null = insertInto
-            ? document.querySelector(insertInto)
+            ? window.document.querySelector(insertInto)
             : inBody
-              ? document.body
-              : document.head;
+              ? window.document.body
+              : window.document.head;
 
         if (attrs && typeof attrs === 'object') {
             for (const attr of Object.keys(attrs)) {

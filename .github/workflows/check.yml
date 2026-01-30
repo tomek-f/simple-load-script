@@ -3,8 +3,8 @@ on:
         branches: ['**']
         # branches: [master, feat/**, fix/**]
         # branches: [feat/**, fix/**]
-    # pull_request:
-    #   branches: [master]
+        # pull_request:
+        #   branches: [master]
     workflow_dispatch:
 
 jobs:
@@ -63,4 +63,4 @@ jobs:
                   cache: 'npm'
             - run: npm ci
             - run: npx playwright install chromium
-            - run: npm run test:run
+            - run: npm run test-run

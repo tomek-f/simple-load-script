@@ -1,7 +1,8 @@
 import { afterAll, beforeAll, expect, test } from 'vitest';
 import { preview } from 'vite';
 import type { PreviewServer } from 'vite';
-import { Browser, Page, chromium } from 'playwright';
+import type { Browser, Page } from 'playwright';
+import { chromium } from 'playwright';
 import { TIMEOUT } from './constants';
 
 let browser: Browser;
@@ -17,9 +18,13 @@ beforeAll(async () => {
 afterAll(async () => {
     await browser.close();
     await new Promise<void>((resolve, reject) => {
-        server.httpServer.close((error: unknown) =>
-            error ? reject(error) : resolve(),
-        );
+        server.httpServer.close((error: unknown) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve();
+            }
+        });
     });
 });
 
@@ -32,12 +37,12 @@ test(
                 const [a, b, c] = await window.simpleLoadScript([
                     '//code.jquery.com/jquery-2.2.3.js',
                     {
-                        url: '//code.jquery.com/jquery-2.2.2.js',
                         attrs: { id: 'jquery2' },
+                        url: '//code.jquery.com/jquery-2.2.2.js',
                     },
                     {
-                        url: '//code.jquery.com/jquery-2.2.1.js',
                         attrs: { id: 'jquery3' },
+                        url: '//code.jquery.com/jquery-2.2.1.js',
                     },
                 ]);
                 return [a, b, c];
@@ -73,12 +78,12 @@ test(
                 await window.simpleLoadScript([
                     '//wrong.domain/jquery-2.2.3.js',
                     {
-                        url: '//code.jquery.com/jquery-2.2.2.js',
                         attrs: { id: 'jquery2' },
+                        url: '//code.jquery.com/jquery-2.2.2.js',
                     },
                     {
-                        url: '//code.jquery.com/jquery-2.2.1.js',
                         attrs: { id: 'jquery3' },
+                        url: '//code.jquery.com/jquery-2.2.1.js',
                     },
                 ]);
             });
