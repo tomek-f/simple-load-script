@@ -28,3 +28,6 @@
 - Start description with capital letter using imperative mood (Add, Enable, Remove, etc.)
 - Don't end with a period
 - Don't repeat the type in the description
+
+## Skills
+- See [.github/skills](../.github/skills) for available skills and how to use them
