@@ -1,3 +1,5 @@
+name: CI
+
 on:
     push:
         branches: ['**']
@@ -11,55 +13,50 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
+            - uses: actions/checkout@v6
+            - uses: actions/setup-node@v6
               with:
-                  node-version: 24
-                  check-latest: true
+                  node-version: lts/*
                   cache: 'npm'
             - run: npm ci
             - run: npm run build
     lint:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
+            - uses: actions/checkout@v6
+            - uses: actions/setup-node@v6
               with:
-                  node-version: 24
-                  check-latest: true
+                  node-version: lts/*
                   cache: 'npm'
             - run: npm ci
             - run: npm run lint
     types:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
+            - uses: actions/checkout@v6
+            - uses: actions/setup-node@v6
               with:
-                  node-version: 24
-                  check-latest: true
+                  node-version: lts/*
                   cache: 'npm'
             - run: npm ci
             - run: npm run check-types
     format-check:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
+            - uses: actions/checkout@v6
+            - uses: actions/setup-node@v6
               with:
-                  node-version: 24
-                  check-latest: true
+                  node-version: lts/*
                   cache: 'npm'
             - run: npm ci
             - run: npm run format-check
     test:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
+            - uses: actions/checkout@v6
+            - uses: actions/setup-node@v6
               with:
-                  node-version: 24
-                  check-latest: true
+                  node-version: lts/*
                   cache: 'npm'
             - run: npm ci
             - run: npm run test-run
