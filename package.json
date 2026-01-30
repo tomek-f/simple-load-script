@@ -46,10 +46,8 @@
         "watch": "npm run build -- -w",
         "lint": "NODE_ENV=production oxlint ./",
         "lint-fix": "NODE_ENV=production oxlint --fix ./",
-        "vite-build-and-preview": "vite build && vite preview",
-        "test-run": "vite build && vitest run --reporter=verbose",
-        "test-ui": "vite build && vitest --reporter=verbose --ui",
-        "test-watch": "vite build && vitest --reporter=verbose",
+        "test-run": "vitest run --reporter=verbose",
+        "test-watch": "vitest --reporter=verbose",
         "format-check": "oxfmt",
         "format-write": "oxfmt --check",
         "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
@@ -58,15 +56,12 @@
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^12.1.2",
         "@types/jsdom": "^27.0.0",
-        "@vitest/ui": "^3.1.1",
         "jsdom": "^27.4.0",
         "oxfmt": "^0.27.0",
         "oxlint": "^1.42.0",
-        "playwright": "^1.51.1",
         "rollup": "^4.40.0",
         "tslib": "^2.8.1",
         "typescript": "^5.8.3",
-        "vite": "^6.2.0",
         "vitest": "^3.1.1"
     },
     "readmeFilename": "README.md"
