@@ -1,6 +1,6 @@
 {
     "name": "simple-load-script",
-    "version": "2.1.1",
+    "version": "2.2.0",
     "description": "Very simple promise based script and JSONP",
     "keywords": [
         "JSONP",
