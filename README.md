@@ -154,7 +154,7 @@ const defaultConfig = {
 
 ## Changelog
 
-[View on github](https://github.com/tomek-f/simple-load-script/blob/master/changelog.md).
+[View on github](https://github.com/tomek-f/simple-load-script/blob/master/CHANGELOG.md).
 
 ## Misc.
 

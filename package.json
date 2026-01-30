@@ -24,7 +24,7 @@
     "files": [
         "src",
         "dist",
-        "changelog.md"
+        "CHANGELOG.md"
     ],
     "type": "module",
     "main": "./dist/index.umd.js",
@@ -50,8 +50,8 @@
         "lint-fix": "NODE_ENV=production oxlint --fix ./",
         "test-run": "vitest run --reporter=verbose",
         "test-watch": "vitest --reporter=verbose",
-        "format-check": "oxfmt",
-        "format-write": "oxfmt --check",
+        "format-check": "oxfmt --check",
+        "format-write": "oxfmt --write",
         "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
     },
     "devDependencies": {
