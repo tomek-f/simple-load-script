@@ -2,6 +2,7 @@
     "compilerOptions": {
         "target": "es2015",
         "module": "es2015",
+        "lib": ["es2015", "DOM"],
         "declaration": true,
         "outDir": "./dist",
         "forceConsistentCasingInFileNames": true,
@@ -11,5 +12,5 @@
         "moduleResolution": "node"
     },
     "include": ["./**/*.ts"],
-    "exclude": ["./dist", "./browser/dist"]
+    "exclude": ["./dist"]
 }

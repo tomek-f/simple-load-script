@@ -1,97 +1,97 @@
-import { afterAll, beforeAll, expect, test } from 'vitest';
-import { preview } from 'vite';
-import type { PreviewServer } from 'vite';
-import type { Browser, Page } from 'playwright';
-import { chromium } from 'playwright';
-import { TIMEOUT } from './constants';
+import { afterEach, beforeEach, expect, test } from 'vitest';
+import simpleLoadScript from '../src/index';
 
-let browser: Browser;
-let server: PreviewServer;
-let page: Page;
-
-beforeAll(async () => {
-    browser = await chromium.launch({ headless: true });
-    server = await preview({ preview: { port: 3005 } });
-    page = await browser.newPage();
+beforeEach(() => {
+    // Clear any existing scripts before each test
+    window.document.head.innerHTML = '';
+    window.document.body.innerHTML = '';
 });
 
-afterAll(async () => {
-    await browser.close();
-    await new Promise<void>((resolve, reject) => {
-        server.httpServer.close((error: unknown) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve();
-            }
-        });
-    });
+afterEach(() => {
+    // Clean up after each test
+    window.document.head.innerHTML = '';
+    window.document.body.innerHTML = '';
 });
 
-test(
-    'load array ok',
-    async () => {
-        try {
-            await page.goto('http://localhost:3005');
-            const scriptRefs = await page.evaluate(async () => {
-                const [a, b, c] = await window.simpleLoadScript([
-                    '//code.jquery.com/jquery-2.2.3.js',
-                    {
-                        attrs: { id: 'jquery2' },
-                        url: '//code.jquery.com/jquery-2.2.2.js',
-                    },
-                    {
-                        attrs: { id: 'jquery3' },
-                        url: '//code.jquery.com/jquery-2.2.1.js',
-                    },
-                ]);
-                return [a, b, c];
-            });
-            expect(scriptRefs.length).toBe(3);
-            const jquery1 = await page.$(
-                'head script[src="//code.jquery.com/jquery-2.2.3.js"]',
-            );
-            const jquery2 = await page.$('script#jquery2');
-            const jquery3 = await page.$('script#jquery3');
-            const src1 = await page.evaluate(
-                (script) => script?.getAttribute('src'),
-                jquery1,
-            );
-            const id2 = await page.evaluate((script) => script?.id, jquery2);
-            const id3 = await page.evaluate((script) => script?.id, jquery3);
-            expect(src1).toBe('//code.jquery.com/jquery-2.2.3.js');
-            expect(id2).toBe('jquery2');
-            expect(id3).toBe('jquery3');
-        } catch (err) {
-            expect(err).toBeUndefined();
+test('load array ok', async () => {
+    // Mock script loading by triggering load event
+    const originalAppendChild = window.document.head.appendChild.bind(
+        window.document.head,
+    );
+    window.document.head.appendChild = function (node: Node) {
+        const result = originalAppendChild(node);
+        if (node.nodeName === 'SCRIPT') {
+            setTimeout(() => {
+                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
+            }, 0);
         }
-    },
-    TIMEOUT,
-);
+        return result;
+    } as any;
 
-test(
-    'load array error',
-    async () => {
-        try {
-            await page.goto('http://localhost:3005');
-            await page.evaluate(async () => {
-                await window.simpleLoadScript([
-                    '//wrong.domain/jquery-2.2.3.js',
-                    {
-                        attrs: { id: 'jquery2' },
-                        url: '//code.jquery.com/jquery-2.2.2.js',
-                    },
-                    {
-                        attrs: { id: 'jquery3' },
-                        url: '//code.jquery.com/jquery-2.2.1.js',
-                    },
-                ]);
-            });
-        } catch (err) {
-            expect(
-                (err as Error).message.includes('Error: Loading script error'),
-            ).toBe(true);
+    const [a, b, c] = await simpleLoadScript([
+        '//code.jquery.com/jquery-2.2.3.js',
+        {
+            attrs: { id: 'jquery2' },
+            url: '//code.jquery.com/jquery-2.2.2.js',
+        },
+        {
+            attrs: { id: 'jquery3' },
+            url: '//code.jquery.com/jquery-2.2.1.js',
+        },
+    ]);
+
+    expect([a, b, c].length).toBe(3);
+
+    const jquery1 = window.document.querySelector(
+        'head script[src="//code.jquery.com/jquery-2.2.3.js"]',
+    ) as HTMLScriptElement;
+    const jquery2 = window.document.querySelector(
+        'script#jquery2',
+    ) as HTMLScriptElement;
+    const jquery3 = window.document.querySelector(
+        'script#jquery3',
+    ) as HTMLScriptElement;
+
+    expect(jquery1.getAttribute('src')).toBe(
+        '//code.jquery.com/jquery-2.2.3.js',
+    );
+    expect(jquery2.id).toBe('jquery2');
+    expect(jquery3.id).toBe('jquery3');
+});
+
+test('load array error', async () => {
+    // Mock script loading by triggering error event
+    const originalAppendChild = window.document.head.appendChild.bind(
+        window.document.head,
+    );
+    window.document.head.appendChild = function (node: Node) {
+        const result = originalAppendChild(node);
+        if (node.nodeName === 'SCRIPT') {
+            const script = node as HTMLScriptElement;
+            setTimeout(() => {
+                if (script.src.includes('wrong.domain')) {
+                    script.dispatchEvent(new Event('error'));
+                } else {
+                    script.dispatchEvent(new Event('load'));
+                }
+            }, 0);
         }
-    },
-    TIMEOUT,
-);
+        return result;
+    } as any;
+
+    try {
+        await simpleLoadScript([
+            '//wrong.domain/jquery-2.2.3.js',
+            {
+                attrs: { id: 'jquery2' },
+                url: '//code.jquery.com/jquery-2.2.2.js',
+            },
+            {
+                attrs: { id: 'jquery3' },
+                url: '//code.jquery.com/jquery-2.2.1.js',
+            },
+        ]);
+    } catch (err) {
+        expect((err as Error).message).toBe('Loading script error');
+    }
+});

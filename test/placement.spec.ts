@@ -1,117 +1,105 @@
-import { afterAll, beforeAll, expect, test } from 'vitest';
-import { preview } from 'vite';
-import type { PreviewServer } from 'vite';
-import type { Browser, Page } from 'playwright';
-import { chromium } from 'playwright';
-import { TIMEOUT } from './constants';
+import { afterEach, beforeEach, expect, test } from 'vitest';
+import simpleLoadScript from '../src/index';
 
-let browser: Browser;
-let server: PreviewServer;
-let page: Page;
-
-beforeAll(async () => {
-    browser = await chromium.launch({ headless: true });
-    server = await preview({ preview: { port: 3003 } });
-    page = await browser.newPage();
+beforeEach(() => {
+    // Clear any existing scripts before each test
+    window.document.head.innerHTML = '';
+    window.document.body.innerHTML = '<div id="insert"></div>';
 });
 
-afterAll(async () => {
-    await browser.close();
-    await new Promise<void>((resolve, reject) => {
-        server.httpServer.close((error: unknown) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve();
-            }
-        });
+afterEach(() => {
+    // Clean up after each test
+    window.document.head.innerHTML = '';
+    window.document.body.innerHTML = '';
+});
+
+test('placement head', async () => {
+    // Mock script loading by triggering load event
+    const originalAppendChild = window.document.head.appendChild.bind(
+        window.document.head,
+    );
+    window.document.head.appendChild = function (node: Node) {
+        const result = originalAppendChild(node);
+        if (node.nodeName === 'SCRIPT') {
+            setTimeout(() => {
+                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
+            }, 0);
+        }
+        return result;
+    } as any;
+
+    await simpleLoadScript({
+        attrs: { id: 'jquery' },
+        url: '//code.jquery.com/jquery-2.2.3.js',
     });
+
+    const jquery = window.document.querySelector(
+        'head script#jquery',
+    ) as HTMLScriptElement;
+    expect(jquery.id).toBe('jquery');
 });
 
-test(
-    'placement head',
-    async () => {
-        try {
-            await page.goto('http://localhost:3003');
-            await page.evaluate(async () => {
-                await window.simpleLoadScript({
-                    attrs: { id: 'jquery' },
-                    url: '//code.jquery.com/jquery-2.2.3.js',
-                });
-            });
-            const jquery = await page.$('head script#jquery');
-            const id = await page.evaluate((script) => script?.id, jquery);
-            expect(id).toBe('jquery');
-        } catch (err) {
-            expect(err).toBeUndefined();
+test('placement body', async () => {
+    // Mock script loading by triggering load event
+    const originalAppendChild = window.document.body.appendChild.bind(
+        window.document.body,
+    );
+    window.document.body.appendChild = function (node: Node) {
+        const result = originalAppendChild(node);
+        if (node.nodeName === 'SCRIPT') {
+            setTimeout(() => {
+                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
+            }, 0);
         }
-    },
-    TIMEOUT,
-);
+        return result;
+    } as any;
 
-test(
-    'placement body',
-    async () => {
-        try {
-            await page.goto('http://localhost:3003');
-            await page.evaluate(async () => {
-                await window.simpleLoadScript({
-                    attrs: { id: 'jquery' },
-                    inBody: true,
-                    url: '//code.jquery.com/jquery-2.2.3.js',
-                });
-            });
-            const jquery = await page.$('body script#jquery');
-            const id = await page.evaluate((script) => script?.id, jquery);
-            expect(id).toBe('jquery');
-        } catch (err) {
-            expect(err).toBeUndefined();
-        }
-    },
-    TIMEOUT,
-);
+    await simpleLoadScript({
+        attrs: { id: 'jquery' },
+        inBody: true,
+        url: '//code.jquery.com/jquery-2.2.3.js',
+    });
 
-test(
-    'insertInto ok',
-    async () => {
-        try {
-            await page.goto('http://localhost:3003');
-            await page.evaluate(async () => {
-                await window.simpleLoadScript({
-                    attrs: { id: 'jquery' },
-                    insertInto: '#insert',
-                    url: '//code.jquery.com/jquery-2.2.3.js',
-                });
-            });
-            const jquery = await page.$('#insert script#jquery');
-            const id = await page.evaluate((script) => script?.id, jquery);
-            expect(id).toBe('jquery');
-        } catch (err) {
-            expect(err).toBeUndefined();
-        }
-    },
-    TIMEOUT,
-);
+    const jquery = window.document.querySelector(
+        'body script#jquery',
+    ) as HTMLScriptElement;
+    expect(jquery.id).toBe('jquery');
+});
 
-test(
-    'insertInto error',
-    async () => {
-        try {
-            await page.goto('http://localhost:3003');
-            await page.evaluate(async () => {
-                await window.simpleLoadScript({
-                    attrs: { id: 'jquery' },
-                    insertInto: '#insert1',
-                    url: '//code.jquery.com/jquery-2.2.3.js',
-                });
-            });
-        } catch (err) {
-            expect(
-                (err as Error).message.includes(
-                    'No DOM element to append script',
-                ),
-            ).toBe(true);
+test('insertInto ok', async () => {
+    const insertDiv = window.document.querySelector('#insert') as HTMLElement;
+    // Mock script loading by triggering load event
+    const originalAppendChild = insertDiv.appendChild.bind(insertDiv);
+    insertDiv.appendChild = function (node: Node) {
+        const result = originalAppendChild(node);
+        if (node.nodeName === 'SCRIPT') {
+            setTimeout(() => {
+                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
+            }, 0);
         }
-    },
-    TIMEOUT,
-);
+        return result;
+    } as any;
+
+    await simpleLoadScript({
+        attrs: { id: 'jquery' },
+        insertInto: '#insert',
+        url: '//code.jquery.com/jquery-2.2.3.js',
+    });
+
+    const jquery = window.document.querySelector(
+        '#insert script#jquery',
+    ) as HTMLScriptElement;
+    expect(jquery.id).toBe('jquery');
+});
+
+test('insertInto error', async () => {
+    try {
+        await simpleLoadScript({
+            attrs: { id: 'jquery' },
+            insertInto: '#insert1',
+            url: '//code.jquery.com/jquery-2.2.3.js',
+        });
+    } catch (err) {
+        expect((err as Error).message).toBe('No DOM element to append script');
+    }
+});
