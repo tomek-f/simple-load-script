@@ -41,7 +41,7 @@ jobs:
                   cache: 'npm'
             - run: npm ci
             - run: npm run check-types
-    prettier:
+    format-check:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
