@@ -1,0 +1,94 @@
+{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "plugins": [
+        "eslint",
+        "import",
+        "typescript",
+        "unicorn",
+        "oxc",
+        "promise",
+        "node",
+        "jsdoc"
+    ],
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "categories": {
+        "correctness": "error",
+        "suspicious": "error",
+        "pedantic": "off",
+        "perf": "off",
+        "style": "off",
+        "restriction": "off",
+        "nursery": "off"
+    },
+    "ignorePatterns": ["**/snippets/newrelic.ts"],
+    "settings": {},
+    "rules": {
+        "no-cycle": "error",
+        "no-empty-file": "off",
+        // "prefer-set-has": "error", // TODO ?
+        // "catch-or-return": "error", // TODO ?
+        "prefer-node-protocol": "error",
+        "no-non-null-assertion": "error",
+        "no-barrel-file": "error",
+        "no-abusive-eslint-disable": "error",
+        "no-new": "error",
+        "radix": "error",
+        "import/no-extraneous-dependencies": "error",
+        "import/no-anonymous-default-export": "error",
+        "import/prefer-default-export": "off",
+        "import/namespace": "off",
+        "import/no-named-as-default": "off",
+        "import/no-cycle": ["error"],
+        "style-prop-object": "error",
+        "prefer-modern-math-apis": "error",
+        "no-length-as-slice-end": "error",
+        "import/no-unassigned-import": "off",
+        "default-param-last": "error",
+        "no-alert": "error",
+        "grouped-accessor-pairs": "error",
+        "no-restricted-globals": [
+            "error",
+            "document",
+            "history",
+            "location",
+            "navigator"
+        ],
+        "curly": ["error", "all"],
+        "no-div-regex": "error",
+        "vars-on-top": "error",
+        "func-names": "off",
+        "max-depth": ["error", 3],
+        "max-nested-callbacks": ["error", 3],
+        "max-params": ["error", 5],
+        "no-bitwise": ["error", { "int32Hint": true }],
+        "no-plusplus": "off",
+        "arrow-body-style": "off",
+        "eqeqeq": ["error", "always", { "null": "ignore" }],
+        "sort-keys": [
+            "error",
+            "asc",
+            {
+                "allowLineSeparatedGroups": true,
+                "caseSensitive": false,
+                "natural": true
+            }
+        ],
+        "typescript/no-var-requires": "error",
+        // ? @typescript-eslint/no-unused-vars
+        "no-unused-vars": "error",
+        "typescript/consistent-type-definitions": ["error", "interface"],
+        "typescript/consistent-type-imports": [
+            "error",
+            {
+                "prefer": "type-imports",
+                "fixStyle": "separate-type-imports",
+                "disallowTypeAnnotations": true
+            }
+        ],
+        "no-unneeded-ternary": "error",
+        "require-await": "error"
+    }
+}

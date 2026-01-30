@@ -1,11 +1,12 @@
-import { UserConfigExport, defineConfig } from 'vite';
+import type { UserConfigExport } from 'vite';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
+    preview: {
+        port: 8080,
+    },
     root: 'browser',
     server: {
         port: 3030,
-    },
-    preview: {
-        port: 8080,
     },
 }) satisfies UserConfigExport;

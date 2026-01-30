@@ -2,45 +2,12 @@
     "name": "simple-load-script",
     "version": "2.1.1",
     "description": "Very simple promise based script and JSONP",
-    "repository": "tomek-f/simple-load-script",
     "keywords": [
-        "script",
+        "JSONP",
         "promise",
-        "JSONP"
+        "script"
     ],
-    "type": "module",
-    "scripts": {
-        "check-all": "npm run lint && npm run format-check && npm run check-types && npm run test:run",
-        "prepublishOnly": "npm run check-all && npm run build",
-        "build": "rollup --c ./rollup.config.ts --configPlugin typescript",
-        "watch": "npm run build -- -w",
-        "lint": "NODE_ENV=production oxlint --import-plugin --promise-plugin --node-plugin ./",
-        "vite:build-and-preview": "vite build && vite preview",
-        "test:run": "vite build && vitest run --reporter=verbose",
-        "test:ui": "vite build && vitest --reporter=verbose --ui",
-        "test:watch": "vite build && vitest --reporter=verbose",
-        "format-check": "prettier --check ./",
-        "format-write": "prettier --write ./",
-        "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
-    },
-    "files": [
-        "src",
-        "dist",
-        "changelog.md"
-    ],
-    "main": "./dist/index.umd.js",
-    "umd:main": "./dist/index.umd.js",
-    "module": "./dist/index.es.js",
-    "types": "./dist/index.d.ts",
-    "exports": {
-        "./package.json": "./package.json",
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.es.js",
-            "require": "./dist/index.cjs.js",
-            "default": "./dist/index.umd.js"
-        }
-    },
+    "license": "MIT",
     "author": "Tomek Fijoł <tomekfijol@gmail.com> (http://tomekf.pl/)",
     "contributors": [
         {
@@ -52,19 +19,53 @@
             "url": "https://github.com/tconroy"
         }
     ],
-    "license": "MIT",
-    "readmeFilename": "README.md",
+    "repository": "tomek-f/simple-load-script",
+    "files": [
+        "src",
+        "dist",
+        "changelog.md"
+    ],
+    "type": "module",
+    "main": "./dist/index.umd.js",
+    "module": "./dist/index.es.js",
+    "types": "./dist/index.d.ts",
+    "umd:main": "./dist/index.umd.js",
+    "exports": {
+        "./package.json": "./package.json",
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.es.js",
+            "require": "./dist/index.cjs.js",
+            "default": "./dist/index.umd.js"
+        }
+    },
+    "scripts": {
+        "check-all": "npm run lint && npm run format-check && npm run check-types && npm run test-run",
+        "prepublishOnly": "npm run check-all && npm run build",
+        "build": "rollup --c ./rollup.config.ts --configPlugin typescript",
+        "watch": "npm run build -- -w",
+        "lint": "NODE_ENV=production oxlint ./",
+        "lint-fix": "NODE_ENV=production oxlint --fix ./",
+        "vite-build-and-preview": "vite build && vite preview",
+        "test-run": "vite build && vitest run --reporter=verbose",
+        "test-ui": "vite build && vitest --reporter=verbose --ui",
+        "test-watch": "vite build && vitest --reporter=verbose",
+        "format-check": "oxfmt",
+        "format-write": "oxfmt --check",
+        "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
+    },
     "devDependencies": {
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^12.1.2",
         "@vitest/ui": "^3.1.1",
-        "oxlint": "^0.16.5",
+        "oxfmt": "^0.27.0",
+        "oxlint": "^1.42.0",
         "playwright": "^1.51.1",
-        "prettier": "^3.5.3",
         "rollup": "^4.40.0",
         "tslib": "^2.8.1",
         "typescript": "^5.8.3",
         "vite": "^6.2.0",
         "vitest": "^3.1.1"
-    }
+    },
+    "readmeFilename": "README.md"
 }
