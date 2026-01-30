@@ -1,16 +1,13 @@
 import { afterEach, beforeEach, expect, test } from 'vitest';
 import simpleLoadScript from '../src/index';
+import { clearTestEnvironment } from './utils';
 
 beforeEach(() => {
-    // Clear any existing scripts before each test
-    window.document.head.innerHTML = '';
-    window.document.body.innerHTML = '';
+    clearTestEnvironment();
 });
 
 afterEach(() => {
-    // Clean up after each test
-    window.document.head.innerHTML = '';
-    window.document.body.innerHTML = '';
+    clearTestEnvironment();
 });
 
 test('load array ok', async () => {

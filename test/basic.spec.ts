@@ -1,19 +1,16 @@
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import simpleLoadScript from '../src/index';
+import { clearTestEnvironment } from './utils';
 
 // https://github.com/vitest-dev/vitest/blob/main/examples/puppeteer/test/basic.test.ts
 // https://gist.github.com/mizchi/5f67109d0719ef6dd57695e1f528ce8d
 
 beforeEach(() => {
-    // Clear any existing scripts before each test
-    window.document.head.innerHTML = '';
-    window.document.body.innerHTML = '';
+    clearTestEnvironment();
 });
 
 afterEach(() => {
-    // Clean up after each test
-    window.document.head.innerHTML = '';
-    window.document.body.innerHTML = '';
+    clearTestEnvironment();
 });
 
 test('load url ok', async () => {
