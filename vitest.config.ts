@@ -1,13 +1,15 @@
 /// <reference types="vitest" />
 
-import type { UserConfigExport } from 'vite';
+import type { UserConfig } from 'vite';
 import { defineConfig } from 'vite';
 import { TIMEOUT } from './test/constants';
 
-export default defineConfig({
+const config: UserConfig = defineConfig({
     test: {
         environment: 'jsdom',
         hookTimeout: TIMEOUT,
         testTimeout: TIMEOUT,
     },
-}) satisfies UserConfigExport;
+});
+
+export default config;

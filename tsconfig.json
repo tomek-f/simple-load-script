@@ -9,7 +9,8 @@
         "strict": true,
         "skipLibCheck": true,
         "noEmit": true,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "isolatedDeclarations": true
     },
     "include": ["./**/*.ts"],
     "exclude": ["./dist"]
