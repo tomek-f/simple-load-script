@@ -1,5 +1,14 @@
 # changelog
 
+## 2.2.0
+
+- update oxlint and add a config file
+- add oxfmt
+- remove prettier
+- remove eslint configs
+- format code
+- fix oxlint issues
+
 ## 2.1.1
 
 - update changelog
