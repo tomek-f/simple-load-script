@@ -1,5 +1,7 @@
 # AGENTS.md
 
+Very simple promise based script loader and JSONP
+
 ## Setup commands
 - Install deps: `npm install`
 - Run tests: `npm run test-run`
@@ -10,8 +12,10 @@
 - Format fix: `npm run format-write`
 - Check all: `npm run check-all`
 
-## Code style
-- TypeScript strict mode
+## TypeScript
+- Never use var.
+- Use interface instead of type when possible.
+- Use strict null checks.
 
 ## Testing
 - **Vitest** with jsdom
