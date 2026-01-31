@@ -23,7 +23,7 @@
         "restriction": "off",
         "nursery": "off"
     },
-    "ignorePatterns": [".agents"],
+    "ignorePatterns": [".agents", "docs"],
     "settings": {},
     "rules": {
         "no-cycle": "error",
