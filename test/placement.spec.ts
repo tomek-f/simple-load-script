@@ -28,7 +28,7 @@ test('placement head', async () => {
 
     await simpleLoadScript({
         attrs: { id: 'jquery' },
-        url: '//code.jquery.com/jquery-2.2.3.js',
+        url: '//code.jquery.com/jquery-4.0.0.js',
     });
 
     const jquery = window.document.querySelector(
@@ -55,7 +55,7 @@ test('placement body', async () => {
     await simpleLoadScript({
         attrs: { id: 'jquery' },
         inBody: true,
-        url: '//code.jquery.com/jquery-2.2.3.js',
+        url: '//code.jquery.com/jquery-4.0.0.js',
     });
 
     const jquery = window.document.querySelector(
@@ -81,7 +81,7 @@ test('insertInto ok', async () => {
     await simpleLoadScript({
         attrs: { id: 'jquery' },
         insertInto: '#insert',
-        url: '//code.jquery.com/jquery-2.2.3.js',
+        url: '//code.jquery.com/jquery-4.0.0.js',
     });
 
     const jquery = window.document.querySelector(
@@ -95,7 +95,7 @@ test('insertInto error', async () => {
         await simpleLoadScript({
             attrs: { id: 'jquery' },
             insertInto: '#insert1',
-            url: '//code.jquery.com/jquery-2.2.3.js',
+            url: '//code.jquery.com/jquery-4.0.0.js',
         });
     } catch (err) {
         expect((err as Error).message).toBe('No DOM element to append script');

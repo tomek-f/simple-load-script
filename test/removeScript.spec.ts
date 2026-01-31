@@ -28,7 +28,7 @@ test('removeScript true', async () => {
     await simpleLoadScript({
         attrs: { id: 'jquery' },
         removeScript: true,
-        url: '//code.jquery.com/jquery-2.2.3.js',
+        url: '//code.jquery.com/jquery-4.0.0.js',
     });
 
     const jquery = window.document.querySelector('script#jquery');
@@ -52,7 +52,7 @@ test('removeScript false', async () => {
 
     await simpleLoadScript({
         attrs: { id: 'jquery' },
-        url: '//code.jquery.com/jquery-2.2.3.js',
+        url: '//code.jquery.com/jquery-4.0.0.js',
     });
 
     const jquery = window.document.querySelector(
