@@ -9,5 +9,5 @@
     "bracketSameLine": false,
     "endOfLine": "lf",
     "tabWidth": 4,
-    "ignorePatterns": ["dist"]
+    "ignorePatterns": [".agents"]
 }

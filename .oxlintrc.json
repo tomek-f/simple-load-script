@@ -23,7 +23,7 @@
         "restriction": "off",
         "nursery": "off"
     },
-    "ignorePatterns": ["**/snippets/newrelic.ts"],
+    "ignorePatterns": [".agents"],
     "settings": {},
     "rules": {
         "no-cycle": "error",
