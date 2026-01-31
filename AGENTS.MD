@@ -6,9 +6,6 @@ Very simple promise based script loader and JSONP
 - Run tests: `npm run test-run`
 - Check all (lint + format + types + test): `npm run check-all`
 
-## Skills
-See [.github/skills](.github/skills) for available skills and how to use them.
-
 ## Plan Mode
 - Make the plan extremely concise. Sacrifice grammar for the sake of concision.
 - End every plan with a numbered list of concrete steps. This should be the last thing visible in the terminal.
