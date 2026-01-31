@@ -27,7 +27,7 @@ test('add attrs', async () => {
 
     await simpleLoadScript({
         attrs: { 'data-test': 'test', id: 'jquery' },
-        url: '//code.jquery.com/jquery-2.2.3.js',
+        url: '//code.jquery.com/jquery-4.0.0.js',
     });
 
     const jquery = window.document.querySelector(
@@ -37,7 +37,7 @@ test('add attrs', async () => {
     expect(jquery).toBeDefined();
     expect(jquery.id).toBe('jquery');
     expect(jquery.dataset.test).toBe('test');
-    expect(jquery.src).toContain('jquery-2.2.3.js');
+    expect(jquery.src).toContain('jquery-4.0.0.js');
 });
 
 test('do not add attrs', async () => {
@@ -56,7 +56,7 @@ test('do not add attrs', async () => {
     } as any;
 
     await simpleLoadScript({
-        url: '//code.jquery.com/jquery-2.2.3.js',
+        url: '//code.jquery.com/jquery-4.0.0.js',
     });
 
     const script = window.document.querySelector('script') as HTMLScriptElement;
@@ -65,5 +65,5 @@ test('do not add attrs', async () => {
     expect(script).toBeDefined();
     expect(script.nodeType).toBe(1);
     expect(scriptWithId).toBeNull();
-    expect(script.src).toContain('jquery-2.2.3.js');
+    expect(script.src).toContain('jquery-4.0.0.js');
 });

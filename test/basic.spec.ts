@@ -29,7 +29,7 @@ test('load url ok', async () => {
     } as any;
 
     const scriptRef = await simpleLoadScript(
-        '//code.jquery.com/jquery-2.2.3.js',
+        '//code.jquery.com/jquery-4.0.0.js',
     );
     expect(scriptRef).toBeDefined();
 });
@@ -50,7 +50,7 @@ test('load config ok', async () => {
     } as any;
 
     const scriptRef = await simpleLoadScript({
-        url: '//code.jquery.com/jquery-2.2.3.js',
+        url: '//code.jquery.com/jquery-4.0.0.js',
     });
     expect(scriptRef).toBeDefined();
 });
@@ -71,7 +71,7 @@ test('wrong url error', async () => {
     } as any;
 
     try {
-        await simpleLoadScript('//wrong.domain/jquery-2.2.3.js');
+        await simpleLoadScript('//wrong.domain/jquery-4.0.0.js');
     } catch (err) {
         expect((err as Error).message).toBe('Loading script error');
     }
@@ -92,7 +92,7 @@ describe('wrong config error', () => {
         try {
             await simpleLoadScript({
                 // @ts-expect-error Testing wrong config
-                elo: '//code.jquery.com/jquery-2.2.3.js',
+                elo: '//code.jquery.com/jquery-4.0.0.js',
             });
         } catch (err) {
             expect((err as Error).message).toBe(

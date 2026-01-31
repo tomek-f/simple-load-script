@@ -26,21 +26,21 @@ test('load array ok', async () => {
     } as any;
 
     const [a, b, c] = await simpleLoadScript([
-        '//code.jquery.com/jquery-2.2.3.js',
+        '//code.jquery.com/jquery-4.0.0.js',
         {
             attrs: { id: 'jquery2' },
-            url: '//code.jquery.com/jquery-2.2.2.js',
+            url: '//code.jquery.com/jquery-3.7.1.js',
         },
         {
             attrs: { id: 'jquery3' },
-            url: '//code.jquery.com/jquery-2.2.1.js',
+            url: '//code.jquery.com/jquery-3.7.0.js',
         },
     ]);
 
     expect([a, b, c].length).toBe(3);
 
     const jquery1 = window.document.querySelector(
-        'head script[src="//code.jquery.com/jquery-2.2.3.js"]',
+        'head script[src="//code.jquery.com/jquery-4.0.0.js"]',
     ) as HTMLScriptElement;
     const jquery2 = window.document.querySelector(
         'script#jquery2',
@@ -50,7 +50,7 @@ test('load array ok', async () => {
     ) as HTMLScriptElement;
 
     expect(jquery1.getAttribute('src')).toBe(
-        '//code.jquery.com/jquery-2.2.3.js',
+        '//code.jquery.com/jquery-4.0.0.js',
     );
     expect(jquery2.id).toBe('jquery2');
     expect(jquery3.id).toBe('jquery3');
@@ -78,14 +78,14 @@ test('load array error', async () => {
 
     try {
         await simpleLoadScript([
-            '//wrong.domain/jquery-2.2.3.js',
+            '//wrong.domain/jquery-4.0.0.js',
             {
                 attrs: { id: 'jquery2' },
-                url: '//code.jquery.com/jquery-2.2.2.js',
+                url: '//code.jquery.com/jquery-3.7.1.js',
             },
             {
                 attrs: { id: 'jquery3' },
-                url: '//code.jquery.com/jquery-2.2.1.js',
+                url: '//code.jquery.com/jquery-3.7.0.js',
             },
         ]);
     } catch (err) {
