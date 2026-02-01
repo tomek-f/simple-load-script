@@ -1,4 +1,3 @@
 # Code Style
 
-## TypeScript
-Currently no specific TypeScript conventions beyond standard best practices.
+Document project-specific code conventions here when needed.
