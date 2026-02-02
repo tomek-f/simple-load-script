@@ -13,5 +13,4 @@ Very simple promise based script loader and JSONP
 
 ## Additional Documentation
 - [Code Style](docs/code-style.md)
-- [Testing](docs/testing.md)
 - [Git Workflow](docs/git-workflow.md)
