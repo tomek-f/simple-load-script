@@ -100,6 +100,7 @@ const config: OxlintConfig = defineConfig({
         'jsdoc/require-param': 'off',
         'unicorn/prefer-dom-node-remove': 'off',
         'unicorn/prefer-dom-node-append': 'off',
+        'unicorn/no-process-exit': 'error',
     },
 });
 
