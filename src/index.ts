@@ -24,6 +24,7 @@ export default function simpleLoadScript(
     config: Config | string | (Config | string)[],
 ): Promise<HTMLScriptElement | undefined | (HTMLScriptElement | undefined)[]> {
     if (Array.isArray(config)) {
+        // oxlint-disable-next-line unicorn/no-array-callback-reference
         return Promise.all(config.map(simpleLoadScript));
     }
 
@@ -74,7 +75,9 @@ export default function simpleLoadScript(
             if (removeScript) {
                 where.removeChild(script);
             }
+            // oxlint-disable-next-line no-warning-comments
             // TODO ? just return err
+            // oxlint-disable-next-line no-warning-comments
             // TODO ? re-throw err with changed message
             reject(new Error('Loading script error'));
         });

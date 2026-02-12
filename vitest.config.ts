@@ -1,6 +1,7 @@
-import type { UserConfig } from 'vite';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
-const config: UserConfig = defineConfig({ test: { environment: 'jsdom' } });
+const config: ReturnType<typeof defineConfig> = defineConfig({
+    test: { environment: 'jsdom' },
+});
 
 export default config;
