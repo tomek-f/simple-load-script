@@ -55,11 +55,11 @@
         "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
     },
     "devDependencies": {
-        "@types/jsdom": "^27.0.0",
+        "@types/jsdom": "^28.0.0",
         "jsdom": "^28.1.0",
-        "oxfmt": "^0.32.0",
-        "oxlint": "^1.47.0",
-        "tsdown": "^0.20.3",
+        "oxfmt": "^0.39.0",
+        "oxlint": "^1.54.0",
+        "tsdown": "^0.21.2",
         "typescript": "^5.9.3",
         "vitest": "^4.0.18"
     }
