@@ -57,10 +57,10 @@
     "devDependencies": {
         "@types/jsdom": "^28.0.0",
         "jsdom": "^28.1.0",
-        "oxfmt": "^0.39.0",
-        "oxlint": "^1.54.0",
+        "oxfmt": "^0.40.0",
+        "oxlint": "^1.55.0",
         "tsdown": "^0.21.2",
         "typescript": "^5.9.3",
-        "vitest": "^4.0.18"
+        "vitest": "^4.1.0"
     }
 }
