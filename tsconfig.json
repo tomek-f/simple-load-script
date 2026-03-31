@@ -1,15 +1,14 @@
 {
     "compilerOptions": {
         "target": "es2015",
-        "module": "es2015",
-        "lib": ["es2015", "DOM"],
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "lib": ["dom", "dom.iterable", "esnext"],
         "declaration": true,
-        "baseUrl": ".",
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "skipLibCheck": true,
         "noEmit": true,
-        "moduleResolution": "node",
         "isolatedDeclarations": true
     },
     "include": ["./**/*.ts"]
