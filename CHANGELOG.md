@@ -1,5 +1,10 @@
 # changelog
 
+## x.x.x
+
+- update deps
+- switch to pnpm
+
 ## 2.2.0
 
 - update oxlint and add a config file

@@ -13,50 +13,34 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v6
-            - uses: actions/setup-node@v6
-              with:
-                  node-version: lts/*
-                  cache: 'npm'
-            - run: npm ci
-            - run: npm run build
+            - uses: actions/checkout@v7
+            - uses: tomek-f/action-pnpm@v1.1.0
+            - run: pnpm build
+
     lint:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v6
-            - uses: actions/setup-node@v6
-              with:
-                  node-version: lts/*
-                  cache: 'npm'
-            - run: npm ci
-            - run: npm run lint
+            - uses: actions/checkout@v7
+            - uses: tomek-f/action-pnpm@v1.1.0
+            - run: pnpm lint
+
     types:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v6
-            - uses: actions/setup-node@v6
-              with:
-                  node-version: lts/*
-                  cache: 'npm'
-            - run: npm ci
-            - run: npm run check-types
+            - uses: actions/checkout@v7
+            - uses: tomek-f/action-pnpm@v1.1.0
+            - run: pnpm check-types
+
     format-check:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v6
-            - uses: actions/setup-node@v6
-              with:
-                  node-version: lts/*
-                  cache: 'npm'
-            - run: npm ci
-            - run: npm run format-check
+            - uses: actions/checkout@v7
+            - uses: tomek-f/action-pnpm@v1.1.0
+            - run: pnpm format-check
+
     test:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v6
-            - uses: actions/setup-node@v6
-              with:
-                  node-version: lts/*
-                  cache: 'npm'
-            - run: npm ci
-            - run: npm run test-run
+            - uses: actions/checkout@v7
+            - uses: tomek-f/action-pnpm@v1.1.0
+            - run: pnpm test-run
