@@ -55,12 +55,15 @@
         "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
     },
     "devDependencies": {
-        "@types/jsdom": "^28.0.1",
-        "jsdom": "^29.0.1",
-        "oxfmt": "^0.42.0",
-        "oxlint": "^1.57.0",
-        "tsdown": "^0.21.7",
-        "typescript": "^6.0.2",
-        "vitest": "^4.1.2"
+        "@types/jsdom": "^28.0.3",
+        "jsdom": "^29.1.1",
+        "oxfmt": "^0.57.0",
+        "oxlint": "^1.72.0",
+        "tsdown": "^0.22.3",
+        "typescript": "^6.0.3",
+        "vitest": "^4.1.9"
+    },
+    "allowScripts": {
+        "fsevents": false
     }
 }
