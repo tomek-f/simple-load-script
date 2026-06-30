@@ -1,0 +1,13 @@
+strictDepBuilds: true
+
+minimumReleaseAge: 1440
+
+minimumReleaseAgeExclude:
+    - typescript
+
+blockExoticSubdeps: true
+
+trustPolicy: no-downgrade
+
+allowBuilds:
+    fsevents: false

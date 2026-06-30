@@ -42,8 +42,8 @@
         }
     },
     "scripts": {
-        "check-all": "npm run lint && npm run format-check && npm run check-types && npm run test-run",
-        "prepublishOnly": "npm run check-all && npm run build",
+        "check-all": "pnpm lint && pnpm format-check && pnpm check-types && pnpm test-run",
+        "prepublishOnly": "pnpm check-all && pnpm build",
         "build": "tsdown",
         "watch": "tsdown --watch",
         "lint": "NODE_ENV=production oxlint ./",
@@ -55,15 +55,13 @@
         "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
     },
     "devDependencies": {
-        "@types/jsdom": "^28.0.3",
-        "jsdom": "^29.1.1",
-        "oxfmt": "^0.57.0",
-        "oxlint": "^1.72.0",
-        "tsdown": "^0.22.3",
-        "typescript": "^6.0.3",
-        "vitest": "^4.1.9"
+        "@types/jsdom": "28.0.3",
+        "jsdom": "29.1.1",
+        "oxfmt": "0.56.0",
+        "oxlint": "1.71.0",
+        "tsdown": "0.22.3",
+        "typescript": "6.0.3",
+        "vitest": "4.1.9"
     },
-    "allowScripts": {
-        "fsevents": false
-    }
+    "packageManager": "pnpm@11.9.0"
 }
