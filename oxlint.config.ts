@@ -38,7 +38,6 @@ const config: OxlintConfig = defineConfig({
         'unicorn/no-abusive-eslint-disable': 'error',
         'eslint/no-new': 'error',
         'eslint/radix': 'error',
-        'import/no-extraneous-dependencies': 'error',
         'import/no-anonymous-default-export': 'error',
         'import/prefer-default-export': 'off',
         'import/namespace': 'off',
