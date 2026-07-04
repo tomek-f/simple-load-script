@@ -52,7 +52,13 @@
         "test-watch": "vitest --reporter=verbose",
         "format-check": "oxfmt --check",
         "format-write": "oxfmt --write",
-        "check-types": "echo 'checking types…' && tsc && echo '…no type problems'"
+        "check-types": "echo 'checking types…' && tsc && echo '…no type problems'",
+        "__show-outdated": "pnpm outdated -r --no-table",
+        "__update-package-recursive-example": "pnpm update -r --latest XXX",
+        "__create-commit-push-deps-branch": "git cam 'feat: Update deps.' && git push -u",
+        "__create-and-push-deps-branch": "git cob feat/deps && pnpm __create-commit-push-deps-branch",
+        "__update-latest": "pnpm update -r --latest && pnpm dedupe && pnpm __create-and-push-deps-branch",
+        "__update": "pnpm update -r && pnpm dedupe && pnpm __create-and-push-deps-branch"
     },
     "devDependencies": {
         "@types/jsdom": "28.0.3",
