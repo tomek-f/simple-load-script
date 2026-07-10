@@ -1,20 +1,17 @@
-// oxlint-disable sort-keys
+import type { OxfmtConfig } from 'oxfmt';
 import { defineConfig } from 'oxfmt';
 
-// kinda doesn't work
-type TEMP_OxfmtConfig = ReturnType<typeof defineConfig>;
-
-const config: TEMP_OxfmtConfig = defineConfig({
+const config: OxfmtConfig = defineConfig<OxfmtConfig>({
     arrowParens: 'always',
-    printWidth: 80,
-    singleQuote: true,
-    trailingComma: 'all',
-    semi: true,
-    bracketSpacing: true,
     bracketSameLine: false,
+    bracketSpacing: true,
     endOfLine: 'lf',
-    tabWidth: 4,
     ignorePatterns: ['.agents', 'docs'],
-} satisfies TEMP_OxfmtConfig);
+    printWidth: 80,
+    semi: true,
+    singleQuote: true,
+    tabWidth: 4,
+    trailingComma: 'all',
+});
 
 export default config;
