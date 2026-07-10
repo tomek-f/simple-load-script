@@ -53,12 +53,14 @@
         "format-check": "oxfmt --check",
         "format-write": "oxfmt --write",
         "check-types": "echo 'checking types…' && tsc && echo '…no type problems'",
+        "__show-latest-version-of-pnpm": "pnpm view pnpm",
         "__show-outdated": "pnpm outdated -r --no-table",
-        "__update-package-recursive-example": "pnpm update -r --latest XXX",
-        "__create-commit-push-deps-branch": "git cam 'feat: Update deps.' && git push -u",
-        "__create-and-push-deps-branch": "git cob feat/deps && pnpm __create-commit-push-deps-branch",
-        "__update-latest": "pnpm update -r --latest && pnpm dedupe && pnpm __create-and-push-deps-branch",
-        "__update": "pnpm update -r && pnpm dedupe && pnpm __create-and-push-deps-branch"
+        "__update-package-recursive-latest-example": "echo 'pnpm update -r --latest <name-of-package>'",
+        "__update-interactive-latest": "pnpm update --interactive -r --latest && pnpm dedupe",
+        "__update-latest": "pnpm update -r --latest && pnpm dedupe",
+        "__update-interactive": "pnpm update --interactive -r && pnpm dedupe",
+        "__update": "pnpm update -r && pnpm dedupe",
+        "__check-some-module": "pnpm dlx qnm typescript"
     },
     "devDependencies": {
         "@types/jsdom": "28.0.3",
