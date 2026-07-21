@@ -67,9 +67,9 @@
         "jsdom": "29.1.1",
         "oxfmt": "0.59.0",
         "oxlint": "1.74.0",
-        "tsdown": "0.22.7",
+        "tsdown": "0.22.12",
         "typescript": "7.0.2",
         "vitest": "4.1.10"
     },
-    "packageManager": "pnpm@11.13.0"
+    "packageManager": "pnpm@11.15.1"
 }
