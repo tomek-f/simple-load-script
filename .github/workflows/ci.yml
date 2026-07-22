@@ -14,33 +14,33 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v7
-            - uses: tomek-f/action-pnpm@v1.1.0
+            - uses: tomek-f/action-pnpm@v1.2.0
             - run: pnpm build
 
     lint:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v7
-            - uses: tomek-f/action-pnpm@v1.1.0
+            - uses: tomek-f/action-pnpm@v1.2.0
             - run: pnpm lint
 
     types:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v7
-            - uses: tomek-f/action-pnpm@v1.1.0
+            - uses: tomek-f/action-pnpm@v1.2.0
             - run: pnpm check-types
 
     format-check:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v7
-            - uses: tomek-f/action-pnpm@v1.1.0
+            - uses: tomek-f/action-pnpm@v1.2.0
             - run: pnpm format-check
 
     test:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v7
-            - uses: tomek-f/action-pnpm@v1.1.0
+            - uses: tomek-f/action-pnpm@v1.2.0
             - run: pnpm test-run
