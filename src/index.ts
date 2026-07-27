@@ -35,7 +35,6 @@ export default function simpleLoadScript(
                 typeof config === 'string'
             )
         ) {
-            console.log({ config });
             reject(new Error('Object with url or url string needed'));
             return;
         }

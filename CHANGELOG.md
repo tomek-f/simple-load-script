@@ -1,12 +1,15 @@
 # changelog
 
-## x.x.x
+## 3.0.0
 
 - update deps
 - switch to pnpm
 - move tests from vitest to node:test and node:assert/strict
-- remove vitest and @types/jsdom dev dependencies
+- remove vitest dev dependency
 - fix script load errors to reject with an `Error` instance instead of the raw DOM event
+- use node 26
+- rename test files
+- fix changelog typos
 
 ## 2.2.0
 
@@ -30,10 +33,10 @@
 ## 2.0.0
 
 - **BREAKING CHANGE** exported files paths
-- **BREAKING CHANGE** `jsonp` removed form Config
-- **BREAKING CHANGE** `callBackName` removed form Config
+- **BREAKING CHANGE** `jsonp` removed from Config
+- **BREAKING CHANGE** `callBackName` removed from Config
 - **BREAKING CHANGE** `removeScript` changes - script is not removed by default on an error
-- **BREAKING CHANGE** `callBack` removed form Config - just run code after simpleLoadScript run (eg. `console.log` in examples)
+- **BREAKING CHANGE** `callBack` removed from Config - just run code after simpleLoadScript run (eg. `console.log` in examples)
 - TS
 - rollup
 - deps
