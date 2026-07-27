@@ -63,6 +63,7 @@
         "__check-some-module": "pnpm dlx qnm typescript"
     },
     "devDependencies": {
+        "@types/jsdom": "^28.0.3",
         "@types/node": "^26.1.1",
         "jsdom": "29.1.1",
         "oxfmt": "0.60.0",

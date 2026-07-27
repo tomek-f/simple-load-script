@@ -1,4 +1,3 @@
-// @ts-expect-error jsdom does not ship type declarations
 import { JSDOM } from 'jsdom';
 
 if (!globalThis.window) {
