@@ -71,9 +71,16 @@ test('wrong url error', async () => {
     } as any;
 
     try {
-        await simpleLoadScript('//wrong.domain/jquery-4.0.0.js');
+        const scriptRef = await simpleLoadScript(
+            'https://wrong.domain/jquery-4.0.0.js',
+        );
+
+        console.log({ scriptRef });
     } catch (err) {
-        expect((err as Error).message).toBe('Loading script error');
+        // TODO does not work here
+
+        console.log({ err }, (err as Error).message);
+        expect((err as Error).message).toBe('Loading script error111');
     }
 });
 

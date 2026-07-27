@@ -42,13 +42,13 @@
         }
     },
     "scripts": {
-        "check-all": "pnpm lint && pnpm format-check && pnpm check-types && pnpm test-run",
+        "check-all": "pnpm lint && pnpm format-check && pnpm check-types && pnpm test",
         "prepublishOnly": "pnpm check-all && pnpm build",
         "build": "tsdown",
         "watch": "tsdown --watch",
         "lint": "NODE_ENV=production oxlint ./",
         "lint-fix": "NODE_ENV=production oxlint --fix ./",
-        "test-run": "vitest run --reporter=verbose",
+        "test": "vitest run --reporter=verbose",
         "test-watch": "vitest --reporter=verbose",
         "format-check": "oxfmt --check",
         "format-write": "oxfmt --write",

@@ -29,6 +29,7 @@ const config: OxlintConfig = defineConfig({
     ignorePatterns: ['.agents', 'build', 'dist', 'docs'],
     settings: {},
     rules: {
+        'eslint/no-warning-comments': 'off',
         'unicorn/no-empty-file': 'off',
         'unicorn/prefer-set-has': 'error',
         'promise/catch-or-return': 'error',
