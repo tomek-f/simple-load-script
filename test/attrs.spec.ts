@@ -1,6 +1,7 @@
-import { afterEach, beforeEach, expect, test } from 'vitest';
-import simpleLoadScript from '../src/index';
-import { clearTestEnvironment } from './utils';
+import { afterEach, beforeEach, test } from 'node:test';
+import assert from 'node:assert/strict';
+import simpleLoadScript from '../src/index.ts';
+import { clearTestEnvironment } from './utils.ts';
 
 beforeEach(() => {
     clearTestEnvironment();
@@ -34,10 +35,10 @@ test('add attrs', async () => {
         'script#jquery',
     ) as HTMLScriptElement;
 
-    expect(jquery).toBeDefined();
-    expect(jquery.id).toBe('jquery');
-    expect(jquery.dataset.test).toBe('test');
-    expect(jquery.src).toContain('jquery-4.0.0.js');
+    assert.notStrictEqual(jquery, undefined);
+    assert.strictEqual(jquery.id, 'jquery');
+    assert.strictEqual(jquery.dataset.test, 'test');
+    assert.ok(jquery.src.includes('jquery-4.0.0.js'));
 });
 
 test('do not add attrs', async () => {
@@ -62,8 +63,8 @@ test('do not add attrs', async () => {
     const script = window.document.querySelector('script') as HTMLScriptElement;
     const scriptWithId = window.document.querySelector('script#jquery');
 
-    expect(script).toBeDefined();
-    expect(script.nodeType).toBe(1);
-    expect(scriptWithId).toBeNull();
-    expect(script.src).toContain('jquery-4.0.0.js');
+    assert.notStrictEqual(script, undefined);
+    assert.strictEqual(script.nodeType, 1);
+    assert.strictEqual(scriptWithId, null);
+    assert.ok(script.src.includes('jquery-4.0.0.js'));
 });

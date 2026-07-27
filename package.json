@@ -48,8 +48,8 @@
         "watch": "tsdown --watch",
         "lint": "NODE_ENV=production oxlint ./",
         "lint-fix": "NODE_ENV=production oxlint --fix ./",
-        "test": "vitest run --reporter=verbose",
-        "test-watch": "vitest --reporter=verbose",
+        "test": "node --test --test-reporter=spec test/*.spec.ts",
+        "test-watch": "node --test --watch --test-reporter=spec test/*.spec.ts",
         "format-check": "oxfmt --check",
         "format-write": "oxfmt --write",
         "check-types": "echo 'checking types…' && tsc && echo '…no type problems'",
@@ -63,13 +63,15 @@
         "__check-some-module": "pnpm dlx qnm typescript"
     },
     "devDependencies": {
-        "@types/jsdom": "28.0.3",
+        "@types/node": "^26.1.1",
         "jsdom": "29.1.1",
         "oxfmt": "0.60.0",
         "oxlint": "1.75.0",
         "tsdown": "0.22.14",
-        "typescript": "7.0.2",
-        "vitest": "4.1.10"
+        "typescript": "7.0.2"
+    },
+    "engines": {
+        "node": ">=26"
     },
     "packageManager": "pnpm@11.17.0"
 }

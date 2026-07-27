@@ -71,11 +71,11 @@ export default function simpleLoadScript(
             }
             resolve(removeScript ? undefined : script);
         });
-        script.addEventListener('error', (err) => {
+        script.addEventListener('error', () => {
             if (removeScript) {
                 where.removeChild(script);
             }
-            reject(err);
+            reject(new Error('Loading script error'));
         });
         script.src = url;
         where.appendChild(script);

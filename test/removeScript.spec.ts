@@ -1,6 +1,7 @@
-import { afterEach, beforeEach, expect, test } from 'vitest';
-import simpleLoadScript from '../src/index';
-import { clearTestEnvironment } from './utils';
+import { afterEach, beforeEach, test } from 'node:test';
+import assert from 'node:assert/strict';
+import simpleLoadScript from '../src/index.ts';
+import { clearTestEnvironment } from './utils.ts';
 
 beforeEach(() => {
     clearTestEnvironment();
@@ -32,7 +33,7 @@ test('removeScript true', async () => {
     });
 
     const jquery = window.document.querySelector('script#jquery');
-    expect(jquery).toBeNull();
+    assert.strictEqual(jquery, null);
 });
 
 test('removeScript false', async () => {
@@ -58,5 +59,5 @@ test('removeScript false', async () => {
     const jquery = window.document.querySelector(
         'script#jquery',
     ) as HTMLScriptElement;
-    expect(jquery.id).toBe('jquery');
+    assert.strictEqual(jquery.id, 'jquery');
 });

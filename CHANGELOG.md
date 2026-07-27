@@ -4,6 +4,9 @@
 
 - update deps
 - switch to pnpm
+- move tests from vitest to node:test and node:assert/strict
+- remove vitest and @types/jsdom dev dependencies
+- fix script load errors to reject with an `Error` instance instead of the raw DOM event
 
 ## 2.2.0
 

@@ -1,6 +1,7 @@
-import { afterEach, beforeEach, expect, test } from 'vitest';
-import simpleLoadScript from '../src/index';
-import { clearTestEnvironment } from './utils';
+import { afterEach, beforeEach, test } from 'node:test';
+import assert from 'node:assert/strict';
+import simpleLoadScript from '../src/index.ts';
+import { clearTestEnvironment } from './utils.ts';
 
 beforeEach(() => {
     clearTestEnvironment();
@@ -37,7 +38,7 @@ test('load array ok', async () => {
         },
     ]);
 
-    expect([a, b, c].length).toBe(3);
+    assert.strictEqual([a, b, c].length, 3);
 
     const jquery1 = window.document.querySelector(
         'head script[src="//code.jquery.com/jquery-4.0.0.js"]',
@@ -49,11 +50,12 @@ test('load array ok', async () => {
         'script#jquery3',
     ) as HTMLScriptElement;
 
-    expect(jquery1.getAttribute('src')).toBe(
+    assert.strictEqual(
+        jquery1.getAttribute('src'),
         '//code.jquery.com/jquery-4.0.0.js',
     );
-    expect(jquery2.id).toBe('jquery2');
-    expect(jquery3.id).toBe('jquery3');
+    assert.strictEqual(jquery2.id, 'jquery2');
+    assert.strictEqual(jquery3.id, 'jquery3');
 });
 
 test('load array error', async () => {
@@ -89,6 +91,6 @@ test('load array error', async () => {
             },
         ]);
     } catch (err) {
-        expect((err as Error).message).toBe('Loading script error');
+        assert.strictEqual((err as Error).message, 'Loading script error');
     }
 });

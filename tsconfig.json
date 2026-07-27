@@ -4,6 +4,8 @@
         "module": "esnext",
         "moduleResolution": "bundler",
         "lib": ["dom", "dom.iterable", "esnext"],
+        "types": ["node"],
+        "allowImportingTsExtensions": true,
         "declaration": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
