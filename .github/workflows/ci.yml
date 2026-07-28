@@ -2,11 +2,8 @@ name: CI
 
 on:
     push:
-        branches: ['**']
-        # branches: [master, feat/**, fix/**]
-        # branches: [feat/**, fix/**]
-        # pull_request:
-        #   branches: [master]
+        branches: [master]
+    pull_request:
     workflow_dispatch:
 
 jobs:
@@ -46,5 +43,5 @@ jobs:
             - run: pnpm test-ci
             - uses: actions/upload-artifact@v7
               with:
-                  name: changelog-format-test-reports
+                  name: test-reports
                   path: ./test-reports/junit.xml
