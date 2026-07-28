@@ -1,25 +1,21 @@
-# typical suspects
-**/node_modules/
-**/tmp/
-**/dist/
-**/build/
-**/out/
-.vscode
-
-# testing
-/coverage
-/test-results
-
-# misc
+~
+node_modules/
+dist/
+*.orig
+*.log
+*.tgz
+.cache
 .DS_Store
-*.pem
-
-# logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# tf
-.env*
+.idea
+coverage/
+test-reports/*
+!test-reports/.gitkeep
 *.tsbuildinfo
+pnpm-debug.log*
+.pnpm-store/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/mcp.json
+!.vscode/settings.json
+.env*
+!.env*.example

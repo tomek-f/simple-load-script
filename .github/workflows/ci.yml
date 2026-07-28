@@ -43,4 +43,8 @@ jobs:
         steps:
             - uses: actions/checkout@v7
             - uses: tomek-f/action-pnpm@v1.2.0
-            - run: pnpm test
+            - run: pnpm test-ci
+            - uses: actions/upload-artifact@v7
+              with:
+                  name: changelog-format-test-reports
+                  path: ./test-reports/junit.xml

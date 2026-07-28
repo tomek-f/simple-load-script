@@ -49,6 +49,7 @@
         "lint": "NODE_ENV=production oxlint ./",
         "lint-fix": "NODE_ENV=production oxlint --fix ./",
         "test": "NODE_ENV=test node --test ./test/*.test.ts",
+        "test-ci": "NODE_ENV=test node --test --test-reporter=spec --test-reporter=junit --test-reporter-destination=stdout --test-reporter-destination=./test-reports/junit.xml ./test/*.test.ts",
         "test-watch": "NODE_ENV=test node --test --watch ./test/*.test.ts",
         "format-check": "oxfmt --check",
         "format-write": "oxfmt --write",
