@@ -2,11 +2,8 @@ name: CI
 
 on:
     push:
-        branches: ['**']
-        # branches: [master, feat/**, fix/**]
-        # branches: [feat/**, fix/**]
-        # pull_request:
-        #   branches: [master]
+        branches: [master]
+    pull_request:
     workflow_dispatch:
 
 jobs:
@@ -43,4 +40,8 @@ jobs:
         steps:
             - uses: actions/checkout@v7
             - uses: tomek-f/action-pnpm@v1.2.0
-            - run: pnpm test-run
+            - run: pnpm test-ci
+            - uses: actions/upload-artifact@v7
+              with:
+                  name: test-reports
+                  path: ./test-reports/junit.xml

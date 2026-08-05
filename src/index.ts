@@ -35,7 +35,6 @@ export default function simpleLoadScript(
                 typeof config === 'string'
             )
         ) {
-            console.log({ config });
             reject(new Error('Object with url or url string needed'));
             return;
         }
@@ -71,14 +70,10 @@ export default function simpleLoadScript(
             }
             resolve(removeScript ? undefined : script);
         });
-        script.addEventListener('error', (/* err */) => {
+        script.addEventListener('error', () => {
             if (removeScript) {
                 where.removeChild(script);
             }
-            // oxlint-disable-next-line no-warning-comments
-            // TODO ? just return err
-            // oxlint-disable-next-line no-warning-comments
-            // TODO ? re-throw err with changed message
             reject(new Error('Loading script error'));
         });
         script.src = url;

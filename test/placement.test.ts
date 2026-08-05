@@ -1,6 +1,7 @@
-import { afterEach, beforeEach, expect, test } from 'vitest';
-import simpleLoadScript from '../src/index';
-import { clearTestEnvironment } from './utils';
+import { afterEach, beforeEach, test } from 'node:test';
+import assert from 'node:assert/strict';
+import simpleLoadScript from '../src/index.ts';
+import { clearTestEnvironment } from './utils.ts';
 
 beforeEach(() => {
     clearTestEnvironment();
@@ -34,7 +35,7 @@ test('placement head', async () => {
     const jquery = window.document.querySelector(
         'head script#jquery',
     ) as HTMLScriptElement;
-    expect(jquery.id).toBe('jquery');
+    assert.strictEqual(jquery.id, 'jquery');
 });
 
 test('placement body', async () => {
@@ -61,7 +62,7 @@ test('placement body', async () => {
     const jquery = window.document.querySelector(
         'body script#jquery',
     ) as HTMLScriptElement;
-    expect(jquery.id).toBe('jquery');
+    assert.strictEqual(jquery.id, 'jquery');
 });
 
 test('insertInto ok', async () => {
@@ -87,7 +88,7 @@ test('insertInto ok', async () => {
     const jquery = window.document.querySelector(
         '#insert script#jquery',
     ) as HTMLScriptElement;
-    expect(jquery.id).toBe('jquery');
+    assert.strictEqual(jquery.id, 'jquery');
 });
 
 test('insertInto error', async () => {
@@ -98,6 +99,9 @@ test('insertInto error', async () => {
             url: '//code.jquery.com/jquery-4.0.0.js',
         });
     } catch (err) {
-        expect((err as Error).message).toBe('No DOM element to append script');
+        assert.strictEqual(
+            (err as Error).message,
+            'No DOM element to append script',
+        );
     }
 });

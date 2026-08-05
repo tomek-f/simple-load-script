@@ -1,6 +1,7 @@
-import { afterEach, beforeEach, describe, expect, test } from 'vitest';
-import simpleLoadScript from '../src/index';
-import { clearTestEnvironment } from './utils';
+import { afterEach, beforeEach, describe, test } from 'node:test';
+import assert from 'node:assert/strict';
+import simpleLoadScript from '../src/index.ts';
+import { clearTestEnvironment } from './utils.ts';
 
 // https://github.com/vitest-dev/vitest/blob/main/examples/puppeteer/test/basic.test.ts
 // https://gist.github.com/mizchi/5f67109d0719ef6dd57695e1f528ce8d
@@ -31,7 +32,7 @@ test('load url ok', async () => {
     const scriptRef = await simpleLoadScript(
         '//code.jquery.com/jquery-4.0.0.js',
     );
-    expect(scriptRef).toBeDefined();
+    assert.notStrictEqual(scriptRef, undefined);
 });
 
 test('load config ok', async () => {
@@ -52,29 +53,29 @@ test('load config ok', async () => {
     const scriptRef = await simpleLoadScript({
         url: '//code.jquery.com/jquery-4.0.0.js',
     });
-    expect(scriptRef).toBeDefined();
+    assert.notStrictEqual(scriptRef, undefined);
 });
 
 test('wrong url error', async () => {
-    // Mock script loading by triggering error event
+    // Mock script loading by triggering error event synchronously
     const originalAppendChild = window.document.head.appendChild.bind(
         window.document.head,
     );
     window.document.head.appendChild = function (node: Node) {
         const result = originalAppendChild(node);
         if (node.nodeName === 'SCRIPT') {
-            setTimeout(() => {
-                (node as HTMLScriptElement).dispatchEvent(new Event('error'));
-            }, 0);
+            (node as HTMLScriptElement).dispatchEvent(new Event('error'));
         }
         return result;
     } as any;
 
-    try {
-        await simpleLoadScript('//wrong.domain/jquery-4.0.0.js');
-    } catch (err) {
-        expect((err as Error).message).toBe('Loading script error');
-    }
+    await assert.rejects(
+        simpleLoadScript('https://wrong.domain/jquery-4.0.0.js'),
+        (err: Error) => {
+            assert.strictEqual(err.message, 'Loading script error');
+            return true;
+        },
+    );
 });
 
 describe('wrong config error', () => {
@@ -83,7 +84,8 @@ describe('wrong config error', () => {
             // @ts-expect-error Testing wrong config
             await simpleLoadScript();
         } catch (err) {
-            expect((err as Error).message).toBe(
+            assert.strictEqual(
+                (err as Error).message,
                 'Object with url or url string needed',
             );
         }
@@ -95,7 +97,8 @@ describe('wrong config error', () => {
                 elo: '//code.jquery.com/jquery-4.0.0.js',
             });
         } catch (err) {
-            expect((err as Error).message).toBe(
+            assert.strictEqual(
+                (err as Error).message,
                 'Object with url or url string needed',
             );
         }
