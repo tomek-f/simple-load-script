@@ -67,13 +67,13 @@
         "@types/jsdom": "^28.0.3",
         "@types/node": "^26.1.2",
         "jsdom": "30.0.1",
-        "oxfmt": "0.61.0",
-        "oxlint": "1.76.0",
+        "oxfmt": "0.62.0",
+        "oxlint": "1.77.0",
         "tsdown": "0.22.14",
         "typescript": "7.0.2"
     },
     "engines": {
         "node": ">=26"
     },
-    "packageManager": "pnpm@11.18.0"
+    "packageManager": "pnpm@11.20.0"
 }
