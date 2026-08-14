@@ -61,7 +61,9 @@
         "__update-latest": "pnpm update -r --latest && pnpm dedupe",
         "__update-interactive": "pnpm update --interactive -r && pnpm dedupe",
         "__update": "pnpm update -r && pnpm dedupe",
-        "__check-some-module": "pnpm dlx qnm typescript"
+        "__check-some-module": "pnpm dlx qnm typescript",
+        "__actions-up": "pnx actions-up",
+        "__zizmor": "zizmor ./"
     },
     "devDependencies": {
         "@types/jsdom": "^30.0.0",
