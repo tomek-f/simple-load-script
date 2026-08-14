@@ -62,7 +62,7 @@
         "__update-interactive": "pnpm update --interactive -r && pnpm dedupe",
         "__update": "pnpm update -r && pnpm dedupe",
         "__check-some-module": "pnpm dlx qnm typescript",
-        "__actions-up": "pnx actions-up",
+        "__actions-up": "pnpm dlx actions-up",
         "__zizmor": "zizmor ./"
     },
     "devDependencies": {
