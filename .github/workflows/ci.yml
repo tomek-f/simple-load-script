@@ -11,35 +11,35 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v7
-            - uses: tomek-f/action-pnpm@v1.2.0
+            - uses: tomek-f/action-pnpm@680dabcd30d0e7f9a8a7907918c54a044204a9af # v2.0.0
             - run: pnpm build
 
     lint:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v7
-            - uses: tomek-f/action-pnpm@v1.2.0
+            - uses: tomek-f/action-pnpm@680dabcd30d0e7f9a8a7907918c54a044204a9af # v2.0.0
             - run: pnpm lint
 
     types:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v7
-            - uses: tomek-f/action-pnpm@v1.2.0
+            - uses: tomek-f/action-pnpm@680dabcd30d0e7f9a8a7907918c54a044204a9af # v2.0.0
             - run: pnpm check-types
 
     format-check:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v7
-            - uses: tomek-f/action-pnpm@v1.2.0
+            - uses: tomek-f/action-pnpm@680dabcd30d0e7f9a8a7907918c54a044204a9af # v2.0.0
             - run: pnpm format-check
 
     test:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v7
-            - uses: tomek-f/action-pnpm@v1.2.0
+            - uses: tomek-f/action-pnpm@680dabcd30d0e7f9a8a7907918c54a044204a9af # v2.0.0
             - run: pnpm test-ci
             - uses: actions/upload-artifact@v7
               with:
