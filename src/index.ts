@@ -1,4 +1,4 @@
-export interface Config {
+interface Config {
     url: string;
     attrs?: Record<string, string>;
     inBody?: boolean;
@@ -14,13 +14,13 @@ const defaultConfig = {
     url: '',
 } satisfies Config;
 
-export default function simpleLoadScript(
+function simpleLoadScript(
     config: (Config | string)[],
 ): Promise<(HTMLScriptElement | undefined)[]>;
-export default function simpleLoadScript(
+function simpleLoadScript(
     config: Config | string,
 ): Promise<HTMLScriptElement | undefined>;
-export default function simpleLoadScript(
+function simpleLoadScript(
     config: Config | string | (Config | string)[],
 ): Promise<HTMLScriptElement | undefined | (HTMLScriptElement | undefined)[]> {
     if (Array.isArray(config)) {
@@ -80,3 +80,7 @@ export default function simpleLoadScript(
         where.appendChild(script);
     });
 }
+
+export type { Config };
+
+export default simpleLoadScript;
