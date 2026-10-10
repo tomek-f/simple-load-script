@@ -60,6 +60,7 @@
         "__update-interactive-latest": "pnpm update --interactive -r --latest && pnpm dedupe",
         "__update-latest": "pnpm update -r --latest && pnpm dedupe",
         "__update-interactive": "pnpm update --interactive -r && pnpm dedupe",
+        "__update-pnpm": "pnpm self-update",
         "__update": "pnpm update -r && pnpm dedupe",
         "__check-some-module": "pnpm dlx qnm typescript",
         "__actions-up": "pnpm dlx actions-up",
