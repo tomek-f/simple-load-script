@@ -1,7 +1,9 @@
 import { afterEach, beforeEach, test } from 'node:test';
 import assert from 'node:assert/strict';
 import simpleLoadScript from '../src/index.ts';
-import { clearTestEnvironment } from './utils.ts';
+import { clearTestEnvironment, mockScriptLoad } from './utils.ts';
+
+const URL = 'https://code.jquery.com/jquery-4.0.0.js';
 
 beforeEach(() => {
     clearTestEnvironment();
@@ -12,96 +14,62 @@ afterEach(() => {
     clearTestEnvironment();
 });
 
-test('placement head', async () => {
-    // Mock script loading by triggering load event
-    const originalAppendChild = window.document.head.appendChild.bind(
-        window.document.head,
-    );
-    window.document.head.appendChild = function (node: Node) {
-        const result = originalAppendChild(node);
-        if (node.nodeName === 'SCRIPT') {
-            setTimeout(() => {
-                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
-            }, 0);
-        }
-        return result;
-    } as any;
+function getInsertDiv(): HTMLElement {
+    const div = window.document.querySelector<HTMLElement>('#insert');
+    assert.ok(div);
+    return div;
+}
 
-    await simpleLoadScript({
-        attrs: { id: 'jquery' },
-        url: '//code.jquery.com/jquery-4.0.0.js',
-    });
+test('placement head', async (t) => {
+    mockScriptLoad(t, window.document.head);
 
-    const jquery = window.document.querySelector(
-        'head script#jquery',
-    ) as HTMLScriptElement;
-    assert.strictEqual(jquery.id, 'jquery');
+    await simpleLoadScript({ attrs: { id: 'jquery' }, url: URL });
+
+    assert.ok(window.document.querySelector('head script#jquery'));
 });
 
-test('placement body', async () => {
-    // Mock script loading by triggering load event
-    const originalAppendChild = window.document.body.appendChild.bind(
-        window.document.body,
-    );
-    window.document.body.appendChild = function (node: Node) {
-        const result = originalAppendChild(node);
-        if (node.nodeName === 'SCRIPT') {
-            setTimeout(() => {
-                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
-            }, 0);
-        }
-        return result;
-    } as any;
+test('placement body', async (t) => {
+    mockScriptLoad(t, window.document.body);
 
-    await simpleLoadScript({
-        attrs: { id: 'jquery' },
-        inBody: true,
-        url: '//code.jquery.com/jquery-4.0.0.js',
-    });
+    await simpleLoadScript({ attrs: { id: 'jquery' }, inBody: true, url: URL });
 
-    const jquery = window.document.querySelector(
-        'body script#jquery',
-    ) as HTMLScriptElement;
-    assert.strictEqual(jquery.id, 'jquery');
+    assert.ok(window.document.querySelector('body > script#jquery'));
+    assert.strictEqual(window.document.querySelector('head script'), null);
 });
 
-test('insertInto ok', async () => {
-    const insertDiv = window.document.querySelector('#insert') as HTMLElement;
-    // Mock script loading by triggering load event
-    const originalAppendChild = insertDiv.appendChild.bind(insertDiv);
-    insertDiv.appendChild = function (node: Node) {
-        const result = originalAppendChild(node);
-        if (node.nodeName === 'SCRIPT') {
-            setTimeout(() => {
-                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
-            }, 0);
-        }
-        return result;
-    } as any;
+test('insertInto ok', async (t) => {
+    mockScriptLoad(t, getInsertDiv());
 
     await simpleLoadScript({
         attrs: { id: 'jquery' },
         insertInto: '#insert',
-        url: '//code.jquery.com/jquery-4.0.0.js',
+        url: URL,
     });
 
-    const jquery = window.document.querySelector(
-        '#insert script#jquery',
-    ) as HTMLScriptElement;
-    assert.strictEqual(jquery.id, 'jquery');
+    assert.ok(window.document.querySelector('#insert > script#jquery'));
+});
+
+test('insertInto overrides inBody', async (t) => {
+    mockScriptLoad(t, getInsertDiv());
+
+    await simpleLoadScript({
+        attrs: { id: 'jquery' },
+        inBody: true,
+        insertInto: '#insert',
+        url: URL,
+    });
+
+    assert.ok(window.document.querySelector('#insert > script#jquery'));
 });
 
 test('insertInto error', async () => {
-    try {
-        await simpleLoadScript({
+    await assert.rejects(
+        simpleLoadScript({
             attrs: { id: 'jquery' },
             insertInto: '#insert1',
-            url: '//code.jquery.com/jquery-4.0.0.js',
-        });
-    } catch (err) {
-        assert.strictEqual(
-            (err as Error).message,
-            'No DOM element to append script',
-        );
-    }
+            url: URL,
+        }),
+        { message: 'No DOM element to append script' },
+    );
+    assert.strictEqual(window.document.querySelector('script'), null);
 });

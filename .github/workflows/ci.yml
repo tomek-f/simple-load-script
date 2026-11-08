@@ -19,6 +19,15 @@ jobs:
             - uses: tomek-f/action-pnpm@680dabcd30d0e7f9a8a7907918c54a044204a9af # v2.0.0
             - run: pnpm build
 
+    package-check:
+        runs-on: ubuntu-26.04
+        steps:
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+              with:
+                  persist-credentials: false
+            - uses: tomek-f/action-pnpm@680dabcd30d0e7f9a8a7907918c54a044204a9af # v2.0.0
+            - run: pnpm check-package
+
     lint:
         runs-on: ubuntu-26.04
         steps:

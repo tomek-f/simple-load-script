@@ -1,7 +1,9 @@
 import { afterEach, beforeEach, test } from 'node:test';
 import assert from 'node:assert/strict';
 import simpleLoadScript from '../src/index.ts';
-import { clearTestEnvironment } from './utils.ts';
+import { clearTestEnvironment, mockScriptLoad } from './utils.ts';
+
+const URL = 'https://code.jquery.com/jquery-4.0.0.js';
 
 beforeEach(() => {
     clearTestEnvironment();
@@ -11,53 +13,51 @@ afterEach(() => {
     clearTestEnvironment();
 });
 
-test('removeScript true', async () => {
-    // Mock script loading by triggering load event
-    const originalAppendChild = window.document.head.appendChild.bind(
-        window.document.head,
-    );
-    window.document.head.appendChild = function (node: Node) {
-        const result = originalAppendChild(node);
-        if (node.nodeName === 'SCRIPT') {
-            setTimeout(() => {
-                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
-            }, 0);
-        }
-        return result;
-    } as any;
+test('removeScript true', async (t) => {
+    mockScriptLoad(t, window.document.head);
 
-    await simpleLoadScript({
+    const script = await simpleLoadScript({
         attrs: { id: 'jquery' },
         removeScript: true,
-        url: '//code.jquery.com/jquery-4.0.0.js',
+        url: URL,
     });
 
-    const jquery = window.document.querySelector('script#jquery');
-    assert.strictEqual(jquery, null);
+    assert.strictEqual(script, undefined);
+    assert.strictEqual(window.document.querySelector('script#jquery'), null);
 });
 
-test('removeScript false', async () => {
-    // Mock script loading by triggering load event
-    const originalAppendChild = window.document.head.appendChild.bind(
-        window.document.head,
-    );
-    window.document.head.appendChild = function (node: Node) {
-        const result = originalAppendChild(node);
-        if (node.nodeName === 'SCRIPT') {
-            setTimeout(() => {
-                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
-            }, 0);
-        }
-        return result;
-    } as any;
+test('removeScript false', async (t) => {
+    mockScriptLoad(t, window.document.head);
 
-    await simpleLoadScript({
+    const script = await simpleLoadScript({
         attrs: { id: 'jquery' },
-        url: '//code.jquery.com/jquery-4.0.0.js',
+        url: URL,
     });
 
-    const jquery = window.document.querySelector(
-        'script#jquery',
-    ) as HTMLScriptElement;
-    assert.strictEqual(jquery.id, 'jquery');
+    assert.ok(script instanceof window.HTMLScriptElement);
+    assert.strictEqual(window.document.querySelector('script#jquery'), script);
+});
+
+test('removeScript true on error removes the tag', async (t) => {
+    mockScriptLoad(t, window.document.head, 'error');
+
+    await assert.rejects(
+        simpleLoadScript({
+            attrs: { id: 'jquery' },
+            removeScript: true,
+            url: URL,
+        }),
+    );
+
+    assert.strictEqual(window.document.querySelector('script#jquery'), null);
+});
+
+test('removeScript false on error keeps the tag', async (t) => {
+    mockScriptLoad(t, window.document.head, 'error');
+
+    await assert.rejects(
+        simpleLoadScript({ attrs: { id: 'jquery' }, url: URL }),
+    );
+
+    assert.ok(window.document.querySelector('script#jquery'));
 });

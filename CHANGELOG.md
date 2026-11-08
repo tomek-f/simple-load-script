@@ -1,6 +1,6 @@
 # changelog
 
-## 3.0.0
+## 3.0.0 (TO BE RELEASED)
 
 - update deps
 - switch to pnpm
@@ -10,6 +10,21 @@
 - use node 26
 - rename test files
 - fix changelog typos
+- **BREAKING CHANGE** load error message now includes the url (`Loading script error: <url>`), and the DOM event is available as `err.cause`
+- **BREAKING CHANGE** empty string url is rejected (same as `{ url: '' }`)
+- add `signal` option (`AbortSignal`) to cancel waiting or set a timeout with `AbortSignal.timeout(ms)`
+- fix promise never settling when the script tag was removed by someone else before load/error (with `removeScript: true`)
+- fix `simpleLoadScript(null)` rejecting with a `TypeError` instead of the config error
+- remove event listeners after the script loads, fails or is aborted
+- fix CommonJS types (`export =`) and split `exports` types for `import`/`require`
+- add `sideEffects: false`
+- move Node requirement from `engines` to `devEngines.runtime` (browser library; Node version only matters for development)
+- remove author url
+- add `check-package` script and CI job (publint + attw)
+- tests: use `assert.rejects` (some error tests passed even when nothing was thrown), add a shared `mockScriptLoad` helper, add tests for missing cases
+- type check `src` without Node types (`tsconfig.src.json`)
+- remove React-related rules from oxlint config
+- README: fix `removeScript` and `url` docs, add install, return value, errors, array order, cancel/timeout, CommonJS and UMD sections
 
 ## 2.2.0
 
