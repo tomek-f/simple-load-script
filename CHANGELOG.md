@@ -25,6 +25,7 @@
 - type check `src` without Node types (`tsconfig.src.json`)
 - remove React-related rules from oxlint config
 - README: fix `removeScript` and `url` docs, add install, return value, errors, array order, cancel/timeout, CommonJS and UMD sections
+- README: fix CI badge alt text
 
 ## 2.2.0
 
