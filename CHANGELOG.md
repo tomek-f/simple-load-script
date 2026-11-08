@@ -26,6 +26,7 @@
 - remove React-related rules from oxlint config
 - README: fix `removeScript` and `url` docs, add install, return value, errors, array order, cancel/timeout and UMD sections
 - README: fix CI badge alt text
+- add husky and lint-staged (pre-commit: lint-staged, type check, tests)
 
 ## 2.2.0
 

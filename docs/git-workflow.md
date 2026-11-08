@@ -10,3 +10,6 @@
 - Imperative mood (Add, Enable, Remove)
 - Capital first letter, no ending period
 - Don't repeat type in description
+
+## Changelog
+- Every user- or dev-facing change adds a line under the unreleased version in `CHANGELOG.md`, in the same PR
