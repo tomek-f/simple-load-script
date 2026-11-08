@@ -152,12 +152,6 @@ try {
 }
 ```
 
-### CommonJS
-
-```js
-const simpleLoadScript = require('simple-load-script');
-```
-
 ### Browser global (UMD)
 
 ```html

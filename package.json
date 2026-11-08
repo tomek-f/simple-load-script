@@ -1,6 +1,6 @@
 {
     "name": "simple-load-script",
-    "version": "3.0.0",
+    "version": "2.2.0",
     "description": "Very simple promise based script and JSONP",
     "keywords": [
         "JSONP",
@@ -28,23 +28,16 @@
     ],
     "type": "module",
     "sideEffects": false,
-    "main": "./dist/index.umd.js",
+    "main": "./dist/index.mjs",
     "module": "./dist/index.mjs",
-    "types": "./dist/index.d.cts",
+    "types": "./dist/index.d.mts",
     "unpkg": "./dist/index.umd.js",
     "umd:main": "./dist/index.umd.js",
     "exports": {
         "./package.json": "./package.json",
         ".": {
-            "import": {
-                "types": "./dist/index.d.mts",
-                "default": "./dist/index.mjs"
-            },
-            "require": {
-                "types": "./dist/index.d.cts",
-                "default": "./dist/index.cjs"
-            },
-            "default": "./dist/index.umd.js"
+            "types": "./dist/index.d.mts",
+            "default": "./dist/index.mjs"
         }
     },
     "scripts": {
@@ -60,7 +53,7 @@
         "format-check": "oxfmt --check",
         "format-write": "oxfmt --write",
         "check-types": "echo 'checking types…' && tsc -p tsconfig.json && tsc -p tsconfig.src.json && echo '…no type problems'",
-        "check-package": "pnpm build && publint --strict && pnpm pack --pack-destination ./.pack && attw ./.pack/*.tgz; status=$?; rm -rf ./.pack; exit $status",
+        "check-package": "pnpm build && publint --strict && pnpm pack --pack-destination ./.pack && attw --profile esm-only ./.pack/*.tgz; status=$?; rm -rf ./.pack; exit $status",
         "__show-latest-version-of-pnpm": "pnpm view pnpm",
         "__show-outdated": "pnpm outdated -r --no-table",
         "__update-package-recursive-latest-example": "echo 'pnpm update -r --latest <name-of-package>'",
