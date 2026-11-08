@@ -10,6 +10,7 @@ The role of this file is to describe common mistakes and confusion points that a
 
 ## Gotchas
 
+- Update `CHANGELOG.md` (unreleased section) in the same commit/PR as the change. Easy to forget; it was missed for husky/lint-staged (#181).
 - `attw --pack` fails (`npm pack` → `EBADDEVENGINES`, `devEngines` requires pnpm). Use `pnpm check-package`, which packs with pnpm.
 - jsdom does not load scripts; tests use `mockScriptLoad` (`test/utils.ts`) to fire `load`/`error`.
 
