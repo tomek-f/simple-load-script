@@ -16,7 +16,7 @@
 - fix promise never settling when the script tag was removed by someone else before load/error (with `removeScript: true`)
 - fix `simpleLoadScript(null)` rejecting with a `TypeError` instead of the config error
 - remove event listeners after the script loads, fails or is aborted
-- fix CommonJS types (`export =`) and split `exports` types for `import`/`require`
+- **BREAKING CHANGE** drop CommonJS build (`require`); ESM, UMD and IIFE builds remain. Jest in CommonJS mode needs `transformIgnorePatterns` to transform `simple-load-script`
 - add `sideEffects: false`
 - move Node requirement from `engines` to `devEngines.runtime` (browser library; Node version only matters for development)
 - remove author url
@@ -24,7 +24,7 @@
 - tests: use `assert.rejects` (some error tests passed even when nothing was thrown), add a shared `mockScriptLoad` helper, add tests for missing cases
 - type check `src` without Node types (`tsconfig.src.json`)
 - remove React-related rules from oxlint config
-- README: fix `removeScript` and `url` docs, add install, return value, errors, array order, cancel/timeout, CommonJS and UMD sections
+- README: fix `removeScript` and `url` docs, add install, return value, errors, array order, cancel/timeout and UMD sections
 - README: fix CI badge alt text
 
 ## 2.2.0
