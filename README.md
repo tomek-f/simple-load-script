@@ -2,7 +2,7 @@
 
 > Very simple promise based script loader and JSONP
 
-[![.github/workflows/ci.yml](https://github.com/tomek-f/simple-load-script/actions/workflows/ci.yml/badge.svg)](https://github.com/tomek-f/simple-load-script/actions/workflows/ci.yml)
+[![CI](https://github.com/tomek-f/simple-load-script/actions/workflows/ci.yml/badge.svg)](https://github.com/tomek-f/simple-load-script/actions/workflows/ci.yml)
 
 ## Install
 
