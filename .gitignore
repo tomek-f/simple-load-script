@@ -19,3 +19,4 @@ pnpm-debug.log*
 !.vscode/settings.json
 .env*
 !.env*.example
+.pack/

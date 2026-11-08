@@ -8,6 +8,12 @@ The role of this file is to describe common mistakes and confusion points that a
 - End every plan with a numbered list of concrete steps. This should be the last thing visible in the terminal.
 - At the end of each plan, give me a list of unresolved questions to answer, if any.
 
+## Gotchas
+
+- `attw --pack` fails (`npm pack` → `EBADDEVENGINES`, `devEngines` requires pnpm). Use `pnpm check-package`, which packs with pnpm.
+- `dist/index.d.cts` is rewritten to `export =` by a `build:done` hook in `tsdown.config.ts` (the dts plugin emits `export default` because `Config` is also exported). If the hook throws after a tsdown upgrade, check the generated export line.
+- jsdom does not load scripts; tests use `mockScriptLoad` (`test/utils.ts`) to fire `load`/`error`.
+
 ## Documentation
 
 - [Git Workflow](docs/git-workflow.md)

@@ -1,6 +1,6 @@
 {
     "name": "simple-load-script",
-    "version": "2.2.0",
+    "version": "3.0.0",
     "description": "Very simple promise based script and JSONP",
     "keywords": [
         "JSONP",
@@ -8,7 +8,7 @@
         "script"
     ],
     "license": "MIT",
-    "author": "Tomek Fijoł <tomekfijol@gmail.com> (http://tomekf.pl/)",
+    "author": "Tomek Fijoł <tomekfijol@gmail.com>",
     "contributors": [
         {
             "name": "Martin Jurča",
@@ -27,23 +27,29 @@
         "CHANGELOG.md"
     ],
     "type": "module",
+    "sideEffects": false,
     "main": "./dist/index.umd.js",
     "module": "./dist/index.mjs",
-    "types": "./dist/index.d.mts",
+    "types": "./dist/index.d.cts",
     "unpkg": "./dist/index.umd.js",
     "umd:main": "./dist/index.umd.js",
     "exports": {
         "./package.json": "./package.json",
         ".": {
-            "types": "./dist/index.d.mts",
-            "import": "./dist/index.mjs",
-            "require": "./dist/index.cjs",
+            "import": {
+                "types": "./dist/index.d.mts",
+                "default": "./dist/index.mjs"
+            },
+            "require": {
+                "types": "./dist/index.d.cts",
+                "default": "./dist/index.cjs"
+            },
             "default": "./dist/index.umd.js"
         }
     },
     "scripts": {
         "check-all": "pnpm lint && pnpm format-check && pnpm check-types && pnpm test",
-        "prepublishOnly": "pnpm check-all && pnpm build",
+        "prepublishOnly": "pnpm check-all && pnpm check-package",
         "build": "tsdown",
         "watch": "tsdown --watch",
         "lint": "NODE_ENV=production oxlint ./",
@@ -53,7 +59,8 @@
         "test-watch": "NODE_ENV=test node --test --watch ./test/*.test.ts",
         "format-check": "oxfmt --check",
         "format-write": "oxfmt --write",
-        "check-types": "echo 'checking types…' && tsc && echo '…no type problems'",
+        "check-types": "echo 'checking types…' && tsc -p tsconfig.json && tsc -p tsconfig.src.json && echo '…no type problems'",
+        "check-package": "pnpm build && publint --strict && pnpm pack --pack-destination ./.pack && attw ./.pack/*.tgz; status=$?; rm -rf ./.pack; exit $status",
         "__show-latest-version-of-pnpm": "pnpm view pnpm",
         "__show-outdated": "pnpm outdated -r --no-table",
         "__update-package-recursive-latest-example": "echo 'pnpm update -r --latest <name-of-package>'",
@@ -67,11 +74,13 @@
         "__zizmor": "zizmor ./"
     },
     "devDependencies": {
+        "@arethetypeswrong/cli": "^0.18.5",
         "@types/jsdom": "^30.0.0",
         "@types/node": "^26.6.6",
         "jsdom": "31.0.0",
         "oxfmt": "0.77.0",
         "oxlint": "1.92.0",
+        "publint": "^0.3.25",
         "tsdown": "0.23.7",
         "typescript": "7.0.2"
     },
@@ -80,9 +89,11 @@
             "name": "pnpm",
             "version": "12.18.0",
             "onFail": "download"
+        },
+        "runtime": {
+            "name": "node",
+            "version": ">=26",
+            "onFail": "error"
         }
-    },
-    "engines": {
-        "node": ">=26"
     }
 }

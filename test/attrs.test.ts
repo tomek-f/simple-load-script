@@ -1,7 +1,9 @@
 import { afterEach, beforeEach, test } from 'node:test';
 import assert from 'node:assert/strict';
 import simpleLoadScript from '../src/index.ts';
-import { clearTestEnvironment } from './utils.ts';
+import { clearTestEnvironment, mockScriptLoad } from './utils.ts';
+
+const URL = 'https://code.jquery.com/jquery-4.0.0.js';
 
 beforeEach(() => {
     clearTestEnvironment();
@@ -11,60 +13,39 @@ afterEach(() => {
     clearTestEnvironment();
 });
 
-test('add attrs', async () => {
-    // Mock script loading by triggering load event
-    const originalAppendChild = window.document.head.appendChild.bind(
-        window.document.head,
-    );
-    window.document.head.appendChild = function (node: Node) {
-        const result = originalAppendChild(node);
-        if (node.nodeName === 'SCRIPT') {
-            setTimeout(() => {
-                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
-            }, 0);
-        }
-        return result;
-    } as any;
+test('add attrs', async (t) => {
+    mockScriptLoad(t, window.document.head);
 
     await simpleLoadScript({
         attrs: { 'data-test': 'test', id: 'jquery' },
-        url: '//code.jquery.com/jquery-4.0.0.js',
+        url: URL,
     });
 
-    const jquery = window.document.querySelector(
-        'script#jquery',
-    ) as HTMLScriptElement;
+    const jquery = window.document.querySelector('script#jquery');
 
-    assert.notStrictEqual(jquery, undefined);
-    assert.strictEqual(jquery.id, 'jquery');
+    assert.ok(jquery instanceof window.HTMLScriptElement);
     assert.strictEqual(jquery.dataset.test, 'test');
-    assert.ok(jquery.src.includes('jquery-4.0.0.js'));
+    assert.strictEqual(jquery.getAttribute('src'), URL);
 });
 
-test('do not add attrs', async () => {
-    // Mock script loading by triggering load event
-    const originalAppendChild = window.document.head.appendChild.bind(
-        window.document.head,
-    );
-    window.document.head.appendChild = function (node: Node) {
-        const result = originalAppendChild(node);
-        if (node.nodeName === 'SCRIPT') {
-            setTimeout(() => {
-                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
-            }, 0);
-        }
-        return result;
-    } as any;
+test('do not add attrs', async (t) => {
+    mockScriptLoad(t, window.document.head);
 
-    await simpleLoadScript({
-        url: '//code.jquery.com/jquery-4.0.0.js',
+    await simpleLoadScript({ url: URL });
+
+    const script = window.document.querySelector('script');
+
+    assert.ok(script instanceof window.HTMLScriptElement);
+    assert.deepStrictEqual(script.getAttributeNames(), ['src']);
+});
+
+test('url wins over attrs.src', async (t) => {
+    mockScriptLoad(t, window.document.head);
+
+    const script = await simpleLoadScript({
+        attrs: { src: 'https://example.com/other.js' },
+        url: URL,
     });
 
-    const script = window.document.querySelector('script') as HTMLScriptElement;
-    const scriptWithId = window.document.querySelector('script#jquery');
-
-    assert.notStrictEqual(script, undefined);
-    assert.strictEqual(script.nodeType, 1);
-    assert.strictEqual(scriptWithId, null);
-    assert.ok(script.src.includes('jquery-4.0.0.js'));
+    assert.strictEqual(script?.getAttribute('src'), URL);
 });

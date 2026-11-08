@@ -1,10 +1,9 @@
 import { afterEach, beforeEach, describe, test } from 'node:test';
 import assert from 'node:assert/strict';
 import simpleLoadScript from '../src/index.ts';
-import { clearTestEnvironment } from './utils.ts';
+import { clearTestEnvironment, mockScriptLoad } from './utils.ts';
 
-// https://github.com/vitest-dev/vitest/blob/main/examples/puppeteer/test/basic.test.ts
-// https://gist.github.com/mizchi/5f67109d0719ef6dd57695e1f528ce8d
+const URL = 'https://code.jquery.com/jquery-4.0.0.js';
 
 beforeEach(() => {
     clearTestEnvironment();
@@ -14,93 +13,76 @@ afterEach(() => {
     clearTestEnvironment();
 });
 
-test('load url ok', async () => {
-    // Mock script loading by triggering load event
-    const originalAppendChild = window.document.head.appendChild.bind(
-        window.document.head,
-    );
-    window.document.head.appendChild = function (node: Node) {
-        const result = originalAppendChild(node);
-        if (node.nodeName === 'SCRIPT') {
-            setTimeout(() => {
-                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
-            }, 0);
-        }
-        return result;
-    } as any;
+test('load url ok', async (t) => {
+    mockScriptLoad(t, window.document.head);
 
-    const scriptRef = await simpleLoadScript(
-        '//code.jquery.com/jquery-4.0.0.js',
-    );
-    assert.notStrictEqual(scriptRef, undefined);
+    const scriptRef = await simpleLoadScript(URL);
+
+    assert.ok(scriptRef instanceof window.HTMLScriptElement);
+    assert.strictEqual(scriptRef.getAttribute('src'), URL);
+    assert.strictEqual(scriptRef.parentNode, window.document.head);
 });
 
-test('load config ok', async () => {
-    // Mock script loading by triggering load event
-    const originalAppendChild = window.document.head.appendChild.bind(
-        window.document.head,
-    );
-    window.document.head.appendChild = function (node: Node) {
-        const result = originalAppendChild(node);
-        if (node.nodeName === 'SCRIPT') {
-            setTimeout(() => {
-                (node as HTMLScriptElement).dispatchEvent(new Event('load'));
-            }, 0);
-        }
-        return result;
-    } as any;
+test('load config ok', async (t) => {
+    mockScriptLoad(t, window.document.head);
 
-    const scriptRef = await simpleLoadScript({
-        url: '//code.jquery.com/jquery-4.0.0.js',
+    const scriptRef = await simpleLoadScript({ url: URL });
+
+    assert.ok(scriptRef instanceof window.HTMLScriptElement);
+    assert.strictEqual(scriptRef.getAttribute('src'), URL);
+});
+
+test('wrong url error', async (t) => {
+    mockScriptLoad(t, window.document.head, 'error');
+    const url = 'https://wrong.domain/jquery-4.0.0.js';
+
+    await assert.rejects(simpleLoadScript(url), (err: Error) => {
+        assert.strictEqual(err.message, `Loading script error: ${url}`);
+        assert.ok(err.cause instanceof window.Event);
+        return true;
     });
-    assert.notStrictEqual(scriptRef, undefined);
 });
 
-test('wrong url error', async () => {
-    // Mock script loading by triggering error event synchronously
-    const originalAppendChild = window.document.head.appendChild.bind(
-        window.document.head,
-    );
-    window.document.head.appendChild = function (node: Node) {
-        const result = originalAppendChild(node);
-        if (node.nodeName === 'SCRIPT') {
-            (node as HTMLScriptElement).dispatchEvent(new Event('error'));
-        }
-        return result;
-    } as any;
+test('settles when the script is detached before load', async (t) => {
+    mockScriptLoad(t, window.document.head, (script) => {
+        script.remove();
+        return 'load';
+    });
 
-    await assert.rejects(
-        simpleLoadScript('https://wrong.domain/jquery-4.0.0.js'),
-        (err: Error) => {
-            assert.strictEqual(err.message, 'Loading script error');
-            return true;
-        },
-    );
+    const scriptRef = await simpleLoadScript({ removeScript: true, url: URL });
+
+    assert.strictEqual(scriptRef, undefined);
 });
 
 describe('wrong config error', () => {
+    const message = { message: 'Object with url or url string needed' };
+
     test('no param', async () => {
-        try {
-            // @ts-expect-error Testing wrong config
-            await simpleLoadScript();
-        } catch (err) {
-            assert.strictEqual(
-                (err as Error).message,
-                'Object with url or url string needed',
-            );
-        }
+        // @ts-expect-error Testing wrong config
+        await assert.rejects(simpleLoadScript(), message);
+    });
+    test('null', async () => {
+        // @ts-expect-error Testing wrong config
+        await assert.rejects(simpleLoadScript(null), message);
+    });
+    test('empty string', async () => {
+        await assert.rejects(simpleLoadScript(''), message);
+    });
+    test('empty url', async () => {
+        await assert.rejects(simpleLoadScript({ url: '' }), message);
     });
     test('bad config', async () => {
-        try {
-            await simpleLoadScript({
+        await assert.rejects(
+            simpleLoadScript({
                 // @ts-expect-error Testing wrong config
-                elo: '//code.jquery.com/jquery-4.0.0.js',
-            });
-        } catch (err) {
-            assert.strictEqual(
-                (err as Error).message,
-                'Object with url or url string needed',
-            );
-        }
+                elo: URL,
+            }),
+            message,
+        );
+    });
+    test('nothing appended', async () => {
+        // @ts-expect-error Testing wrong config
+        await assert.rejects(simpleLoadScript(null), message);
+        assert.strictEqual(window.document.querySelector('script'), null);
     });
 });
