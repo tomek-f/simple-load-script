@@ -27,6 +27,7 @@
 - README: fix `removeScript` and `url` docs, add install, return value, errors, array order, cancel/timeout and UMD sections
 - README: fix CI badge alt text
 - add husky and lint-staged (pre-commit: lint-staged, type check, tests)
+- bump jsdom (31.0.1), oxfmt (0.78.0) and oxlint (1.93.0)
 
 ## 2.2.0
 
