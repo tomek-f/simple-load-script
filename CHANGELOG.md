@@ -28,6 +28,7 @@
 - README: fix CI badge alt text
 - add husky and lint-staged (pre-commit: lint-staged, type check, tests)
 - bump jsdom (31.0.1), oxfmt (0.78.0) and oxlint (1.93.0)
+- bump pnpm (12.21.0)
 
 ## 2.2.0
 
