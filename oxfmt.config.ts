@@ -6,7 +6,6 @@ const config: OxfmtConfig = defineConfig<OxfmtConfig>({
     bracketSameLine: false,
     bracketSpacing: true,
     endOfLine: 'lf',
-    ignorePatterns: ['.agents', 'docs'],
     printWidth: 80,
     semi: true,
     singleQuote: true,
