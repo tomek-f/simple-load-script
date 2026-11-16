@@ -16,4 +16,5 @@
     - Bad: `fix: Fix start race; Fix truncation`
 
 ## Changelog
+
 - Every user- or dev-facing change adds a line under the unreleased version in `CHANGELOG.md`, in the same PR
